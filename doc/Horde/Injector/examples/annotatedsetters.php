@@ -8,7 +8,6 @@
  * @package  Injector
  * @author   Chuck Hagenbuch <chuck@horde.org>
  * @license  http://www.horde.org/licenses/bsd BSD
- * @link     http://pear.horde.org/index.php?package=Injector
  */
 
 require 'Horde/Autoloader.php';

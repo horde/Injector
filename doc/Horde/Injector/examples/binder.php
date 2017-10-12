@@ -9,7 +9,6 @@
  * @package  Injector
  * @author   Gunnar Wrobel <wrobel@pardus.de>
  * @license  http://www.horde.org/licenses/bsd BSD
- * @link     http://pear.horde.org/index.php?package=Injector
  */
 
 require 'Horde/Autoloader.php';
@@ -21,7 +20,6 @@ require 'Horde/Autoloader.php';
  * @package  Injector
  * @author   Gunnar Wrobel <wrobel@pardus.de>
  * @license  http://www.horde.org/licenses/bsd BSD
- * @link     http://pear.horde.org/index.php?package=Injector
  */
 class Binder implements Horde_Injector_Binder
 {
