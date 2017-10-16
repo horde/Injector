@@ -10,7 +10,7 @@
   <email>chuck@horde.org</email>
   <active>yes</active>
  </lead>
- <date>2016-02-01</date>
+ <date>2017-10-17</date>
  <version>
   <release>2.0.6</release>
   <api>1.0.0</api>
@@ -36,7 +36,6 @@
        <file name="implementation.php" role="doc" />
        <file name="setget.php" role="doc" />
       </dir> <!-- /doc/Horde/Injector/examples -->
-      <file name="COPYING" role="doc" />
       <file name="Readme.html" role="doc" />
      </dir> <!-- /doc/Horde/Injector -->
     </dir> <!-- /doc/Horde -->
@@ -76,6 +75,7 @@
      </dir> <!-- /test/Horde/Injector -->
     </dir> <!-- /test/Horde -->
    </dir> <!-- /test -->
+   <file name="LICENSE" role="doc" />
   </dir> <!-- / -->
  </contents>
  <dependencies>
@@ -108,33 +108,33 @@
  </dependencies>
  <phprelease>
   <filelist>
-   <install as="COPYING" name="doc/Horde/Injector/COPYING" />
-   <install as="Readme.html" name="doc/Horde/Injector/Readme.html" />
    <install as="examples/annotatedsetters.php" name="doc/Horde/Injector/examples/annotatedsetters.php" />
    <install as="examples/binder.php" name="doc/Horde/Injector/examples/binder.php" />
    <install as="examples/closure.php" name="doc/Horde/Injector/examples/closure.php" />
    <install as="examples/factory.php" name="doc/Horde/Injector/examples/factory.php" />
    <install as="examples/implementation.php" name="doc/Horde/Injector/examples/implementation.php" />
    <install as="examples/setget.php" name="doc/Horde/Injector/examples/setget.php" />
+   <install as="Readme.html" name="doc/Horde/Injector/Readme.html" />
    <install as="Horde/Injector.php" name="lib/Horde/Injector.php" />
    <install as="Horde/Injector/Binder.php" name="lib/Horde/Injector/Binder.php" />
-   <install as="Horde/Injector/DependencyFinder.php" name="lib/Horde/Injector/DependencyFinder.php" />
-   <install as="Horde/Injector/Exception.php" name="lib/Horde/Injector/Exception.php" />
-   <install as="Horde/Injector/Scope.php" name="lib/Horde/Injector/Scope.php" />
-   <install as="Horde/Injector/TopLevel.php" name="lib/Horde/Injector/TopLevel.php" />
    <install as="Horde/Injector/Binder/AnnotatedSetters.php" name="lib/Horde/Injector/Binder/AnnotatedSetters.php" />
    <install as="Horde/Injector/Binder/Closure.php" name="lib/Horde/Injector/Binder/Closure.php" />
    <install as="Horde/Injector/Binder/Factory.php" name="lib/Horde/Injector/Binder/Factory.php" />
    <install as="Horde/Injector/Binder/Implementation.php" name="lib/Horde/Injector/Binder/Implementation.php" />
+   <install as="Horde/Injector/DependencyFinder.php" name="lib/Horde/Injector/DependencyFinder.php" />
+   <install as="Horde/Injector/Exception.php" name="lib/Horde/Injector/Exception.php" />
+   <install as="Horde/Injector/Scope.php" name="lib/Horde/Injector/Scope.php" />
+   <install as="Horde/Injector/TopLevel.php" name="lib/Horde/Injector/TopLevel.php" />
+   <install as="LICENSE" name="LICENSE" />
    <install as="Horde/Injector/AllTests.php" name="test/Horde/Injector/AllTests.php" />
-   <install as="Horde/Injector/BinderTest.php" name="test/Horde/Injector/BinderTest.php" />
-   <install as="Horde/Injector/bootstrap.php" name="test/Horde/Injector/bootstrap.php" />
-   <install as="Horde/Injector/InjectorTest.php" name="test/Horde/Injector/InjectorTest.php" />
-   <install as="Horde/Injector/phpunit.xml" name="test/Horde/Injector/phpunit.xml" />
    <install as="Horde/Injector/Binder/AnnotatedSettersTest.php" name="test/Horde/Injector/Binder/AnnotatedSettersTest.php" />
    <install as="Horde/Injector/Binder/ClosureTest.php" name="test/Horde/Injector/Binder/ClosureTest.php" />
    <install as="Horde/Injector/Binder/FactoryTest.php" name="test/Horde/Injector/Binder/FactoryTest.php" />
    <install as="Horde/Injector/Binder/ImplementationTest.php" name="test/Horde/Injector/Binder/ImplementationTest.php" />
+   <install as="Horde/Injector/BinderTest.php" name="test/Horde/Injector/BinderTest.php" />
+   <install as="Horde/Injector/bootstrap.php" name="test/Horde/Injector/bootstrap.php" />
+   <install as="Horde/Injector/InjectorTest.php" name="test/Horde/Injector/InjectorTest.php" />
+   <install as="Horde/Injector/phpunit.xml" name="test/Horde/Injector/phpunit.xml" />
   </filelist>
  </phprelease>
  <changelog>
@@ -339,7 +339,7 @@
    <stability>
     <release>stable</release>
     <api>stable</api></stability>
-   <date>2016-02-01</date>
+   <date>2017-10-17</date>
    <license uri="http://www.horde.org/licenses/bsd">BSD-2-Clause</license>
    <notes>
 * 
