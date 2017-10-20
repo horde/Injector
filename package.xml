@@ -10,7 +10,7 @@
   <email>chuck@horde.org</email>
   <active>yes</active>
  </lead>
- <date>2017-10-17</date>
+ <date>2017-10-20</date>
  <version>
   <release>2.0.6</release>
   <api>1.0.0</api>
@@ -71,7 +71,6 @@
       <file name="BinderTest.php" role="test" />
       <file name="bootstrap.php" role="test" />
       <file name="InjectorTest.php" role="test" />
-      <file name="phpunit.xml" role="test" />
      </dir> <!-- /test/Horde/Injector -->
     </dir> <!-- /test/Horde -->
    </dir> <!-- /test -->
@@ -134,7 +133,6 @@
    <install as="Horde/Injector/BinderTest.php" name="test/Horde/Injector/BinderTest.php" />
    <install as="Horde/Injector/bootstrap.php" name="test/Horde/Injector/bootstrap.php" />
    <install as="Horde/Injector/InjectorTest.php" name="test/Horde/Injector/InjectorTest.php" />
-   <install as="Horde/Injector/phpunit.xml" name="test/Horde/Injector/phpunit.xml" />
   </filelist>
  </phprelease>
  <changelog>
@@ -339,7 +337,7 @@
    <stability>
     <release>stable</release>
     <api>stable</api></stability>
-   <date>2017-10-17</date>
+   <date>2017-10-20</date>
    <license uri="http://www.horde.org/licenses/bsd">BSD-2-Clause</license>
    <notes>
 * 
