@@ -10,7 +10,7 @@
   <email>chuck@horde.org</email>
   <active>yes</active>
  </lead>
- <date>2016-02-01</date>
+ <date>2017-10-30</date>
  <version>
   <release>2.0.6</release>
   <api>1.0.0</api>
@@ -36,6 +36,7 @@
        <file name="implementation.php" role="doc" />
        <file name="setget.php" role="doc" />
       </dir> <!-- /doc/Horde/Injector/examples -->
+      <file name="CHANGES" role="doc" />
       <file name="COPYING" role="doc" />
       <file name="Readme.html" role="doc" />
      </dir> <!-- /doc/Horde/Injector -->
@@ -108,6 +109,7 @@
  </dependencies>
  <phprelease>
   <filelist>
+   <install as="CHANGES" name="doc/Horde/Injector/CHANGES" />
    <install as="COPYING" name="doc/Horde/Injector/COPYING" />
    <install as="Readme.html" name="doc/Horde/Injector/Readme.html" />
    <install as="examples/annotatedsetters.php" name="doc/Horde/Injector/examples/annotatedsetters.php" />
@@ -339,7 +341,7 @@
    <stability>
     <release>stable</release>
     <api>stable</api></stability>
-   <date>2016-02-01</date>
+   <date>2017-10-30</date>
    <license uri="http://www.horde.org/licenses/bsd">BSD-2-Clause</license>
    <notes>
 * 
