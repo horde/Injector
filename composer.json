@@ -1,8 +1,8 @@
 {
     "name": "horde/injector",
-    "description": "Horde dependency injection container",
+    "description": "Dependency injection container library",
     "type": "library",
-    "homepage": "https://pear.horde.org",
+    "homepage": "https://www.horde.org/libraries/Horde_Injector",
     "license": "BSD-2-Clause",
     "authors": [
         {
@@ -12,7 +12,7 @@
         }
     ],
     "version": "2.0.6",
-    "time": "2017-10-20",
+    "time": "2017-11-11",
     "repositories": [
         {
             "type": "pear",
