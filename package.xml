@@ -73,7 +73,6 @@
       <file name="BinderTest.php" role="test" />
       <file name="bootstrap.php" role="test" />
       <file name="InjectorTest.php" role="test" />
-      <file name="phpunit.xml" role="test" />
      </dir> <!-- /test/Horde/Injector -->
     </dir> <!-- /test/Horde -->
    </dir> <!-- /test -->
@@ -132,7 +131,6 @@
    <install as="Horde/Injector/BinderTest.php" name="test/Horde/Injector/BinderTest.php" />
    <install as="Horde/Injector/bootstrap.php" name="test/Horde/Injector/bootstrap.php" />
    <install as="Horde/Injector/InjectorTest.php" name="test/Horde/Injector/InjectorTest.php" />
-   <install as="Horde/Injector/phpunit.xml" name="test/Horde/Injector/phpunit.xml" />
    <install as="Horde/Injector/Binder/AnnotatedSettersTest.php" name="test/Horde/Injector/Binder/AnnotatedSettersTest.php" />
    <install as="Horde/Injector/Binder/ClosureTest.php" name="test/Horde/Injector/Binder/ClosureTest.php" />
    <install as="Horde/Injector/Binder/FactoryTest.php" name="test/Horde/Injector/Binder/FactoryTest.php" />
