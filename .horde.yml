@@ -2,7 +2,7 @@
 id: Injector
 name: Injector
 full: Dependency injection container library
-description: A depedency injection container for Horde.
+description: A dependency injection container for Horde.
 list: dev
 type: library
 homepage: https://www.horde.org/libraries/Horde_Injector
