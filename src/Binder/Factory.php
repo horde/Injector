@@ -18,7 +18,7 @@ use Horde\Injector\Injector;
  * A binder object for binding an interface to a factory class and method.
  *
  * An interface may be bound to a factory class.  That factory class must
- * provide a method or methods that accept a Horde_Injector, and return an
+ * provide a method or methods that accept a Horde\Injector\Injector, and return an
  * object that satisfies the instance requirement. For example:
  *
  * <pre>
@@ -52,7 +52,7 @@ class Factory implements Binder
     private $method;
 
     /**
-     * Create a new Horde_Injector_Binder_Factory instance.
+     * Create a new Horde\Injector\Binder\Factory instance.
      *
      * @param string $factory  The factory class to use for creating objects.
      * @param string $method   The method on that factory to use for creating
@@ -110,9 +110,9 @@ class Factory implements Binder
      *
      * @param Injector $injector  Injector object.
      *
-     * @return Injector
+     * @return object A factory
      */
-    public function create(Injector $injector): Injector
+    public function create(Injector $injector)
     {
         $childInjector = $injector->createChildInjector();
 
