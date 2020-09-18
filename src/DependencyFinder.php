@@ -60,7 +60,18 @@ class DependencyFinder
     {
         if ($parameter->getClass()) {
             return $injector->getInstance($parameter->getClass()->getName());
-        } elseif ($parameter->isOptional()) {
+        }
+        if ($type = $parameter->getType()) {
+            $instance = $injector->getInstance($type);
+            if ($instance) {
+                return $instance;
+            }
+            $instance = $injector->getInstance('\\' . $type);
+            if ($instance) {
+                return $instance;
+            }
+        }
+        if ($parameter->isOptional()) {
             return $parameter->getDefaultValue();
         }
 
