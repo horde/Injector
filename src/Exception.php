@@ -10,16 +10,10 @@
  * @license   http://www.horde.org/licenses/bsd BSD
  * @package   Injector
  */
-require_once('../../src/Injector.php');
-use Horde\Injector\Injector;
+namespace Horde\Injector;
 
 /**
- * Injector class for injecting dependencies of objects
- *
- * This class is responsible for injecting dependencies of objects.  It is
- * inspired by the bucket_Container's concept of child scopes, but written to
- * support many different types of bindings as well as allowing for setter
- * injection bindings.
+ * Injector exception class.
  *
  * @author    Bob Mckee <bmckee@bywires.com>
  * @author    James Pepin <james@jamespepin.com>
@@ -28,6 +22,6 @@ use Horde\Injector\Injector;
  * @license   http://www.horde.org/licenses/bsd BSD
  * @package   Injector
  */
-class Horde_Injector extends Injector implements \Horde_Injector_Scope
+class Exception extends \Horde_Exception
 {
 }

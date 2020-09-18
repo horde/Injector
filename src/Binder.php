@@ -10,9 +10,7 @@
  * @license   http://www.horde.org/licenses/bsd BSD
  * @package   Injector
  */
-require_once('../../../src/Binder.php');
-use Horde\Injector\Binder;
-
+namespace Horde\Injector;
 /**
  * Describes a binding class that is able to create concrete object instances.
  *
@@ -23,27 +21,25 @@ use Horde\Injector\Binder;
  * @license   http://www.horde.org/licenses/bsd BSD
  * @package   Injector
  */
-interface Horde_Injector_Binder extends Binder
+interface Binder
 {
     /**
      * Create an instance.
      *
-     * @param \Horde_Injector $injector  The injector should provide all
-     *                                  required dependencies for creating the
-     *                                  instance.
+     * @param Injector $injector  The injector should provide all
+     *                            required dependencies for creating the instance.
      *
      * @return mixed  The concrete instance.
      */
-    public function create(\Horde_Injector $injector);
+    public function create(Injector $injector);
 
     /**
      * Determine if one binder equals another binder
      *
-     * @param Horde_Injector_Binder $binder  The binder to compare against
-     *                                       $this.
+     * @param Binder $binder  The binder to compare against $this.
      *
      * @return bool  True if equal, false if not equal.
      */
-    public function equals(\Horde_Injector_Binder $binder);
+    public function equals(Binder $binder): bool;
 
 }
