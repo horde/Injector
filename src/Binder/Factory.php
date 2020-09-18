@@ -119,7 +119,7 @@ class Factory implements Binder
         /* We use getInstance() here because we don't want to have to create
          * this factory more than one time to create more objects of this
          * type. */
-        return $childInjector->getInstance($this->_factory)->{$this->method}($childInjector);
+        return $childInjector->getInstance($this->factory)->{$this->method}($childInjector);
     }
 
 }

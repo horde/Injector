@@ -81,7 +81,7 @@ class AnnotatedSetters implements Binder
      */
     public function create(Injector $injector)
     {
-        $instance = $this->_binder->create($injector);
+        $instance = $this->binder->create($injector);
 
         try {
             $reflectionClass = new \ReflectionClass(get_class($instance));
