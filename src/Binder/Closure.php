@@ -18,7 +18,7 @@ use Horde\Injector\Injector;
  * A binder object for binding an interface to a closure.
  *
  * An interface may be bound to a closure.  That closure must accept a
- * Horde_Injector and return an object that satisfies the instance
+ * Horde\Injector and return an object that satisfies the instance
  * requirement. For example:
  *
  * <pre>
@@ -58,7 +58,7 @@ class Closure implements Binder
     public function equals(Binder $otherBinder): bool
     {
         return (($otherBinder instanceof Closure) &&
-                ($otherBinder->getClosure() == $this->_closure));
+                ($otherBinder->getClosure() == $this->closure));
     }
 
     /**
@@ -74,11 +74,11 @@ class Closure implements Binder
     /**
      * Create instance using a closure.
      *
-     * If the closure depends on a Horde_Injector we want to limit its scope
+     * If the closure depends on a Horde\Injector we want to limit its scope
      * so it cannot change anything that effects any higher-level scope.  A
      * closure should not have the responsibility of making a higher-level
      * scope change.
-     * To enforce this we create a new child Horde_Injector.  When a
+     * To enforce this we create a new child Horde\Injector\Injector.  When a
      * Injector is requested from a Injector it will return
      * itself. This means that the closure will only ever be able to work on
      * the child Injector we give it now.

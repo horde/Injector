@@ -27,7 +27,7 @@ namespace Horde\Injector;
 interface Scope
 {
     /**
-     * Returns the Horde_Injector_Binder object mapped to the request
+     * Returns the Horde\Injector\Binder object mapped to the request
      * interface if such a
      * mapping exists
      *
