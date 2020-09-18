@@ -76,6 +76,7 @@ class Injector implements Scope
      */
     public function createChildInjector(): Injector
     {
+        // Using self is wrong and breaks wrapping into inheriting injectors
         return new self($this);
     }
 
@@ -137,12 +138,12 @@ class Injector implements Scope
      * $this->bind[BinderType].
      *
      * <pre>
-     * bindFactory - Creates a Horde\Injector\Binder_Factory
+     * bindFactory - Creates a Horde\Injector\Binder\Factory
      * bindImplementation - Creates a Horde\Injector\Binder\Implementation
      * </pre>
      *
      * All subsequent arguments are passed to the constructor of the
-     * Horde_Injector_Binder object.
+     * Horde\Injector\Binder object.
      *
      * @param string $interface              The interface to bind to.
      * @param Binder $binder                 The binder to be bound to the
@@ -195,7 +196,7 @@ class Injector implements Scope
      */
     public function setInstance(string $interface, $instance): Injector
     {
-        $this->_instances[$interface] = $instance;
+        $this->instances[$interface] = $instance;
         return $this;
     }
 
