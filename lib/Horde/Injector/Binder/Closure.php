@@ -10,7 +10,7 @@
  * @license   http://www.horde.org/licenses/bsd BSD
  * @package   Injector
  */
-require_once('../../../../src/Binder/Closure.php');
+require_once(dirname(__FILE__, 3) . '/_autoload.php');
 use Horde\Injector\Binder\Closure;
 /**
  * A binder object for binding an interface to a closure.

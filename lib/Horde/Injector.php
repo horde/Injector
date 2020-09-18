@@ -10,7 +10,7 @@
  * @license   http://www.horde.org/licenses/bsd BSD
  * @package   Injector
  */
-require_once('../../src/Injector.php');
+require_once(dirname(__FILE__, 1) .'/_autoload.php');
 use Horde\Injector\Injector;
 
 /**

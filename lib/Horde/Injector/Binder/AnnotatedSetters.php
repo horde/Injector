@@ -10,7 +10,7 @@
  * @license   http://www.horde.org/licenses/bsd BSD
  * @package   Injector
  */
-require_once('../../../../src/Binder/AnnotatedSetters.php');
+require_once(dirname(__FILE__, 3) . '/_autoload.php');
 use Horde\Injector\Binder\AnnotatedSetter;
 /**
  * This is a binder that finds methods marked with @inject and calls them with
