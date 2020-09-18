@@ -10,7 +10,7 @@
  * @license   http://www.horde.org/licenses/bsd BSD
  * @package   Injector
  */
-require_once(dirname(__FILE__, 2) . '/_autoload.php');
+require_once(dirname(__FILE__, 3) . '/_autoload.php');
 use Horde\Injector\Exception;
 
 /**
