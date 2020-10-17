@@ -80,7 +80,7 @@ class Injector implements Scope, ContainerInterface
     {
         // Using self is wrong and breaks wrapping into inheriting injectors
         $thisOrDerivedClass = \get_class($this);
-        return new $thisOrDerivedClass();
+        return new $thisOrDerivedClass($this);
     }
 
     /**
