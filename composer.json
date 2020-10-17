@@ -21,7 +21,8 @@
     ],
     "require": {
         "php": "^5.3 || ^7",
-        "pear-pear.horde.org/Horde_Exception": "^2"
+        "pear-pear.horde.org/Horde_Exception": "^2",
+        "psr/container": "^1"
     },
     "suggest": {
         "pear-pear.horde.org/Horde_Test": "^2.1"
