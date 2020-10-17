@@ -49,4 +49,15 @@ interface Scope
      */
     public function getInstance(string $interface);
 
+    /**
+     * Returns instance of requested object if proper configuration has been
+     * provided.
+     *
+     * @param string $interface  Interface name of object which is being
+     *                           requested.
+     *
+     * @return mixed
+     */
+    public function get($interface);
+
 }

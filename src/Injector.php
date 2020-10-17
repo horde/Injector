@@ -11,6 +11,8 @@
  * @package   Injector
  */
 namespace Horde\Injector;
+use Psr\Container\ContainerInterface;
+
 /**
  * Injector class for injecting dependencies of objects
  *
@@ -26,7 +28,7 @@ namespace Horde\Injector;
  * @license   http://www.horde.org/licenses/bsd BSD
  * @package   Injector
  */
-class Injector implements Scope
+class Injector implements Scope, ContainerInterface
 {
     /**
      * @var array
@@ -220,6 +222,50 @@ class Injector implements Scope
     /**
      * Retrieve an instance of the specified object/interface.
      *
+     * PSR-11 ContainerInterface Version
+     * 
+     * This method gets you an instance, and saves a reference to that
+     * instance for later requests.
+     *
+     * Interfaces must be bound to a concrete class to be created this way.
+     * Concrete instances may be created through reflection.
+     *
+     * It does not gaurantee that it is a new instance of the object.  For a
+     * new instance see createInstance().
+     *
+     * @param string $interface  The interface name, or object class to be
+     *                           created.
+     *
+     * @return mixed  An object that implements $interface, but not
+     *                necessarily a new one.
+     * 
+     * @throws Horde\Injector\NotFoundException
+     */
+    public function get($interface)
+    {
+        try { // Do we have an instance?
+            if (!$this->has($interface)) {
+                // Do we have a binding for this interface? If so then we don't
+                // ask our parent.
+                if (!isset($this->bindings[$interface]) &&
+                    // Does our parent have an instance?
+                    ($instance = $this->parentInjector->get($interface))) {
+                    return $instance;
+                }
+
+                // We have to make our own instance
+                $this->setInstance($interface, $this->createInstance($interface));
+            }
+        } catch (Exception $e) {
+            throw new NotFoundException($e->getMessage(), $e->getCode(), $e);
+        }
+        return $this->instances[$interface];
+    }
+    /**
+     * Retrieve an instance of the specified object/interface.
+     *
+     * Horde 5 compatible call. Refactor to get()
+     * 
      * This method gets you an instance, and saves a reference to that
      * instance for later requests.
      *
@@ -237,25 +283,28 @@ class Injector implements Scope
      */
     public function getInstance(string $interface)
     {
-        // Do we have an instance?
-        if (!$this->hasInstance($interface)) {
-            // Do we have a binding for this interface? If so then we don't
-            // ask our parent.
-            if (!isset($this->bindings[$interface]) &&
-                // Does our parent have an instance?
-                ($instance = $this->parentInjector->getInstance($interface))) {
-                return $instance;
-            }
+        $this->get($interface);
+    }
 
-            // We have to make our own instance
-            $this->setInstance($interface, $this->createInstance($interface));
-        }
 
-        return $this->instances[$interface];
+    /**
+     * Has the interface for the specified object/interface been created yet?
+     * 
+     * PSR-11 ContainerInterface version
+     *
+     * @param string $interface  The interface name or object class.
+     *
+     * @return bool  True if the instance already has been created.
+     */
+    public function has($interface): bool
+    {
+        return isset($this->instances[$interface]);
     }
 
     /**
      * Has the interface for the specified object/interface been created yet?
+     * 
+     * Horde 5 compatible call. Refactor to has()
      *
      * @param string $interface  The interface name or object class.
      *

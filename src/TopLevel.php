@@ -62,4 +62,8 @@ class TopLevel implements Scope
         return null;
     }
 
+    public function get($interface)
+    {
+        return null;
+    }
 }

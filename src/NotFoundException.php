@@ -11,17 +11,16 @@
  * @package   Injector
  */
 namespace Horde\Injector;
-use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 /**
- * Injector exception class.
+ * Injector NotFoundException class as suggested by PSR-11.
  *
- * @author    Bob Mckee <bmckee@bywires.com>
- * @author    James Pepin <james@jamespepin.com>
+ * @author    Ralf Lang <lang@b1-systems.de>
  * @category  Horde
- * @copyright 2009-2020 Horde LLC
+ * @copyright 2020-2020 Horde LLC
  * @license   http://www.horde.org/licenses/bsd BSD
  * @package   Injector
  */
-class Exception extends \Horde_Exception implements ContainerExceptionInterface
+class NotFoundException extends Exception implements NotFoundExceptionInterface
 {
 }
