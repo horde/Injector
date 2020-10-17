@@ -11,6 +11,7 @@
  * @package   Injector
  */
 namespace Horde\Injector;
+use Horde\Injector\Binder;
 
 /**
  * Top level injector class for returning the default binding for an object
@@ -38,7 +39,7 @@ class TopLevel implements Scope
      * @return Horde\Injector\Binder\AnnotatedSetters
      *         A new binding object that maps the interface to itself.
      */
-    public function getBinder(string $interface): Binder\AnnotatedSetters
+    public function getBinder(string $interface): ?Binder
     {
         $dependencyFinder = new DependencyFinder();
         $implementationBinder = new Binder\Implementation($interface, $dependencyFinder);
