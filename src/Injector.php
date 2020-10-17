@@ -79,7 +79,8 @@ class Injector implements Scope, ContainerInterface
     public function createChildInjector(): Injector
     {
         // Using self is wrong and breaks wrapping into inheriting injectors
-        return new self($this);
+        $thisOrDerivedClass = \get_class($this);
+        return new $thisOrDerivedClass();
     }
 
     /**

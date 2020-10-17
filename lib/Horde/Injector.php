@@ -48,9 +48,4 @@ class Horde_Injector extends Injector implements \Horde_Injector_Scope
      *
      * @return Injector  A child injector with $this as its parent.
      */
-    public function createChildInjector(): Injector
-    {
-        // Using self is wrong and breaks wrapping into inheriting injectors
-        return new self($this);
-    }
 }
