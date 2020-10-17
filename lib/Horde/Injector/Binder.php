@@ -12,6 +12,7 @@
  */
 require_once(dirname(__FILE__, 3) . '/_autoload.php');
 use Horde\Injector\Binder;
+use Horde\Injector\Injector;
 
 /**
  * Describes a binding class that is able to create concrete object instances.
@@ -25,25 +26,4 @@ use Horde\Injector\Binder;
  */
 interface Horde_Injector_Binder extends Binder
 {
-    /**
-     * Create an instance.
-     *
-     * @param \Horde_Injector $injector  The injector should provide all
-     *                                  required dependencies for creating the
-     *                                  instance.
-     *
-     * @return mixed  The concrete instance.
-     */
-    public function create(\Horde_Injector $injector);
-
-    /**
-     * Determine if one binder equals another binder
-     *
-     * @param Horde_Injector_Binder $binder  The binder to compare against
-     *                                       $this.
-     *
-     * @return bool  True if equal, false if not equal.
-     */
-    public function equals(\Horde_Injector_Binder $binder);
-
 }
