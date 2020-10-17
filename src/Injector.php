@@ -284,7 +284,7 @@ class Injector implements Scope, ContainerInterface
      */
     public function getInstance(string $interface)
     {
-        $this->get($interface);
+        return $this->get($interface);
     }
 
 
