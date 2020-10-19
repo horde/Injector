@@ -1,28 +1,34 @@
 <?php
-class Horde_Injector_Binder_FactoryTest extends Horde_Test_Case
+namespace Horde\Injector\Binder;
+use Horde\Injector\Binder;
+use Horde\Injector\DependencyFinder;
+use Horde\Injector\Injector;
+use Horde\Injector\TopLevel;
+
+class FactoryTest extends \Horde_Test_Case
 {
     public function testShouldCallFactoryMethod()
     {
-        $factory = $this->getMockSkipConstructor('Horde_Injector_Binder_Factory', array('create'));
+        $factory = $this->getMockSkipConstructor('Horde\Injector\Binder\Factory', array('create'));
         $factory->expects($this->once())
             ->method('create')
             ->with()
             ->will($this->returnValue('INSTANCE'));
         $factoryClassName = get_class($factory);
 
-        $childInjector = $this->getMockSkipConstructor('Horde_Injector', array('createInstance', 'getInstance'));
+        $childInjector = $this->getMockSkipConstructor('Horde\Injector\Injector', array('createInstance', 'getInstance'));
         $childInjector->expects($this->once())
             ->method('getInstance')
             ->with($this->equalTo($factoryClassName))
             ->will($this->returnValue($factory));
 
-        $injector = $this->getMockSkipConstructor('Horde_Injector', array('createChildInjector'));
+        $injector = $this->getMockSkipConstructor('Horde\Injector\Injector', array('createChildInjector'));
         $injector->expects($this->once())
             ->method('createChildInjector')
             ->with()
             ->will($this->returnValue($childInjector));
 
-        $factoryBinder = new Horde_Injector_Binder_Factory(
+        $factoryBinder = new Factory(
             $factoryClassName,
             'create'
         );
@@ -38,9 +44,9 @@ class Horde_Injector_Binder_FactoryTest extends Horde_Test_Case
     {
         $factory = new InjectorFactoryTestMockFactory();
 
-        $binder = new Horde_Injector_Binder_Factory('InjectorFactoryTestMockFactory', 'create');
+        $binder = new Factory('InjectorFactoryTestMockFactory', 'create');
 
-        $injector = new InjectorMockTestAccess(new Horde_Injector_TopLevel());
+        $injector = new InjectorMockTestAccess(new TopLevel());
         $injector->TEST_ID = "PARENTINJECTOR";
 
         // set the instance so we know we'll get our factory object from the injector
@@ -60,7 +66,7 @@ class Horde_Injector_Binder_FactoryTest extends Horde_Test_Case
     public function testMockFactoryStoresPassedInjector()
     {
         $factory = new InjectorFactoryTestMockFactory();
-        $injector = new InjectorMockTestAccess(new Horde_Injector_TopLevel());
+        $injector = new InjectorMockTestAccess(new TopLevel());
         $injector->TEST_ID = "INJECTOR";
         $factory->create($injector);
 
@@ -69,7 +75,7 @@ class Horde_Injector_Binder_FactoryTest extends Horde_Test_Case
 
     public function testShouldReturnBindingDetails()
     {
-        $factoryBinder = new Horde_Injector_Binder_Factory(
+        $factoryBinder = new Factory(
             'FACTORY',
             'METHOD'
         );
@@ -85,14 +91,14 @@ class InjectorFactoryTestMockFactory
     {
         return $this->_injector;
     }
-    public function create(Horde_Injector $injector)
+    public function create(Injector $injector)
     {
         $this->_injector = $injector;
     }
 }
-class InjectorMockTestAccess extends Horde_Injector
+class InjectorMockTestAccess extends Injector
 {
-    public function createChildInjector()
+    public function createChildInjector(): Injector
     {
         $child = new self($this);
         $child->TEST_ID = $this->TEST_ID . "->CHILD";

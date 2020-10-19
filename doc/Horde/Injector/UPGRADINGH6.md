@@ -10,6 +10,8 @@ Child classes now must implement a compatible constructor. When creating Child I
 
 It is advisable to wrap and use injector rather than using it as a base class.
 
+Binder Implementations must either type hint for Horde\Injector\Binder or a more general type. Hinting for Horde_Injector_Binder will not suffice the Liskov principle and produce an error.
+
 ## Use namespaced version
 
 When refactoring code, use Horde\Injector\Injector rather than the compatibility wrapper \Horde_Injector.

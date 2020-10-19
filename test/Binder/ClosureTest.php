@@ -1,17 +1,23 @@
 <?php
-class Horde_Injector_Binder_ClosureTest extends Horde_Test_Case
+namespace Horde\Injector\Binder;
+use Horde\Injector\Binder;
+use Horde\Injector\DependencyFinder;
+use Horde\Injector\Injector;
+use Horde\Injector\TopLevel;
+
+class ClosureTest extends \Horde_Test_Case
 {
     public function testShouldCallClosure()
     {
-        $childInjector = $this->getMockSkipConstructor('Horde_Injector', array('createInstance', 'getInstance'));
-        $injector = $this->getMockSkipConstructor('Horde_Injector', array('createChildInjector'));
+        $childInjector = $this->getMockSkipConstructor('Horde\Injector\Injector', array('createInstance', 'getInstance'));
+        $injector = $this->getMockSkipConstructor('Horde\Injector\Injector', array('createChildInjector'));
         $injector->expects($this->once())
             ->method('createChildInjector')
             ->with()
             ->will($this->returnValue($childInjector));
 
-        $closureBinder = new Horde_Injector_Binder_Closure(
-            function (Horde_Injector $injector) { return 'INSTANCE'; }
+        $closureBinder = new Closure(
+            function (Injector $injector) { return 'INSTANCE'; }
         );
 
         $this->assertEquals('INSTANCE', $closureBinder->create($injector));
@@ -23,11 +29,11 @@ class Horde_Injector_Binder_ClosureTest extends Horde_Test_Case
      */
     public function testShouldPassChildInjectorToClosure()
     {
-        $closure = function (Horde_Injector $injector) { return $injector; };
+        $closure = function (Injector $injector) { return $injector; };
 
-        $binder = new Horde_Injector_Binder_Closure($closure);
+        $binder = new Closure($closure);
 
-        $injector = new ClosureInjectorMockTestAccess(new Horde_Injector_TopLevel());
+        $injector = new ClosureInjectorMockTestAccess(new TopLevel());
         $injector->TEST_ID = "PARENTINJECTOR";
 
         // calling create should pass a child injector to the factory
@@ -39,8 +45,8 @@ class Horde_Injector_Binder_ClosureTest extends Horde_Test_Case
 
     public function testShouldReturnBindingDetails()
     {
-        $closure = function (Horde_Injector $injector) {};
-        $closureBinder = new Horde_Injector_Binder_Closure(
+        $closure = function (Injector $injector) {};
+        $closureBinder = new Closure(
             $closure
         );
 
@@ -48,9 +54,9 @@ class Horde_Injector_Binder_ClosureTest extends Horde_Test_Case
     }
 }
 
-class ClosureInjectorMockTestAccess extends Horde_Injector
+class ClosureInjectorMockTestAccess extends Injector
 {
-    public function createChildInjector()
+    public function createChildInjector(): Injector
     {
         $child = new self($this);
         $child->TEST_ID = $this->TEST_ID . "->CHILD";
