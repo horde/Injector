@@ -23,10 +23,10 @@
         "horde/horde-installer-plugin": "*",
         "php": "^7",
         "psr/container": "^1",
-        "horde/exception": "^2"
+        "horde/exception": "^3 || dev-FRAMEWORK_6_0"
     },
     "suggest": {
-        "horde/test": "^2.1"
+        "horde/test": "^3 || dev-FRAMEWORK_6_0"
     },
     "autoload": {
         "psr-0": {
