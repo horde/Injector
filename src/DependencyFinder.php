@@ -61,7 +61,13 @@ class DependencyFinder
         if ($parameter->getClass()) {
             return $injector->getInstance($parameter->getClass()->getName());
         }
-        if ($type = $parameter->getType()) {
+        // Catch optional array parameters
+        if ($parameter->isArray() && $parameter->isOptional()) {
+            return $parameter->getDefaultValue();
+        }
+        // Handle typed parameters other than arrays
+        $type = $parameter->getType();
+        if ($type && !in_array($type->getName(), ['bool', 'int', 'string', 'float'])) {
             $instance = $injector->getInstance($type);
             if ($instance) {
                 return $instance;
