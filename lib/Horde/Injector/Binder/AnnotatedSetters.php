@@ -11,7 +11,7 @@
  * @package   Injector
  */
 require_once(dirname(__FILE__, 4) . '/_autoload.php');
-use Horde\Injector\Binder\AnnotatedSetter;
+use Horde\Injector\Binder\AnnotatedSetters;
 /**
  * This is a binder that finds methods marked with @inject and calls them with
  * their dependencies. It must be stacked on another binder that actually
