@@ -4,12 +4,13 @@
   state:
     release: alpha
     api: alpha
-  date: 2021-07-04
+  date: 2021-07-19
   license:
     identifier: BSD-2-Clause
     uri: http://www.horde.org/licenses/bsd
-  notes: |+
-    
+  notes: |
+    [rla] Added PSR-11 compatible interfaces.
+    |+
 3.0.0alpha4:
   api: 3.0.0alpha1
   state:
