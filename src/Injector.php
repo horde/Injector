@@ -224,7 +224,7 @@ class Injector implements Scope, ContainerInterface
      * Retrieve an instance of the specified object/interface.
      *
      * PSR-11 ContainerInterface Version
-     * 
+     *
      * This method gets you an instance, and saves a reference to that
      * instance for later requests.
      *
@@ -262,11 +262,12 @@ class Injector implements Scope, ContainerInterface
         }
         return $this->instances[$interface];
     }
+
     /**
      * Retrieve an instance of the specified object/interface.
      *
      * Horde 5 compatible call. Refactor to get()
-     * 
+     *
      * This method gets you an instance, and saves a reference to that
      * instance for later requests.
      *
@@ -290,7 +291,7 @@ class Injector implements Scope, ContainerInterface
 
     /**
      * Has the interface for the specified object/interface been created yet?
-     * 
+     *
      * PSR-11 ContainerInterface version
      *
      * @param string $interface  The interface name or object class.
@@ -304,7 +305,7 @@ class Injector implements Scope, ContainerInterface
 
     /**
      * Has the interface for the specified object/interface been created yet?
-     * 
+     *
      * Horde 5 compatible call. Refactor to has()
      *
      * @param string $interface  The interface name or object class.
