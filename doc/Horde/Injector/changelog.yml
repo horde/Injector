@@ -8,8 +8,9 @@
   license:
     identifier: BSD-2-Clause
     uri: http://www.horde.org/licenses/bsd
-  notes: |+
-    
+  notes: |
+    [rla] Upgraded to conform PSR-11 2.0.1 interfaces
+    |+
 3.0.0alpha5:
   api: 3.0.0alpha1
   state:
