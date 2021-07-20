@@ -1,5 +1,4 @@
 {
-    "minimum-stability": "dev",
     "name": "horde/injector",
     "description": "Dependency injection container library",
     "type": "library",
@@ -12,7 +11,7 @@
             "role": "lead"
         }
     ],
-    "time": "2021-07-19",
+    "time": "2021-07-20",
     "repositories": [
         {
             "type": "composer",
@@ -22,11 +21,11 @@
     "require": {
         "php": "^7",
         "psr/container": "^2",
-        "horde/exception": "^3 || dev-FRAMEWORK_6_0"
+        "horde/exception": "^3"
     },
     "require-dev": {},
     "suggest": {
-        "horde/test": "^3 || dev-FRAMEWORK_6_0"
+        "horde/test": "^3"
     },
     "autoload": {
         "psr-0": {
