@@ -239,10 +239,10 @@ class Injector implements Scope, ContainerInterface
      *
      * @return mixed  An object that implements $interface, but not
      *                necessarily a new one.
-     * 
+     *
      * @throws Horde\Injector\NotFoundException
      */
-    public function get($interface)
+    public function get(string $interface)
     {
         try { // Do we have an instance?
             if (!$this->has($interface)) {
@@ -258,7 +258,7 @@ class Injector implements Scope, ContainerInterface
                 $this->setInstance($interface, $this->createInstance($interface));
             }
         } catch (Exception $e) {
-            throw new NotFoundException($e->getMessage(), $e->getCode(), $e);
+            throw new NotFoundException('The requested interface was not found: ' . $interface , $e->getCode(), $e);
         }
         return $this->instances[$interface];
     }
@@ -298,7 +298,7 @@ class Injector implements Scope, ContainerInterface
      *
      * @return bool  True if the instance already has been created.
      */
-    public function has($interface): bool
+    public function has(string $interface): bool
     {
         return isset($this->instances[$interface]);
     }

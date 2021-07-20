@@ -58,6 +58,6 @@ interface Scope
      *
      * @return mixed
      */
-    public function get($interface);
+    public function get(string $interface);
 
 }
