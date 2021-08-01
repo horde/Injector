@@ -31,8 +31,5 @@ dependencies:
   optional:
     composer:
       horde/test: ^3
-autoload:
-  psr-0:
-    Horde_Injector: lib/
-  psr-4:
-    Horde\Injector\: src/
+provides:
+  psr/container-implementation: 2.0.1
