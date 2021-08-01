@@ -1,5 +1,4 @@
 {
-    "minimum-stability": "dev",
     "name": "horde/injector",
     "description": "Dependency injection container library",
     "type": "library",
@@ -12,7 +11,7 @@
             "role": "lead"
         }
     ],
-    "time": "2021-07-20",
+    "time": "2021-08-01",
     "repositories": [
         {
             "type": "composer",
@@ -35,5 +34,13 @@
         "psr-4": {
             "Horde\\Injector\\": "src/"
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Horde\\Injector\\Test\\": "test/"
+        }
+    },
+    "provide": {
+        "psr/container-implementation": "2.0.1"
     }
 }
