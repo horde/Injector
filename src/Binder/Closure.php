@@ -85,9 +85,9 @@ class Closure implements Binder
      *
      * @param Injector $injector  Injector object.
      *
-     * @return Injector
+     * @return mixed The object or value created from the closure.
      */
-    public function create(Injector $injector): ?Injector
+    public function create(Injector $injector)
     {
         $childInjector = $injector->createChildInjector();
         $closure = $this->closure;
