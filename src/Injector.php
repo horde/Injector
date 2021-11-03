@@ -88,7 +88,7 @@ class Injector implements Scope, ContainerInterface
      *
      * @return Binder  See bind().
      */
-    public function __call(string $name, iterable $args = []): Binder
+    public function __call(string $name, array $args = []): Binder
     {
         if (substr($name, 0, 4) == 'bind') {
             return $this->bind(substr($name, 4), $args);
