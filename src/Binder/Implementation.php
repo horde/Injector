@@ -15,6 +15,7 @@ namespace Horde\Injector\Binder;
 use Horde\Injector\Binder;
 use Horde\Injector\DependencyFinder;
 use Horde\Injector\Exception;
+use Horde\Injector\NotFoundException;
 use Horde\Injector\Injector;
 /**
  * @author    Bob Mckee <bmckee@bywires.com>
@@ -72,7 +73,7 @@ class Implementation implements Binder
         try {
             $reflectionClass = new \ReflectionClass($this->implementation);
         } catch (\ReflectionException $e) {
-            throw new Exception($e);
+            throw new NotFoundException($e);
         }
         $this->validateImplementation($reflectionClass);
         return $this->getInstance($injector, $reflectionClass);
@@ -83,7 +84,7 @@ class Implementation implements Binder
     protected function validateImplementation(\ReflectionClass $reflectionClass)
     {
         if ($reflectionClass->isAbstract() || $reflectionClass->isInterface()) {
-            throw new Exception('Cannot bind interface or abstract class "' . $this->implementation . '" to an interface.');
+            throw new NotFoundException('Cannot bind interface or abstract class "' . $this->implementation . '" to an interface.');
         }
     }
 
