@@ -8,8 +8,9 @@
   license:
     identifier: BSD-2-Clause
     uri: http://www.horde.org/licenses/bsd
-  notes: |+
-    
+  notes: |
+    [rla] Enable for PHP 8.
+    |+
 3.0.0alpha6:
   api: 3.0.0alpha1
   state:

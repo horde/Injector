@@ -11,7 +11,7 @@
             "role": "lead"
         }
     ],
-    "time": "2021-08-01",
+    "time": "2021-11-03",
     "repositories": [
         {
             "type": "composer",
@@ -19,14 +19,14 @@
         }
     ],
     "require": {
-        "php": "^7",
+        "php": "^7.4 || ^8",
         "psr/container": "^2",
-        "horde/exception": "^3 || dev-FRAMEWORK_6_0"
+        "horde/exception": "^3"
     },
-    "require-dev": {},
-    "suggest": {
-        "horde/test": "^3 || dev-FRAMEWORK_6_0"
+    "require-dev": {
+        "horde/test": "^3"
     },
+    "suggest": {},
     "autoload": {
         "psr-0": {
             "Horde_Injector": "lib/"
