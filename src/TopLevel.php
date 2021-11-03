@@ -12,6 +12,7 @@
  */
 namespace Horde\Injector;
 use Horde\Injector\Binder;
+use Horde\Injector\Binder\AnnotatedSetters;
 
 /**
  * Top level injector class for returning the default binding for an object
@@ -36,7 +37,7 @@ class TopLevel implements Scope
      * @param string $interface  The interface to retrieve binding information
      *                           for.
      *
-     * @return Horde\Injector\Binder\AnnotatedSetters
+     * @return AnnotatedSetters
      *         A new binding object that maps the interface to itself.
      */
     public function getBinder(string $interface): ?Binder

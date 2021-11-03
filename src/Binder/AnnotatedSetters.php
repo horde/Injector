@@ -58,7 +58,7 @@ class AnnotatedSetters implements Binder
     }
 
     /**
-     * @param Binder $binder
+     * @param Binder $otherBinder
      *
      * @return bool  Equality.
      */
@@ -77,7 +77,7 @@ class AnnotatedSetters implements Binder
     }
 
     /**
-     * @param Injector
+     * @param Injector $injector
      */
     public function create(Injector $injector)
     {
