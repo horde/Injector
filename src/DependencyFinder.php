@@ -75,7 +75,7 @@ class DependencyFinder
         } elseif ($type instanceof ReflectionUnionType) {
             $types = $type->getTypes();
         } else {
-            $types = $type;
+            $types = [];
         }
 
         foreach ($types as $type) {
