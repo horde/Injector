@@ -1,10 +1,12 @@
 <?php
-namespace Horde\Injector\Binder;
+namespace Horde\Injector\Test\Binder;
 use Horde\Injector\Binder;
 use Horde\Injector\DependencyFinder;
 use Horde\Injector\Injector;
 use Horde\Injector\TopLevel;
-class AnnotatedSettersTest extends \Horde_Test_Case
+use Horde\Injector\Binder\AnnotatedSetters;
+
+class AnnotatedSettersTest extends \Horde\Test\TestCase
 {
     public function testShouldCallAnnotatedSetters()
     {
@@ -16,7 +18,7 @@ class AnnotatedSettersTest extends \Horde_Test_Case
 
         $this->assertNull($instance->dep);
         $newInstance = $annotatedSettersBinder->create($injector);
-        $this->assertInstanceOf('Horde\Injector\Binder\AnnotatedSettersTest__NoDependencies', $newInstance->dep);
+        $this->assertInstanceOf(AnnotatedSettersTest__NoDependencies::class, $newInstance->dep);
     }
 }
 
