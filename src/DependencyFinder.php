@@ -11,6 +11,9 @@
  * @package   Injector
  */
 namespace Horde\Injector;
+
+use ReflectionNamedType;
+use ReflectionUnionType;
 /**
  * This is a simple class that uses reflection to figure out the dependencies
  * of a method and attempts to return them using the Injector instance.
@@ -50,7 +53,7 @@ class DependencyFinder
 
     /**
      * @param Injector $injector
-     * @param \ReflectionParameter $method
+     * @param \ReflectionParameter $parameter
      *
      * @return mixed
      * @throws Exception
@@ -67,16 +70,27 @@ class DependencyFinder
         }
         // Handle typed parameters other than arrays
         $type = $parameter->getType();
-        if ($type && !in_array($type->getName(), ['bool', 'int', 'string', 'float'])) {
-            $instance = $injector->getInstance($type);
-            if ($instance) {
-                return $instance;
-            }
-            $instance = $injector->getInstance('\\' . $type);
-            if ($instance) {
-                return $instance;
-            }
+        if ($type instanceof ReflectionNamedType) {
+            $types = [$type];
+        } elseif ($type instanceof ReflectionUnionType) {
+            $types = $type->getTypes();
+        } else {
+            $types = $type;
         }
+
+        foreach ($types as $type) {
+            if ($type instanceof ReflectionNamedType && !in_array($type->getName(), ['bool', 'int', 'string', 'float'])) {
+                $instance = $injector->getInstance($type);
+                if ($instance) {
+                    return $instance;
+                }
+                $instance = $injector->getInstance('\\' . $type);
+                if ($instance) {
+                    return $instance;
+                }
+            }    
+        }
+
         if ($parameter->isOptional()) {
             return $parameter->getDefaultValue();
         }
