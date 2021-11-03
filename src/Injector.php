@@ -1,12 +1,12 @@
 <?php
 /**
- * Copyright 2009-2020 Horde LLC (http://www.horde.org/)
+ * Copyright 2009-2021 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (BSD). If you
  * did not receive this file, see http://www.horde.org/licenses/bsd.
  *
  * @category  Horde
- * @copyright 2009-2020 Horde LLC
+ * @copyright 2009-2021 Horde LLC
  * @license   http://www.horde.org/licenses/bsd BSD
  * @package   Injector
  */
@@ -24,7 +24,7 @@ use Psr\Container\ContainerInterface;
  * @author    Bob Mckee <bmckee@bywires.com>
  * @author    James Pepin <james@jamespepin.com>
  * @category  Horde
- * @copyright 2009-2020 Horde LLC
+ * @copyright 2009-2021 Horde LLC
  * @license   http://www.horde.org/licenses/bsd BSD
  * @package   Injector
  */
@@ -240,7 +240,7 @@ class Injector implements Scope, ContainerInterface
      * @return mixed  An object that implements $interface, but not
      *                necessarily a new one.
      *
-     * @throws Horde\Injector\NotFoundException
+     * @throws NotFoundException
      */
     public function get(string $interface)
     {
