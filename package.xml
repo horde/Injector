@@ -12,7 +12,7 @@
  </lead>
  <date>2021-07-20</date>
  <version>
-  <release>3.0.0alpha8</release>
+  <release>3.0.0alpha9</release>
   <api>3.0.0alpha1</api>
  </version>
  <stability>
@@ -481,6 +481,22 @@
   <release>
    <version>
     <release>3.0.0alpha8</release>
+    <api>3.0.0alpha1</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2021-07-20</date>
+   <license uri="http://www.horde.org/licenses/bsd">BSD-2-Clause</license>
+   <notes>
+* [rla] Release for PHP 8.
+* |+
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>3.0.0alpha9</release>
     <api>3.0.0alpha1</api>
    </version>
    <stability>
