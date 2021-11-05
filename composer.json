@@ -1,4 +1,5 @@
 {
+    "minimum-stability": "dev",
     "name": "horde/injector",
     "description": "Dependency injection container library",
     "type": "library",
@@ -21,10 +22,10 @@
     "require": {
         "php": "^7.4 || ^8",
         "psr/container": "^2",
-        "horde/exception": "^3"
+        "horde/exception": "^3 || dev-FRAMEWORK_6_0"
     },
     "require-dev": {
-        "horde/test": "^3"
+        "horde/test": "^3 || dev-FRAMEWORK_6_0"
     },
     "suggest": {},
     "autoload": {
