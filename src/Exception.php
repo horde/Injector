@@ -10,8 +10,11 @@
  * @license   http://www.horde.org/licenses/bsd BSD
  * @package   Injector
  */
+
 namespace Horde\Injector;
+
 use Psr\Container\ContainerExceptionInterface;
+
 /**
  * Injector exception class.
  *

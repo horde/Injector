@@ -10,6 +10,7 @@
  * @license   http://www.horde.org/licenses/bsd BSD
  * @package   Injector
  */
+
 namespace Horde\Injector\Binder;
 
 use Horde\Injector\Binder;
@@ -17,6 +18,7 @@ use Horde\Injector\DependencyFinder;
 use Horde\Injector\Exception;
 use Horde\Injector\NotFoundException;
 use Horde\Injector\Injector;
+
 /**
  * @author    Bob Mckee <bmckee@bywires.com>
  * @author    James Pepin <james@jamespepin.com>
@@ -39,9 +41,10 @@ class Implementation implements Binder
 
     /**
      */
-    public function __construct($implementation,
-                                DependencyFinder $finder = null)
-    {
+    public function __construct(
+        $implementation,
+        DependencyFinder $finder = null
+    ) {
         $this->implementation = $implementation;
         $this->dependencyFinder = is_null($finder)
             ? new DependencyFinder()
@@ -90,12 +93,12 @@ class Implementation implements Binder
 
     /**
      */
-    protected function getInstance(Injector $injector,
-                                    \ReflectionClass $class)
-    {
+    protected function getInstance(
+        Injector $injector,
+        \ReflectionClass $class
+    ) {
         return $class->getConstructor()
             ? $class->newInstanceArgs($this->dependencyFinder->getMethodDependencies($injector, $class->getConstructor()))
             : $class->newInstance();
     }
-
 }

@@ -10,10 +10,12 @@
  * @license   http://www.horde.org/licenses/bsd BSD
  * @package   Injector
  */
+
 namespace Horde\Injector\Binder;
 
 use Horde\Injector\Binder;
 use Horde\Injector\Injector;
+
 /**
  * A binder object for binding an interface to a factory class and method.
  *
@@ -121,5 +123,4 @@ class Factory implements Binder
          * type. */
         return $childInjector->getInstance($this->factory)->{$this->method}($childInjector);
     }
-
 }

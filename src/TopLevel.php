@@ -10,7 +10,9 @@
  * @license   http://www.horde.org/licenses/bsd BSD
  * @package   Injector
  */
+
 namespace Horde\Injector;
+
 use Horde\Injector\Binder;
 use Horde\Injector\Binder\AnnotatedSetters;
 

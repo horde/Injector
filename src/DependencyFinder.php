@@ -10,10 +10,12 @@
  * @license   http://www.horde.org/licenses/bsd BSD
  * @package   Injector
  */
+
 namespace Horde\Injector;
 
 use ReflectionNamedType;
 use ReflectionUnionType;
+
 /**
  * This is a simple class that uses reflection to figure out the dependencies
  * of a method and attempts to return them using the Injector instance.
@@ -35,9 +37,10 @@ class DependencyFinder
      * @return array
      * @throws Exception
      */
-    public function getMethodDependencies(Injector $injector,
-                                          \ReflectionMethod $method): array
-    {
+    public function getMethodDependencies(
+        Injector $injector,
+        \ReflectionMethod $method
+    ): array {
         $dependencies = [];
 
         try {
@@ -58,9 +61,10 @@ class DependencyFinder
      * @return mixed
      * @throws Exception
      */
-    public function getParameterDependency(Injector $injector,
-                                           \ReflectionParameter $parameter)
-    {
+    public function getParameterDependency(
+        Injector $injector,
+        \ReflectionParameter $parameter
+    ) {
         if ($parameter->getClass()) {
             return $injector->getInstance($parameter->getClass()->getName());
         }
@@ -88,7 +92,7 @@ class DependencyFinder
                 if ($instance) {
                     return $instance;
                 }
-            }    
+            }
         }
 
         if ($parameter->isOptional()) {
@@ -97,5 +101,4 @@ class DependencyFinder
 
         throw new Exception("Untyped parameter \$" . $parameter->getName() . "can't be fulfilled");
     }
-
 }

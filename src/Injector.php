@@ -10,7 +10,9 @@
  * @license   http://www.horde.org/licenses/bsd BSD
  * @package   Injector
  */
+
 namespace Horde\Injector;
+
 use Psr\Container\ContainerInterface;
 
 /**
@@ -20,6 +22,10 @@ use Psr\Container\ContainerInterface;
  * inspired by the bucket_Container's concept of child scopes, but written to
  * support many different types of bindings as well as allowing for setter
  * injection bindings.
+ *
+ *
+ * @method Binder bindFactory(string $factory, string $method) multiply two integers
+ * @method Binder bindClosure(\Closure $closure) The closure to add
  *
  * @author    Bob Mckee <bmckee@bywires.com>
  * @author    James Pepin <james@jamespepin.com>
@@ -31,26 +37,26 @@ use Psr\Container\ContainerInterface;
 class Injector implements Scope, ContainerInterface
 {
     /**
-     * @var array
+     * @var Binder[]
      */
-    private $bindings = array();
+    private array $bindings = [];
 
     /**
-     * @var array
+     * @var mixed[]
      */
-    private $instances;
+    private array $instances;
 
     /**
      * @var Scope
      */
-    private $parentInjector;
+    private Scope $parentInjector;
 
     /**
      * Reflection cache.
      *
-     * @var array
+     * @var array[]
      */
-    private $reflection = array();
+    private $reflection = [];
 
     /**
      * Create a new Injector object.
@@ -86,6 +92,9 @@ class Injector implements Scope, ContainerInterface
     /**
      * Method overloader.  Handles $this->bind[BinderType] type calls.
      *
+     * @param string $name The method name
+     * @param mixed[] $args The arguments to the called method
+     *
      * @return Binder  See bind().
      */
     public function __call(string $name, array $args = []): Binder
@@ -117,10 +126,10 @@ class Injector implements Scope, ContainerInterface
 
         if (!isset($this->reflection[$type])) {
             $rc = new \ReflectionClass('Horde\Injector\Binder\\' . $type);
-            $this->reflection[$type] = array(
+            $this->reflection[$type] = [
                 $rc,
-                (bool)$rc->getConstructor()
-            );
+                (bool)$rc->getConstructor(),
+            ];
         }
 
         $this->addBinder(
@@ -179,9 +188,8 @@ class Injector implements Scope, ContainerInterface
      */
     public function getBinder(string $interface): ?Binder
     {
-        return isset($this->bindings[$interface])
-            ? $this->bindings[$interface]
-            : $this->parentInjector->getBinder($interface);
+        return $this->bindings[$interface]
+            ?? $this->parentInjector->getBinder($interface);
     }
 
     /**
@@ -258,7 +266,7 @@ class Injector implements Scope, ContainerInterface
                 $this->setInstance($interface, $this->createInstance($interface));
             }
         } catch (Exception $e) {
-            throw new NotFoundException('The requested interface was not found: ' . $interface , $e->getCode(), $e);
+            throw new NotFoundException('The requested interface was not found: ' . $interface, $e->getCode(), $e);
         }
         return $this->instances[$interface];
     }
