@@ -10,7 +10,9 @@
  * @license   http://www.horde.org/licenses/bsd BSD
  * @package   Injector
  */
+
 namespace Horde\Injector;
+
 /**
  * Describes a binding class that is able to create concrete object instances.
  *
@@ -41,5 +43,4 @@ interface Binder
      * @return bool  True if equal, false if not equal.
      */
     public function equals(Binder $binder): bool;
-
 }

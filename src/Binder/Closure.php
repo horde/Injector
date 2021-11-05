@@ -10,10 +10,12 @@
  * @license   http://www.horde.org/licenses/bsd BSD
  * @package   Injector
  */
+
 namespace Horde\Injector\Binder;
 
 use Horde\Injector\Binder;
 use Horde\Injector\Injector;
+
 /**
  * A binder object for binding an interface to a closure.
  *
@@ -36,16 +38,16 @@ use Horde\Injector\Injector;
 class Closure implements Binder
 {
     /**
-     * @var Closure
+     * @var \Closure
      */
     private $closure;
 
     /**
      * Create a new Closure instance.
      *
-     * @param string $closure  The closure to use for creating objects.
+     * @param \Closure $closure  The closure to use for creating objects.
      */
-    public function __construct($closure)
+    public function __construct(\Closure $closure)
     {
         $this->closure = $closure;
     }
@@ -94,5 +96,4 @@ class Closure implements Binder
 
         return $closure($childInjector);
     }
-
 }

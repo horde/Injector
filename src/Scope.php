@@ -10,6 +10,7 @@
  * @license   http://www.horde.org/licenses/bsd BSD
  * @package   Injector
  */
+
 namespace Horde\Injector;
 
 /**
@@ -59,5 +60,4 @@ interface Scope
      * @return mixed
      */
     public function get(string $interface);
-
 }

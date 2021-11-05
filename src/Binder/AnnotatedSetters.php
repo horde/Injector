@@ -10,12 +10,14 @@
  * @license   http://www.horde.org/licenses/bsd BSD
  * @package   Injector
  */
+
 namespace Horde\Injector\Binder;
 
-use \Horde\Injector\Binder;
-use \Horde\Injector\Exception;
-use \Horde\Injector\Injector;
-use \Horde\Injector\DependencyFinder;
+use Horde\Injector\Binder;
+use Horde\Injector\Exception;
+use Horde\Injector\Injector;
+use Horde\Injector\DependencyFinder;
+
 /**
  * This is a binder that finds methods marked with @inject and calls them with
  * their dependencies. It must be stacked on another binder that actually
@@ -48,9 +50,10 @@ class AnnotatedSetters implements Binder
      * @param \Horde\Injector\DependencyFinder $finder
      *
      */
-    public function __construct(Binder $binder,
-                                DependencyFinder $finder = null)
-    {
+    public function __construct(
+        Binder $binder,
+        DependencyFinder $finder = null
+    ) {
         $this->binder = $binder;
         $this->dependencyFinder = is_null($finder)
             ? new DependencyFinder()
@@ -119,8 +122,8 @@ class AnnotatedSetters implements Binder
      * comment that includes @inject).
      *
      * @param \ReflectionMethod $reflectionMethod
-     * 
-     * @return bool 
+     *
+     * @return bool
      */
     private function isSetterMethod(\ReflectionMethod $reflectionMethod): bool
     {
@@ -142,9 +145,11 @@ class AnnotatedSetters implements Binder
      * @param Injector $injector        The injector to get dependencies from.
      * @param object $instance          The object to call setters on.
      */
-    private function callSetters(array $setters, Injector $injector,
-                                  $instance)
-    {
+    private function callSetters(
+        array $setters,
+        Injector $injector,
+        $instance
+    ) {
         foreach ($setters as $setterMethod) {
             $setterMethod->invokeArgs(
                 $instance,
@@ -152,5 +157,4 @@ class AnnotatedSetters implements Binder
             );
         }
     }
-
 }
