@@ -17,6 +17,9 @@ use Horde\Injector\Binder;
 use Horde\Injector\Exception;
 use Horde\Injector\Injector;
 use Horde\Injector\DependencyFinder;
+use ReflectionClass;
+use ReflectionException;
+use ReflectionMethod;
 
 /**
  * This is a binder that finds methods marked with @inject and calls them with
@@ -87,8 +90,12 @@ class AnnotatedSetters implements Binder
         $instance = $this->binder->create($injector);
 
         try {
-            $reflectionClass = new \ReflectionClass(get_class($instance));
-        } catch (\ReflectionException $e) {
+            $className = get_class($instance);
+            if (!$className) {
+                throw new Exception('Failed to get classname of ' . (string) var_export($instance));
+            }
+            $reflectionClass = new ReflectionClass($className);
+        } catch (ReflectionException $e) {
             throw new Exception($e);
         }
         $setters = $this->findAnnotatedSetters($reflectionClass);
@@ -101,14 +108,14 @@ class AnnotatedSetters implements Binder
      * Find all public methods in $reflectionClass that are annotated with
      * @inject.
      *
-     * @param \ReflectionClass $reflectionClass
+     * @param ReflectionClass $reflectionClass
      *
-     * @return array
+     * @return ReflectionMethod[]
      */
-    private function findAnnotatedSetters(\ReflectionClass $reflectionClass): array
+    private function findAnnotatedSetters(ReflectionClass $reflectionClass): array
     {
         $setters = [];
-        foreach ($reflectionClass->getMethods(\ReflectionMethod::IS_PUBLIC) as $reflectionMethod) {
+        foreach ($reflectionClass->getMethods(ReflectionMethod::IS_PUBLIC) as $reflectionMethod) {
             if ($this->isSetterMethod($reflectionMethod)) {
                 $setters[] = $reflectionMethod;
             }
@@ -141,7 +148,7 @@ class AnnotatedSetters implements Binder
      * Call each ReflectionMethod in the $setters array, filling in its
      * dependencies with the $injector.
      *
-     * @param array $setters            Array of ReflectionMethods to call.
+     * @param ReflectionMethod[] $setters            Array of ReflectionMethods to call.
      * @param Injector $injector        The injector to get dependencies from.
      * @param object $instance          The object to call setters on.
      */
@@ -149,7 +156,7 @@ class AnnotatedSetters implements Binder
         array $setters,
         Injector $injector,
         $instance
-    ) {
+    ): void {
         foreach ($setters as $setterMethod) {
             $setterMethod->invokeArgs(
                 $instance,

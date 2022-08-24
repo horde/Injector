@@ -14,6 +14,8 @@
 namespace Horde\Injector;
 
 use Psr\Container\ContainerInterface;
+use BadMethodCallException;
+use ReflectionClass;
 
 /**
  * Injector class for injecting dependencies of objects
@@ -54,7 +56,7 @@ class Injector implements Scope, ContainerInterface
     /**
      * Reflection cache.
      *
-     * @var array[]
+     * @var ReflectionClass[]
      */
     private $reflection = [];
 
@@ -113,19 +115,21 @@ class Injector implements Scope, ContainerInterface
      *
      * @param string $type  The type of Horde\Injector\Binder\* to be created.
      *                      Matches /^Horde\Injector\Binder\(\w+)$/.
-     * @param array $args   The constructor arguments for the binder object.
+     * @param mixed[] $args   The constructor arguments for the binder object.
      *
      * @return Binder  The binder object created. Useful for
      *                                method chaining.
      */
     private function bind(string $type, iterable $args = []): Binder
     {
-        if (!($interface = array_shift($args))) {
-            throw new \BadMethodCallException('First parameter for "bind' . $type . '" must be the name of an interface or class');
+        $argsArray = (array)$args;
+        if (!($interface = array_shift($argsArray))) {
+            throw new BadMethodCallException('First parameter for "bind' . $type . '" must be the name of an interface or class');
         }
 
+        // TODO: We should detect and mind binder types with FQCN
         if (!isset($this->reflection[$type])) {
-            $rc = new \ReflectionClass('Horde\Injector\Binder\\' . $type);
+            $rc = new ReflectionClass('Horde\Injector\Binder\\' . $type);
             $this->reflection[$type] = [
                 $rc,
                 (bool)$rc->getConstructor(),
@@ -135,7 +139,7 @@ class Injector implements Scope, ContainerInterface
         $this->addBinder(
             $interface,
             $this->reflection[$type][1]
-                ? $this->reflection[$type][0]->newInstanceArgs($args)
+                ? $this->reflection[$type][0]->newInstanceArgs($argsArray)
                 : $this->reflection[$type][0]->newInstance()
         );
 
