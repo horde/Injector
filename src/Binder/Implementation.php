@@ -18,6 +18,7 @@ use Horde\Injector\DependencyFinder;
 use Horde\Injector\Exception;
 use Horde\Injector\NotFoundException;
 use Horde\Injector\Injector;
+use ReflectionClass;
 
 /**
  * @author    Bob Mckee <bmckee@bywires.com>
@@ -40,6 +41,8 @@ class Implementation implements Binder
     private $dependencyFinder;
 
     /**
+     * @param mixed $implementation
+     * @param DependencyFinder $finder
      */
     public function __construct(
         $implementation,
@@ -74,7 +77,7 @@ class Implementation implements Binder
     public function create(Injector $injector)
     {
         try {
-            $reflectionClass = new \ReflectionClass($this->implementation);
+            $reflectionClass = new ReflectionClass($this->implementation);
         } catch (\ReflectionException $e) {
             throw new NotFoundException($e);
         }
@@ -84,7 +87,7 @@ class Implementation implements Binder
 
     /**
      */
-    protected function validateImplementation(\ReflectionClass $reflectionClass)
+    protected function validateImplementation(ReflectionClass $reflectionClass): void
     {
         if ($reflectionClass->isAbstract() || $reflectionClass->isInterface()) {
             throw new NotFoundException('Cannot bind interface or abstract class "' . $this->implementation . '" to an interface.');
@@ -92,10 +95,11 @@ class Implementation implements Binder
     }
 
     /**
+     * @return mixed
      */
     protected function getInstance(
         Injector $injector,
-        \ReflectionClass $class
+        ReflectionClass $class
     ) {
         return $class->getConstructor()
             ? $class->newInstanceArgs($this->dependencyFinder->getMethodDependencies($injector, $class->getConstructor()))

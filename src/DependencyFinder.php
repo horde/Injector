@@ -35,7 +35,7 @@ class DependencyFinder
      * @param Injector $injector
      * @param \ReflectionMethod $method
      *
-     * @return array
+     * @return mixed[]
      * @throws Exception
      */
     public function getMethodDependencies(
@@ -68,12 +68,12 @@ class DependencyFinder
     ) {
         $type = $parameter->getType();
         // TODO: What about union and intersection types?
-        if ($type && $classname = $type->getName()) {
+        if ($type instanceof ReflectionNamedType && $classname = $type->getName()) {
             return $injector->getInstance($classname);
         }
         // Catch optional array parameters
         // TODO: What about union and intersection types including arrays?
-        if ($type && $type->getName() === 'array' && $parameter->isOptional()) {
+        if ($type instanceof ReflectionNamedType && $type->getName() === 'array' && $parameter->isOptional()) {
             return $parameter->getDefaultValue();
         }
         // Handle typed parameters other than arrays
