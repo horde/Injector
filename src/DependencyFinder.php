@@ -15,6 +15,7 @@ namespace Horde\Injector;
 
 use ReflectionNamedType;
 use ReflectionUnionType;
+use ReflectionClass;
 
 /**
  * This is a simple class that uses reflection to figure out the dependencies
@@ -65,11 +66,14 @@ class DependencyFinder
         Injector $injector,
         \ReflectionParameter $parameter
     ) {
-        if ($parameter->getClass()) {
-            return $injector->getInstance($parameter->getClass()->getName());
+        $type = $parameter->getType();
+        // TODO: What about union and intersection types?
+        if ($type && $classname = $type->getName()) {
+            return $injector->getInstance($classname);
         }
         // Catch optional array parameters
-        if ($parameter->isArray() && $parameter->isOptional()) {
+        // TODO: What about union and intersection types including arrays?
+        if ($type && $type->getName() === 'array' && $parameter->isOptional()) {
             return $parameter->getDefaultValue();
         }
         // Handle typed parameters other than arrays
