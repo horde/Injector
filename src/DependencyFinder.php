@@ -68,7 +68,7 @@ class DependencyFinder
     ) {
         $type = $parameter->getType();
         // TODO: What about union and intersection types?
-        if ($type instanceof ReflectionNamedType && $classname = $type->getName()) {
+        if ($type instanceof ReflectionNamedType && !$type->isBuiltin() && $classname = $type->getName()) {
             return $injector->getInstance($classname);
         }
         // Catch optional array parameters
