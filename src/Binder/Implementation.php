@@ -16,8 +16,8 @@ namespace Horde\Injector\Binder;
 use Horde\Injector\Binder;
 use Horde\Injector\DependencyFinder;
 use Horde\Injector\Exception;
-use Horde\Injector\NotFoundException;
 use Horde\Injector\Injector;
+use Horde\Injector\NotFoundException;
 use ReflectionClass;
 
 /**

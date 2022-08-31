@@ -13,9 +13,9 @@
 
 namespace Horde\Injector;
 
+use ReflectionClass;
 use ReflectionNamedType;
 use ReflectionUnionType;
-use ReflectionClass;
 
 /**
  * This is a simple class that uses reflection to figure out the dependencies

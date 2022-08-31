@@ -1,12 +1,14 @@
 <?php
+
 namespace Horde\Injector\Test\Binder;
+
 use Horde\Injector\Binder;
+use Horde\Injector\Binder\Implementation;
 use Horde\Injector\DependencyFinder;
+use Horde\Injector\Exception;
 use Horde\Injector\Injector;
 use Horde\Injector\NotFoundException;
 use Horde\Injector\TopLevel;
-use Horde\Injector\Exception;
-use Horde\Injector\Binder\Implementation;
 
 class ImplementationTest extends \Horde\Test\TestCase
 {
@@ -116,7 +118,7 @@ class ImplementationTest extends \Horde\Test\TestCase
 
     private function _getInjectorNeverCallMock()
     {
-        $injector = $this->getMockSkipConstructor('Horde\Injector\Injector', array('getInstance'));
+        $injector = $this->getMockSkipConstructor('Horde\Injector\Injector', ['getInstance']);
         $injector->expects($this->never())
             ->method('getInstance');
         return $injector;
@@ -124,7 +126,7 @@ class ImplementationTest extends \Horde\Test\TestCase
 
     private function _getInjectorReturnsNoDependencyObject()
     {
-        $injector = $this->getMockSkipConstructor('Horde\Injector\Injector', array('getInstance'));
+        $injector = $this->getMockSkipConstructor('Horde\Injector\Injector', ['getInstance']);
         $injector->expects($this->once())
             ->method('getInstance')
             ->with($this->equalTo(ImplementationTest__NoDependencies::class))

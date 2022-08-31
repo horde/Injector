@@ -1,15 +1,17 @@
 <?php
+
 namespace Horde\Injector\Test;
+
+use BadMethodCallException;
 use Horde\Injector\Binder;
+use Horde\Injector\Binder\AnnotatedSetters;
+use Horde\Injector\Binder\Factory;
+use Horde\Injector\Binder\Implementation;
+use Horde\Injector\Binder\Mock;
+use Horde\Injector\Binder\MockWithDependencies;
 use Horde\Injector\DependencyFinder;
 use Horde\Injector\Injector;
 use Horde\Injector\TopLevel;
-use BadMethodCallException;
-use Horde\Injector\Binder\AnnotatedSetters;
-use Horde\Injector\Binder\Mock;
-use Horde\Injector\Binder\MockWithDependencies;
-use Horde\Injector\Binder\Implementation;
-use Horde\Injector\Binder\Factory;
 
 class InjectorTest extends \PHPUnit\Framework\TestCase
 {
@@ -49,10 +51,14 @@ class InjectorTest extends \PHPUnit\Framework\TestCase
         $injector = new Injector(new TopLevel());
 
         // binds a Horde\Injector\Binder\Mock object
-        $this->assertInstanceOf(MockWithDependencies::class,
-            $injector->bindMockWithDependencies('BOUND_INTERFACE', 'PARAMETER1'));
-        $this->assertInstanceOf(MockWithDependencies::class,
-            $injector->getBinder('BOUND_INTERFACE'));
+        $this->assertInstanceOf(
+            MockWithDependencies::class,
+            $injector->bindMockWithDependencies('BOUND_INTERFACE', 'PARAMETER1')
+        );
+        $this->assertInstanceOf(
+            MockWithDependencies::class,
+            $injector->getBinder('BOUND_INTERFACE')
+        );
     }
 
     public function testShouldThrowExceptionIfInterfaceNameIsNotPassedToMagicFactoryMethodForBinderAddition()
@@ -157,8 +163,11 @@ class InjectorTest extends \PHPUnit\Framework\TestCase
         // add same binding again to child
         $childInjector->addBinder('FooBarInterface', new Binder\Implementation('StdClass', $df));
 
-        $this->assertSame($returnedObject, $childInjector->getInstance('FooBarInterface'),
-            "Child should have returned object reference from parent because added binder was identical to the parent binder");
+        $this->assertSame(
+            $returnedObject,
+            $childInjector->getInstance('FooBarInterface'),
+            "Child should have returned object reference from parent because added binder was identical to the parent binder"
+        );
     }
 
     /**
@@ -269,8 +278,10 @@ class InjectorTest extends \PHPUnit\Framework\TestCase
 }
 
 namespace Horde\Injector\Binder;
+
 use Horde\Injector\Binder;
 use Horde\Injector\Injector;
+
 /**
  * Used by preceding tests
  */

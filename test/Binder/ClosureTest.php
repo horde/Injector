@@ -1,5 +1,7 @@
 <?php
+
 namespace Horde\Injector\Test\Binder;
+
 use Horde\Injector\Binder;
 use Horde\Injector\Binder\Closure;
 use Horde\Injector\DependencyFinder;
@@ -18,7 +20,9 @@ class ClosureTest extends \Horde\Test\TestCase
             ->will($this->returnValue($childInjector));
 
         $closureBinder = new Closure(
-            function (Injector $injector) { return 'INSTANCE'; }
+            function (Injector $injector) {
+                return 'INSTANCE';
+            }
         );
 
         $this->assertEquals('INSTANCE', $closureBinder->create($injector));
@@ -30,7 +34,9 @@ class ClosureTest extends \Horde\Test\TestCase
      */
     public function testShouldPassChildInjectorToClosure()
     {
-        $closure = function (Injector $injector) { return $injector; };
+        $closure = function (Injector $injector) {
+            return $injector;
+        };
 
         $binder = new Closure($closure);
 
@@ -46,7 +52,8 @@ class ClosureTest extends \Horde\Test\TestCase
 
     public function testShouldReturnBindingDetails()
     {
-        $closure = function (Injector $injector) {};
+        $closure = function (Injector $injector) {
+        };
         $closureBinder = new Closure(
             $closure
         );

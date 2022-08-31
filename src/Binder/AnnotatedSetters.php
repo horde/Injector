@@ -14,9 +14,9 @@
 namespace Horde\Injector\Binder;
 
 use Horde\Injector\Binder;
+use Horde\Injector\DependencyFinder;
 use Horde\Injector\Exception;
 use Horde\Injector\Injector;
-use Horde\Injector\DependencyFinder;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionMethod;
