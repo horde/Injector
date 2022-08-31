@@ -13,8 +13,8 @@
 
 namespace Horde\Injector;
 
-use Psr\Container\ContainerInterface;
 use BadMethodCallException;
+use Psr\Container\ContainerInterface;
 use ReflectionClass;
 
 /**
