@@ -10,7 +10,7 @@
   <email>chuck@horde.org</email>
   <active>no</active>
  </lead>
- <date>2021-07-20</date>
+ <date>2022-09-11</date>
  <version>
   <release>3.0.0alpha9</release>
   <api>3.0.0alpha1</api>
@@ -21,7 +21,9 @@
  </stability>
  <license uri="http://www.horde.org/licenses/bsd">BSD-2-Clause</license>
  <notes>
-* 
+* [rla] Added Cache for has() method.
+* [rla] Fixed has() method compliance with PSR-11.
+* |+
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
@@ -90,12 +92,23 @@
      <file name="FactoryTest.php" role="test" />
      <file name="ImplementationTest.php" role="test" />
     </dir> <!-- /test/Binder -->
+    <dir name="Injectable">
+     <file name="AnInterface.php" role="test" />
+     <file name="ClassDependingOnUnionType.php" role="test" />
+     <file name="ClassImplementingAnInterface.php" role="test" />
+     <file name="ClassWithArrayParam.php" role="test" />
+     <file name="ClassWithOptionalStringDefaultParam.php" role="test" />
+     <file name="ClassWithOptionalStringNullParam.php" role="test" />
+     <file name="UnwireableChildClassImplementingAnInterface.php" role="test" />
+    </dir> <!-- /test/Injectable -->
     <file name="AllTests.php" role="test" />
+    <file name="AutowireTest.php" role="test" />
     <file name="BinderTest.php" role="test" />
     <file name="bootstrap.php" role="test" />
     <file name="InjectorTest.php" role="test" />
    </dir> <!-- /test -->
    <file name="LICENSE" role="doc" />
+   <file name="phpstan.neon" role="php" />
   </dir> <!-- / -->
  </contents>
  <dependencies>
@@ -136,6 +149,7 @@
    <install as="Horde/Injector/TopLevel.php" name="lib/Horde/Injector/TopLevel.php" />
    <install as="_autoload.php" name="lib/_autoload.php" />
    <install as="LICENSE" name="LICENSE" />
+   <install as="" name="phpstan.neon" />
    <install as="Binder.php" name="src/Binder.php" />
    <install as="Binder/AnnotatedSetters.php" name="src/Binder/AnnotatedSetters.php" />
    <install as="Binder/Closure.php" name="src/Binder/Closure.php" />
@@ -148,12 +162,20 @@
    <install as="Scope.php" name="src/Scope.php" />
    <install as="TopLevel.php" name="src/TopLevel.php" />
    <install as="AllTests.php" name="test/AllTests.php" />
+   <install as="AutowireTest.php" name="test/AutowireTest.php" />
    <install as="Binder/AnnotatedSettersTest.php" name="test/Binder/AnnotatedSettersTest.php" />
    <install as="Binder/ClosureTest.php" name="test/Binder/ClosureTest.php" />
    <install as="Binder/FactoryTest.php" name="test/Binder/FactoryTest.php" />
    <install as="Binder/ImplementationTest.php" name="test/Binder/ImplementationTest.php" />
    <install as="BinderTest.php" name="test/BinderTest.php" />
    <install as="bootstrap.php" name="test/bootstrap.php" />
+   <install as="Injectable/AnInterface.php" name="test/Injectable/AnInterface.php" />
+   <install as="Injectable/ClassDependingOnUnionType.php" name="test/Injectable/ClassDependingOnUnionType.php" />
+   <install as="Injectable/ClassImplementingAnInterface.php" name="test/Injectable/ClassImplementingAnInterface.php" />
+   <install as="Injectable/ClassWithArrayParam.php" name="test/Injectable/ClassWithArrayParam.php" />
+   <install as="Injectable/ClassWithOptionalStringDefaultParam.php" name="test/Injectable/ClassWithOptionalStringDefaultParam.php" />
+   <install as="Injectable/ClassWithOptionalStringNullParam.php" name="test/Injectable/ClassWithOptionalStringNullParam.php" />
+   <install as="Injectable/UnwireableChildClassImplementingAnInterface.php" name="test/Injectable/UnwireableChildClassImplementingAnInterface.php" />
    <install as="InjectorTest.php" name="test/InjectorTest.php" />
   </filelist>
  </phprelease>
@@ -506,7 +528,9 @@
    <date>2021-07-20</date>
    <license uri="http://www.horde.org/licenses/bsd">BSD-2-Clause</license>
    <notes>
-* 
+* [rla] Added Cache for has() method.
+* [rla] Fixed has() method compliance with PSR-11.
+* |+
    </notes>
   </release>
  </changelog>
