@@ -8,8 +8,10 @@
   license:
     identifier: BSD-2-Clause
     uri: http://www.horde.org/licenses/bsd
-  notes: |+
-    
+  notes: |
+    [rla] Added Cache for has() method.
+    [rla] Fixed has() method compliance with PSR-11.
+    |+
 3.0.0alpha8:
   api: 3.0.0alpha1
   state:
