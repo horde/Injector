@@ -70,4 +70,17 @@ class TopLevel implements Scope
     {
         return null;
     }
+
+    /**
+     * Stub of has()
+     * 
+     * Always false.
+     *
+     * @param string $interface
+     * @return bool False
+     */
+    public function has(string $interface): bool
+    {
+        return false;
+    }
 }

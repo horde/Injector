@@ -18,6 +18,7 @@ use Horde\Injector\Test\Injectable\ClassImplementingAnInterface;
 use Horde\Injector\Test\Injectable\ClassWithArrayParam;
 use Horde\Injector\Test\Injectable\ClassWithOptionalStringNullParam;
 use Horde\Injector\Test\Injectable\ClassWithOptionalStringDefaultParam;
+use Horde\Injector\Test\Injectable\UnwireableChildClassImplementingAnInterface;
 use Horde\Injector\TopLevel;
 use PHPUnit\Framework\TestCase;
 
@@ -51,21 +52,31 @@ class AutowireTest extends TestCase
     public function testJustProduceClassWithNoDependenciesExplicitly()
     {
         $injector = new Injector(new TopLevel());
-//        $this->assertTrue($injector->has(ClassImplementingAnInterface::class));
+        // hasInstance is about having produced or assigned, not about being able to produce
+        $this->assertFalse($injector->hasInstance(ClassImplementingAnInterface::class));
+        $this->assertTrue($injector->has(ClassImplementingAnInterface::class));
         $res = $injector->get(ClassImplementingAnInterface::class);
         $this->assertInstanceOf(ClassImplementingAnInterface::class, $res);
+        // We must have it after a successful get
+        $this->assertTrue($injector->hasInstance(ClassImplementingAnInterface::class));
+        $this->assertTrue($injector->has(ClassImplementingAnInterface::class));
     }
 
     public function testCannotProduceInterfaceWithoutRegistering()
     {
         $injector = new Injector(new TopLevel());
         $this->assertFalse($injector->has(AnInterface::class));
-/*        $this->expectException(NotFoundException::class);
-        $res = $injector->get(AnInterface::class);*/
+        $this->assertFalse($injector->hasInstance(AnInterface::class));
+        $this->expectException(NotFoundException::class);
+        $res = $injector->get(AnInterface::class);
     }
 
     public function testFailWithoutDefault()
     {
-
+        $injector = new Injector(new TopLevel());
+        $this->assertFalse($injector->has(UnwireableChildClassImplementingAnInterface::class));
+        $this->assertFalse($injector->hasInstance(UnwireableChildClassImplementingAnInterface::class));
+        $this->expectException(NotFoundException::class);
+        $res = $injector->get(UnwireableChildClassImplementingAnInterface::class);
     }
 }

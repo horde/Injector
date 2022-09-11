@@ -60,4 +60,12 @@ interface Scope
      * @return mixed
      */
     public function get(string $interface);
+
+    /**
+     * 
+     *
+     * @param string $interface
+     * @return boolean
+     */
+    public function has(string $interface): bool;
 }
