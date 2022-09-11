@@ -2,7 +2,9 @@
 v3.0.0alpha9
 ------------
 
-
+[rla] Added Cache for has() method.
+[rla] Fixed has() method compliance with PSR-11.
+|+
 
 
 ------------
