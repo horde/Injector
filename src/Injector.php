@@ -15,6 +15,7 @@ namespace Horde\Injector;
 
 use BadMethodCallException;
 use Psr\Container\ContainerInterface;
+use Reflection;
 use ReflectionClass;
 
 /**
@@ -61,6 +62,22 @@ class Injector implements Scope, ContainerInterface
     private $reflection = [];
 
     /**
+     * Cache any hits for speeding up has();
+     * 
+     * @var array
+     */
+    private array $hasCache = [];
+
+    /**
+     * Cache misses
+     * 
+     * Needs reset on new binders or implementations
+     *
+     * @var array
+     */
+    private array $hasNotCache = [];
+
+    /**
      * Create a new Injector object.
      *
      * Every injector object has a parent scope.  For the very first
@@ -105,7 +122,7 @@ class Injector implements Scope, ContainerInterface
             return $this->bind(substr($name, 4), $args);
         }
 
-        throw new \BadMethodCallException('Call to undefined method ' . __CLASS__ . '::' . $name . '()');
+        throw new BadMethodCallException('Call to undefined method ' . __CLASS__ . '::' . $name . '()');
     }
 
     /**
@@ -174,6 +191,10 @@ class Injector implements Scope, ContainerInterface
         if (!$binder->equals($this->parentInjector->getBinder($interface))) {
             $this->bindings[$interface] = $binder;
         }
+        $pos = array_search($interface, $this->hasNotCache);
+        if ($pos !== false) {
+            $this->hasNotCache = array_splice($this->hasNotCache, $pos, 1);
+        }
         return $this;
     }
 
@@ -212,6 +233,11 @@ class Injector implements Scope, ContainerInterface
     public function setInstance(string $interface, $instance): Injector
     {
         $this->instances[$interface] = $instance;
+        $pos = array_search($interface, $this->hasNotCache);
+        if ($pos !== false) {
+            $this->hasNotCache = array_splice($this->hasNotCache, $pos, 1);
+            $this->hasCache[$instance] = 'instance';
+        }
         return $this;
     }
 
@@ -257,7 +283,7 @@ class Injector implements Scope, ContainerInterface
     public function get(string $interface)
     {
         try { // Do we have an instance?
-            if (!$this->has($interface)) {
+            if (!$this->hasInstance($interface)) {
                 // Do we have a binding for this interface? If so then we don't
                 // ask our parent.
                 if (!isset($this->bindings[$interface]) &&
@@ -313,10 +339,77 @@ class Injector implements Scope, ContainerInterface
      * @param string $id Identifier of the entry to look for.
      *
      * @return bool
-     */    public function has(string $interface): bool
+     */    
+    public function has(string $interface): bool
     {
-        // TODO: Incomplete/wrong implementation.
-        return isset($this->instances[$interface]);
+        if (array_key_exists($interface, $this->hasCache)) {
+            // ParentInjector can change content without injector noticing
+            if ($this->hasCache[$interface] == 'parent')
+            {
+                return $this->parentInjector->has($interface);
+            }
+            return true;
+        }
+        if (in_array($interface, $this->hasNotCache, true)) {
+            // ParentInjector can change content without injector noticing
+            return $this->parentInjector->has($interface);
+        }
+        if ($this->hasInstance($interface)) {
+            $this->hasCache[$interface] = 'instance';
+            return true;
+        }
+        if (isset($this->bindings[$interface])) {
+            $this->hasCache[$interface] = 'binding';
+            return true;
+        }
+        if ($this->parentInjector->has($interface)) {
+            $this->hasCache[$interface] = 'parent';
+            return true;
+        }
+        // Find out if we could autowire it.
+        // TODO: Unions and intersections must be handled before this.
+        // TODO: Do Enums need special handling?
+        // It must be a class (no interface)
+        if (!class_exists($interface)) {
+            $this->hasNotCache[] = $interface;
+            return false;
+        }
+        $reflection = new ReflectionClass($interface);
+        // non-abstract,
+        if ($reflection->isAbstract()) {
+            $this->hasNotCache[] = $interface;
+            return false;
+        }
+        // Either has no constructor
+        $constructor = $reflection->getConstructor();
+        if ($constructor === null) {
+            $this->hasCache[$interface] = 'noConstructor';
+            return true;
+        }
+        $parameters = $constructor->getParameters();
+        // Or a parameter-less constructor
+        if (empty($parameters)) {
+            $this->hasCache[$interface] = 'noConstructorParameters';
+            return true;
+        }
+        // Or all parameters are either optional or available
+        foreach ($parameters as $parameter) {
+            if ($parameter->isOptional()) {
+                continue;
+            }
+            $parameterType = $parameter->getType();
+            if ((string) $parameterType == $interface) {
+                // Cannot autowire recursive constructions
+                $this->hasNotCache[] = $interface;
+                return false;
+            }
+            if (!$this->has((string) $parameterType)) {
+                $this->hasNotCache[] = $interface;
+                return false;
+            }
+        }
+        $this->hasCache[$interface] = 'autowireable';
+        return true;
     }
 
     /**
@@ -324,6 +417,7 @@ class Injector implements Scope, ContainerInterface
      *
      * Horde 5 compatible call. 
      * This is not the same as the PSR-11 has() call as it returns false on items that can be created.
+     * This is true if setInstance has been called explicitly or through a previous get()
      *
      * @param string $interface  The interface name or object class.
      *
