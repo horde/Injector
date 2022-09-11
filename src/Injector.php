@@ -302,23 +302,28 @@ class Injector implements Scope, ContainerInterface
 
 
     /**
-     * Has the interface for the specified object/interface been created yet?
+     * PSR-11 conforming availability check
+     * 
+     * Returns true if the container can return an entry for the given identifier.
+     * Returns false otherwise.
      *
-     * PSR-11 ContainerInterface version
+     * `has($id)` returning true does not mean that `get($id)` will not throw an exception.
+     * It does however mean that `get($id)` will not throw a `NotFoundExceptionInterface`.
      *
-     * @param string $interface  The interface name or object class.
+     * @param string $id Identifier of the entry to look for.
      *
-     * @return bool  True if the instance already has been created.
-     */
-    public function has(string $interface): bool
+     * @return bool
+     */    public function has(string $interface): bool
     {
+        // TODO: Incomplete/wrong implementation.
         return isset($this->instances[$interface]);
     }
 
     /**
      * Has the interface for the specified object/interface been created yet?
      *
-     * Horde 5 compatible call. Refactor to has()
+     * Horde 5 compatible call. 
+     * This is not the same as the PSR-11 has() call as it returns false on items that can be created.
      *
      * @param string $interface  The interface name or object class.
      *
