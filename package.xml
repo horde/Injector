@@ -12,7 +12,7 @@
  </lead>
  <date>2022-09-11</date>
  <version>
-  <release>3.0.0alpha9</release>
+  <release>3.0.0alpha10</release>
   <api>3.0.0alpha1</api>
  </version>
  <stability>
@@ -21,9 +21,7 @@
  </stability>
  <license uri="http://www.horde.org/licenses/bsd">BSD-2-Clause</license>
  <notes>
-* [rla] Added Cache for has() method.
-* [rla] Fixed has() method compliance with PSR-11.
-* |+
+* 
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
@@ -180,6 +178,29 @@
   </filelist>
  </phprelease>
  <changelog>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
   <release>
    <version>
     <release>1.0.0alpha1</release>
@@ -525,12 +546,27 @@
     <release>alpha</release>
     <api>alpha</api>
    </stability>
-   <date>2021-07-20</date>
+   <date>2022-09-11</date>
    <license uri="http://www.horde.org/licenses/bsd">BSD-2-Clause</license>
    <notes>
 * [rla] Added Cache for has() method.
 * [rla] Fixed has() method compliance with PSR-11.
 * |+
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>3.0.0alpha10</release>
+    <api>3.0.0alpha1</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2022-09-11</date>
+   <license uri="http://www.horde.org/licenses/bsd">BSD-2-Clause</license>
+   <notes>
+* 
    </notes>
   </release>
  </changelog>
