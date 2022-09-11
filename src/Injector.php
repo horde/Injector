@@ -272,33 +272,33 @@ class Injector implements Scope, ContainerInterface
      * It does not gaurantee that it is a new instance of the object.  For a
      * new instance see createInstance().
      *
-     * @param string $interface  The interface name, or object class to be
+     * @param string $id  The interface name, or object class to be
      *                           created.
      *
-     * @return mixed  An object that implements $interface, but not
+     * @return mixed  An object that implements $id, but not
      *                necessarily a new one.
      *
      * @throws NotFoundException
      */
-    public function get(string $interface)
+    public function get(string $id)
     {
         try { // Do we have an instance?
-            if (!$this->hasInstance($interface)) {
+            if (!$this->hasInstance($id)) {
                 // Do we have a binding for this interface? If so then we don't
                 // ask our parent.
-                if (!isset($this->bindings[$interface]) &&
+                if (!isset($this->bindings[$id]) &&
                     // Does our parent have an instance?
-                    ($instance = $this->parentInjector->get($interface))) {
+                    ($instance = $this->parentInjector->get($id))) {
                     return $instance;
                 }
 
                 // We have to make our own instance
-                $this->setInstance($interface, $this->createInstance($interface));
+                $this->setInstance($id, $this->createInstance($id));
             }
         } catch (Exception $e) {
-            throw new NotFoundException('The requested interface was not found: ' . $interface, $e->getCode(), $e);
+            throw new NotFoundException('The requested interface was not found: ' . $id, $e->getCode(), $e);
         }
-        return $this->instances[$interface];
+        return $this->instances[$id];
     }
 
     /**
@@ -340,56 +340,56 @@ class Injector implements Scope, ContainerInterface
      *
      * @return bool
      */    
-    public function has(string $interface): bool
+    public function has(string $id): bool
     {
-        if (array_key_exists($interface, $this->hasCache)) {
+        if (array_key_exists($id, $this->hasCache)) {
             // ParentInjector can change content without injector noticing
-            if ($this->hasCache[$interface] == 'parent')
+            if ($this->hasCache[$id] == 'parent')
             {
-                return $this->parentInjector->has($interface);
+                return $this->parentInjector->has($id);
             }
             return true;
         }
-        if (in_array($interface, $this->hasNotCache, true)) {
+        if (in_array($id, $this->hasNotCache, true)) {
             // ParentInjector can change content without injector noticing
-            return $this->parentInjector->has($interface);
+            return $this->parentInjector->has($id);
         }
-        if ($this->hasInstance($interface)) {
-            $this->hasCache[$interface] = 'instance';
+        if ($this->hasInstance($id)) {
+            $this->hasCache[$id] = 'instance';
             return true;
         }
-        if (isset($this->bindings[$interface])) {
-            $this->hasCache[$interface] = 'binding';
+        if (isset($this->bindings[$id])) {
+            $this->hasCache[$id] = 'binding';
             return true;
         }
-        if ($this->parentInjector->has($interface)) {
-            $this->hasCache[$interface] = 'parent';
+        if ($this->parentInjector->has($id)) {
+            $this->hasCache[$id] = 'parent';
             return true;
         }
         // Find out if we could autowire it.
         // TODO: Unions and intersections must be handled before this.
         // TODO: Do Enums need special handling?
         // It must be a class (no interface)
-        if (!class_exists($interface)) {
-            $this->hasNotCache[] = $interface;
+        if (!class_exists($id)) {
+            $this->hasNotCache[] = $id;
             return false;
         }
-        $reflection = new ReflectionClass($interface);
+        $reflection = new ReflectionClass($id);
         // non-abstract,
         if ($reflection->isAbstract()) {
-            $this->hasNotCache[] = $interface;
+            $this->hasNotCache[] = $id;
             return false;
         }
         // Either has no constructor
         $constructor = $reflection->getConstructor();
         if ($constructor === null) {
-            $this->hasCache[$interface] = 'noConstructor';
+            $this->hasCache[$id] = 'noConstructor';
             return true;
         }
         $parameters = $constructor->getParameters();
         // Or a parameter-less constructor
         if (empty($parameters)) {
-            $this->hasCache[$interface] = 'noConstructorParameters';
+            $this->hasCache[$id] = 'noConstructorParameters';
             return true;
         }
         // Or all parameters are either optional or available
@@ -398,17 +398,17 @@ class Injector implements Scope, ContainerInterface
                 continue;
             }
             $parameterType = $parameter->getType();
-            if ((string) $parameterType == $interface) {
+            if ((string) $parameterType == $id) {
                 // Cannot autowire recursive constructions
-                $this->hasNotCache[] = $interface;
+                $this->hasNotCache[] = $id;
                 return false;
             }
             if (!$this->has((string) $parameterType)) {
-                $this->hasNotCache[] = $interface;
+                $this->hasNotCache[] = $id;
                 return false;
             }
         }
-        $this->hasCache[$interface] = 'autowireable';
+        $this->hasCache[$id] = 'autowireable';
         return true;
     }
 
