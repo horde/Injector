@@ -193,7 +193,7 @@ class Injector implements Scope, ContainerInterface
         }
         $pos = array_search($interface, $this->hasNotCache);
         if ($pos !== false) {
-            $this->hasNotCache = array_splice($this->hasNotCache, $pos, 1);
+            array_splice($this->hasNotCache, $pos, 1);
         }
         return $this;
     }
@@ -235,8 +235,8 @@ class Injector implements Scope, ContainerInterface
         $this->instances[$interface] = $instance;
         $pos = array_search($interface, $this->hasNotCache);
         if ($pos !== false) {
-            $this->hasNotCache = array_splice($this->hasNotCache, $pos, 1);
-            $this->hasCache[$instance] = 'instance';
+            array_splice($this->hasNotCache, $pos, 1);
+            $this->hasCache[$interface] = 'instance';
         }
         return $this;
     }
