@@ -21,6 +21,7 @@ use Horde\Injector\Test\Injectable\ClassWithOptionalStringDefaultParam;
 use Horde\Injector\Test\Injectable\UnwireableChildClassImplementingAnInterface;
 use Horde\Injector\TopLevel;
 use PHPUnit\Framework\TestCase;
+use Psr\Container\ContainerInterface;
 
 class AutowireTest extends TestCase
 {
@@ -78,5 +79,16 @@ class AutowireTest extends TestCase
         $this->assertFalse($injector->hasInstance(UnwireableChildClassImplementingAnInterface::class));
         $this->expectException(NotFoundException::class);
         $res = $injector->get(UnwireableChildClassImplementingAnInterface::class);
+    }
+
+    public function testSetInstanceIfInjectorDoesNotHaveInterface()
+    {
+        $injector = new Injector(new TopLevel());
+
+        // This is pretty much what happens in Horde\Core\Middleware\HordeCore
+        if (!$injector->has(AnInterface::class)) {
+            $injector->setInstance(AnInterface::class, new ClassImplementingAnInterface());
+        }
+        $this->assertTrue($injector->has(AnInterface::class));
     }
 }
