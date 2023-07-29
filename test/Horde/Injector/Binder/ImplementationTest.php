@@ -1,7 +1,7 @@
 <?php
 class Horde_Injector_Binder_ImplementationTest extends Horde_Test_Case
 {
-    public function setUp()
+    public function setUp(): void
     {
         $this->df = new Horde_Injector_DependencyFinder();
     }
@@ -49,11 +49,9 @@ class Horde_Injector_Binder_ImplementationTest extends Horde_Test_Case
         );
     }
 
-    /**
-     * @expectedException Horde_Injector_Exception
-     */
     public function testShouldThrowExceptionWhenTryingToCreateInstanceOfClassWithUntypedDependencies()
     {
+        $this->expectException('Horde_Injector_Exception');
         $implBinder = new Horde_Injector_Binder_Implementation(
             'Horde_Injector_Binder_ImplementationTest__UntypedDependency',
             $this->df
@@ -74,11 +72,9 @@ class Horde_Injector_Binder_ImplementationTest extends Horde_Test_Case
         $this->assertEquals('DEPENDENCY', $createdInstance->dep);
     }
 
-    /**
-     * @expectedException Horde_Injector_Exception
-     */
     public function testShouldThrowExceptionIfRequestedClassIsNotDefined()
     {
+        $this->expectException('Horde_Injector_Exception');
         $implBinder = new Horde_Injector_Binder_Implementation(
             'CLASS_DOES_NOT_EXIST',
             $this->df
@@ -87,11 +83,9 @@ class Horde_Injector_Binder_ImplementationTest extends Horde_Test_Case
         $implBinder->create($this->_getInjectorNeverCallMock());
     }
 
-    /**
-     * @expectedException Horde_Injector_Exception
-     */
     public function testShouldThrowExceptionIfImplementationIsAnInterface()
     {
+        $this->expectException('Horde_Injector_Exception');
         $implBinder = new Horde_Injector_Binder_Implementation(
             'Horde_Injector_Binder_ImplementationTest__Interface',
             $this->df
@@ -100,11 +94,9 @@ class Horde_Injector_Binder_ImplementationTest extends Horde_Test_Case
         $implBinder->create($this->_getInjectorNeverCallMock());
     }
 
-    /**
-     * @expectedException Horde_Injector_Exception
-     */
     public function testShouldThrowExceptionIfImplementationIsAnAbstractClass()
     {
+        $this->expectException('Horde_Injector_Exception');
         $implBinder = new Horde_Injector_Binder_Implementation(
             'Horde_Injector_Binder_ImplementationTest__AbstractClass',
             $this->df
