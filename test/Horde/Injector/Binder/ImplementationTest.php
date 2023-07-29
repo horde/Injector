@@ -1,4 +1,5 @@
 <?php
+#[\AllowDynamicProperties]
 class Horde_Injector_Binder_ImplementationTest extends Horde_Test_Case
 {
     public function setUp(): void
