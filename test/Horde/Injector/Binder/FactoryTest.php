@@ -79,7 +79,6 @@ class Horde_Injector_Binder_FactoryTest extends Horde_Test_Case
     }
 }
 
-#[\AllowDynamicProperties]
 class InjectorFactoryTestMockFactory
 {
     public function getInjector()
@@ -91,8 +90,6 @@ class InjectorFactoryTestMockFactory
         $this->_injector = $injector;
     }
 }
-
-#[\AllowDynamicProperties]
 class InjectorMockTestAccess extends Horde_Injector
 {
     public function createChildInjector()
