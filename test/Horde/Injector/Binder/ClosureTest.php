@@ -48,6 +48,7 @@ class Horde_Injector_Binder_ClosureTest extends Horde_Test_Case
     }
 }
 
+#[\AllowDynamicProperties]
 class ClosureInjectorMockTestAccess extends Horde_Injector
 {
     public function createChildInjector()
