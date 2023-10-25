@@ -58,11 +58,8 @@ class Horde_Injector_DependencyFinder
     public function getParameterDependency(Horde_Injector $injector,
                                            ReflectionParameter $parameter)
     {
-        $class = $parameter->getType() && !$parameter->getType()->isBuiltin()
-            ? new ReflectionClass($parameter->getType()->getName())
-            : null;
-        if ($class) {
-            return $injector->getInstance($class->getName());
+        if ($parameter->getClass()) {
+            return $injector->getInstance($parameter->getClass()->getName());
         } elseif ($parameter->isOptional()) {
             return $parameter->getDefaultValue();
         }

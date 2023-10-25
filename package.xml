@@ -3,7 +3,7 @@
  <name>Horde_Injector</name>
  <channel>pear.horde.org</channel>
  <summary>Dependency injection container library</summary>
- <description>A dependency injection container for Horde.</description>
+ <description>A depedency injection container for Horde.</description>
  <lead>
   <name>Chuck Hagenbuch</name>
   <user>chuck</user>
