@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2009-2021 Horde LLC (http://www.horde.org/)
  *
@@ -55,7 +56,7 @@ class AnnotatedSetters implements Binder
      */
     public function __construct(
         Binder $binder,
-        DependencyFinder $finder = null
+        ?DependencyFinder $finder = null
     ) {
         $this->binder = $binder;
         $this->dependencyFinder = is_null($finder)
@@ -92,7 +93,7 @@ class AnnotatedSetters implements Binder
         try {
             $className = get_class($instance);
             if (!$className) {
-                throw new Exception('Failed to get classname of ' . (string) var_export($instance));
+                throw new Exception('Failed to get classname of ' . (string) var_export($instance, return: true));
             }
             $reflectionClass = new ReflectionClass($className);
         } catch (ReflectionException $e) {

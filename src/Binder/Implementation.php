@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2009-2021 Horde LLC (http://www.horde.org/)
  *
@@ -46,7 +47,7 @@ class Implementation implements Binder
      */
     public function __construct(
         $implementation,
-        DependencyFinder $finder = null
+        ?DependencyFinder $finder = null
     ) {
         $this->implementation = $implementation;
         $this->dependencyFinder = is_null($finder)

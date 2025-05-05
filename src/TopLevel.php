@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2009-2021 Horde LLC (http://www.horde.org/)
  *
@@ -73,7 +74,7 @@ class TopLevel implements Scope
 
     /**
      * Stub of has()
-     * 
+     *
      * Always false.
      *
      * @param string $interface

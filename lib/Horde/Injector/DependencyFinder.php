@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2009-2021 Horde LLC (http://www.horde.org/)
  *
@@ -25,6 +26,4 @@ use Horde\Injector\DependencyFinder;
  * @license   http://www.horde.org/licenses/bsd BSD
  * @package   Injector
  */
-class Horde_Injector_DependencyFinder extends DependencyFinder
-{
-}
+class Horde_Injector_DependencyFinder extends DependencyFinder {}
