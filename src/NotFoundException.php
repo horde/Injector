@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2009-2021 Horde LLC (http://www.horde.org/)
  *
@@ -24,6 +25,4 @@ use Psr\Container\NotFoundExceptionInterface;
  * @license   http://www.horde.org/licenses/bsd BSD
  * @package   Injector
  */
-class NotFoundException extends Exception implements NotFoundExceptionInterface
-{
-}
+class NotFoundException extends Exception implements NotFoundExceptionInterface {}

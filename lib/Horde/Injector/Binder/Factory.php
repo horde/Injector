@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2009-2021 Horde LLC (http://www.horde.org/)
  *
@@ -38,6 +39,4 @@ use Horde\Injector\Binder\Factory;
  * @license   http://www.horde.org/licenses/bsd BSD
  * @package   Injector
  */
-class Horde_Injector_Binder_Factory extends Factory implements \Horde_Injector_Binder
-{
-}
+class Horde_Injector_Binder_Factory extends Factory implements \Horde_Injector_Binder {}

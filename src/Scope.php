@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2009-2021 Horde LLC (http://www.horde.org/)
  *
@@ -62,7 +63,7 @@ interface Scope
     public function get(string $interface);
 
     /**
-     * 
+     *
      *
      * @param string $interface
      * @return boolean

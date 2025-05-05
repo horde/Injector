@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2009-2021 Horde LLC (http://www.horde.org/)
  *
@@ -12,6 +13,7 @@
  */
 require_once(dirname(__FILE__, 4) . '/_autoload.php');
 use Horde\Injector\Binder\Closure;
+
 /**
  * A binder object for binding an interface to a closure.
  *
@@ -31,6 +33,4 @@ use Horde\Injector\Binder\Closure;
  * @license   http://www.horde.org/licenses/bsd BSD
  * @package   Injector
  */
-class Horde_Injector_Binder_Closure extends Closure implements \Horde_Injector_Binder
-{
-}
+class Horde_Injector_Binder_Closure extends Closure implements \Horde_Injector_Binder {}

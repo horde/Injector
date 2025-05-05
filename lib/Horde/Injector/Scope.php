@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2009-2021 Horde LLC (http://www.horde.org/)
  *
@@ -25,6 +26,4 @@ use Horde\Injector\Scope;
  * @license   http://www.horde.org/licenses/bsd BSD
  * @package   Injector
  */
-interface Horde_Injector_Scope extends Scope
-{
-}
+interface Horde_Injector_Scope extends Scope {}

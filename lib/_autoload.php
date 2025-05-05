@@ -1,16 +1,17 @@
 <?php
+
 /**
- * Load all PSR-4 classes and interfaces from src/ recursively. 
- * 
+ * Load all PSR-4 classes and interfaces from src/ recursively.
+ *
  * PSR-0/Pear use cases may not be prepared to autoload PSR-4 files from src/ dir
  * Also, it is not sufficient to force load only the direct relative of the PSR-0 files.
- * 
+ *
  * There is no forward relation from the PSR-4 classes to their PSR-0 interfaces.
- * But there is a backward relation from all PSR-0 interfaces to corresponding namespaced 
+ * But there is a backward relation from all PSR-0 interfaces to corresponding namespaced
  * PSR-4 src/ entities.
- * 
+ *
  * This file is kept a low-tech as possible to facilitate autogeneration and keep overhead low
- * 
+ *
  */
 $srcDir = dirname(__FILE__, 2) . '/src';
 require_once("$srcDir/Binder.php");

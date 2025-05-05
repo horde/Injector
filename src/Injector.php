@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2009-2021 Horde LLC (http://www.horde.org/)
  *
@@ -63,14 +64,14 @@ class Injector implements Scope, ContainerInterface
 
     /**
      * Cache any hits for speeding up has();
-     * 
+     *
      * @var array
      */
     private array $hasCache = [];
 
     /**
      * Cache misses
-     * 
+     *
      * Needs reset on new binders or implementations
      *
      * @var array
@@ -139,7 +140,7 @@ class Injector implements Scope, ContainerInterface
      */
     private function bind(string $type, iterable $args = []): Binder
     {
-        $argsArray = (array)$args;
+        $argsArray = (array) $args;
         if (!($interface = array_shift($argsArray))) {
             throw new BadMethodCallException('First parameter for "bind' . $type . '" must be the name of an interface or class');
         }
@@ -149,7 +150,7 @@ class Injector implements Scope, ContainerInterface
             $rc = new ReflectionClass('Horde\Injector\Binder\\' . $type);
             $this->reflection[$type] = [
                 $rc,
-                (bool)$rc->getConstructor(),
+                (bool) $rc->getConstructor(),
             ];
         }
 
@@ -329,7 +330,7 @@ class Injector implements Scope, ContainerInterface
 
     /**
      * PSR-11 conforming availability check
-     * 
+     *
      * Returns true if the container can return an entry for the given identifier.
      * Returns false otherwise.
      *
@@ -339,13 +340,12 @@ class Injector implements Scope, ContainerInterface
      * @param string $id Identifier of the entry to look for.
      *
      * @return bool
-     */    
+     */
     public function has(string $id): bool
     {
         if (array_key_exists($id, $this->hasCache)) {
             // ParentInjector can change content without injector noticing
-            if ($this->hasCache[$id] == 'parent')
-            {
+            if ($this->hasCache[$id] == 'parent') {
                 return $this->parentInjector->has($id);
             }
             return true;
@@ -415,7 +415,7 @@ class Injector implements Scope, ContainerInterface
     /**
      * Has the interface for the specified object/interface been created yet?
      *
-     * Horde 5 compatible call. 
+     * Horde 5 compatible call.
      * This is not the same as the PSR-11 has() call as it returns false on items that can be created.
      * This is true if setInstance has been called explicitly or through a previous get()
      *

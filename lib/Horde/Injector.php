@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2009-2021 Horde LLC (http://www.horde.org/)
  *
@@ -10,7 +11,7 @@
  * @license   http://www.horde.org/licenses/bsd BSD
  * @package   Injector
  */
-require_once(dirname(__FILE__, 2) .'/_autoload.php');
+require_once(dirname(__FILE__, 2) . '/_autoload.php');
 use Horde\Injector\Injector;
 
 /**
@@ -30,7 +31,6 @@ use Horde\Injector\Injector;
  */
 class Horde_Injector extends Injector implements \Horde_Injector_Scope
 {
-
     public function __construct(\Horde_Injector_Scope $scope)
     {
         parent::__construct($scope);
