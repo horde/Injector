@@ -55,7 +55,7 @@ class AnnotatedSetters implements Binder
      */
     public function __construct(
         Binder $binder,
-        DependencyFinder $finder = null
+        ?DependencyFinder $finder = null
     ) {
         $this->binder = $binder;
         $this->dependencyFinder = is_null($finder)

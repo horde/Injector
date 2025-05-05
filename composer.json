@@ -25,7 +25,9 @@
         "horde/exception": "^3 || dev-FRAMEWORK_6_0"
     },
     "require-dev": {
-        "horde/test": "^3 || dev-FRAMEWORK_6_0"
+        "horde/test": "^3 || dev-FRAMEWORK_6_0",
+        "friendsofphp/php-cs-fixer": "^3",
+        "phpstan/phpstan": "^2"
     },
     "suggest": {},
     "autoload": {
