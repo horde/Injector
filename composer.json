@@ -1,5 +1,4 @@
 {
-    "minimum-stability": "dev",
     "name": "horde/injector",
     "description": "Dependency injection container library",
     "type": "library",
@@ -12,20 +11,15 @@
             "role": "lead"
         }
     ],
-    "time": "2022-11-18",
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://horde-satis.maintaina.com"
-        }
-    ],
+    "time": "2025-05-05",
+    "repositories": [],
     "require": {
-        "php": "^7.4 || ^8",
+        "php": "^8.1",
         "psr/container": "^2",
-        "horde/exception": "^3 || dev-FRAMEWORK_6_0"
+        "horde/exception": "^3"
     },
     "require-dev": {
-        "horde/test": "^3 || dev-FRAMEWORK_6_0",
+        "horde/test": "^3",
         "friendsofphp/php-cs-fixer": "^3",
         "phpstan/phpstan": "^2"
     },
