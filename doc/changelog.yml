@@ -86,6 +86,7 @@
     identifier: BSD-2-Clause
     uri: http://www.horde.org/licenses/bsd
   notes: |
+    revert: A release v3.0.0alpha5 already exists
     fix: var_export needs 2nd parameter to actually return rather than output
     style: Apply recent php-cs-fixer rules
 3.0.0-alpha4:
