@@ -93,7 +93,7 @@ class AnnotatedSetters implements Binder
         try {
             $className = get_class($instance);
             if (!$className) {
-                throw new Exception('Failed to get classname of ' . (string) var_export($instance));
+                throw new Exception('Failed to get classname of ' . (string) var_export($instance, return: true));
             }
             $reflectionClass = new ReflectionClass($className);
         } catch (ReflectionException $e) {
