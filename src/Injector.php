@@ -28,7 +28,7 @@ use ReflectionClass;
  * injection bindings.
  *
  *
- * @method Binder bindFactory(string $factory, string $method) multiply two integers
+ * @method Binder bindFactory(string $interface, string $factory, string $method) Bind an interface to a factory method
  * @method Binder bindClosure(\Closure $closure) The closure to add
  *
  * @author    Bob Mckee <bmckee@bywires.com>
