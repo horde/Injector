@@ -14,7 +14,7 @@ authors:
     active: false
     role: lead
 version:
-  release: 3.0.0-alpha5
+  release: 3.0.0-alpha12
   api: 3.0.0alpha1
 state:
   release: alpha
@@ -35,3 +35,4 @@ dependencies:
       phpstan/phpstan: ^2
 provides:
   psr/container-implementation: 2.0.1
+vendor: horde

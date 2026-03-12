@@ -1,4 +1,14 @@
 ---
+3.0.0-alpha12:
+  api: 3.0.0-alpha12
+  state:
+    release: alpha
+    api: alpha
+  date: 2026-03-12
+  license:
+    identifier: BSD-2-Clause
+    uri: https://spdx.org/licenses/BSD-2-Clause.html
+  notes: Release version 3.0.0-alpha12
 3.0.0-alpha11:
   api: 3.0.0alpha1
   state:
