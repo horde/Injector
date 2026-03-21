@@ -38,3 +38,7 @@ vendor: horde
 autoload-dev:
   psr-4:
     Horde\\Injector\\Test\\: test/
+
+quality:
+  phpstan:
+    level: 5
