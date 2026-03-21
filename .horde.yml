@@ -30,9 +30,11 @@ dependencies:
       horde/exception: ^3
   dev:
     composer:
-      horde/test: ^3
       friendsofphp/php-cs-fixer: ^3
       phpstan/phpstan: ^2
 provides:
   psr/container-implementation: 2.0.1
 vendor: horde
+autoload-dev:
+  psr-4:
+    Horde\\Injector\\Test\\: test/
