@@ -79,6 +79,13 @@ class Injector implements Scope, ContainerInterface
     private array $hasNotCache = [];
 
     /**
+     * Track classes being resolved to detect circular dependencies.
+     *
+     * @var string[]
+     */
+    private array $resolutionStack = [];
+
+    /**
      * Create a new Injector object.
      *
      * Every injector object has a parent scope.  For the very first
@@ -328,6 +335,20 @@ class Injector implements Scope, ContainerInterface
      */
     public function get(string $id)
     {
+        // Detect circular dependencies
+        if (in_array($id, $this->resolutionStack, true)) {
+            $cycle = [...$this->resolutionStack, $id];
+            throw new CircularDependencyException(
+                sprintf(
+                    'Circular dependency detected: %s',
+                    implode(' → ', $cycle)
+                )
+            );
+        }
+
+        // Track current resolution
+        $this->resolutionStack[] = $id;
+
         try { // Do we have an instance?
             if (!$this->hasInstance($id)) {
                 // Do we have a binding for this interface? If so then we don't
@@ -335,15 +356,23 @@ class Injector implements Scope, ContainerInterface
                 if (!isset($this->bindings[$id])
                     // Does our parent have an instance?
                     && ($instance = $this->parentInjector->get($id))) {
+                    array_pop($this->resolutionStack);
                     return $instance;
                 }
 
                 // We have to make our own instance
                 $this->setInstance($id, $this->createInstance($id));
             }
+        } catch (CircularDependencyException $e) {
+            // Re-throw circular dependency as-is
+            array_pop($this->resolutionStack);
+            throw $e;
         } catch (Exception $e) {
+            array_pop($this->resolutionStack);
             throw new NotFoundException('The requested interface was not found: ' . $id, $e->getCode(), $e);
         }
+
+        array_pop($this->resolutionStack);
         return $this->instances[$id];
     }
 

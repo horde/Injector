@@ -49,6 +49,9 @@ class DependencyFinder
             foreach ($method->getParameters() as $parameter) {
                 $dependencies[] = $this->getParameterDependency($injector, $parameter);
             }
+        } catch (CircularDependencyException $e) {
+            // Re-throw circular dependency as-is
+            throw $e;
         } catch (Exception $e) {
             throw new Exception("$method has unfulfilled dependencies ($parameter)", 0, $e);
         }
