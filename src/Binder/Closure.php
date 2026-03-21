@@ -60,8 +60,8 @@ class Closure implements Binder
      */
     public function equals(Binder $otherBinder): bool
     {
-        return (($otherBinder instanceof Closure) &&
-                ($otherBinder->getClosure() == $this->closure));
+        return (($otherBinder instanceof Closure)
+                && ($otherBinder->getClosure() == $this->closure));
     }
 
     /**

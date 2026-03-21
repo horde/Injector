@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Horde\Injector\Test\Unit;
@@ -24,6 +25,9 @@ if (!class_exists('Horde\Injector\Binder\MockBinderWithDependencies')) {
     class_alias(MockBinderWithDependencies::class, 'Horde\Injector\Binder\MockBinderWithDependencies');
 }
 
+/**
+ * @coversNothing
+ */
 class InjectorTest extends TestCase
 {
     public function testShouldGetDefaultImplementationBinder(): void

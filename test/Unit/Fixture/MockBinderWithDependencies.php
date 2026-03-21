@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Horde\Injector\Test\Unit\Fixture;
@@ -13,8 +14,7 @@ class MockBinderWithDependencies implements Binder
 {
     public function __construct(
         private readonly mixed $parameter1
-    ) {
-    }
+    ) {}
 
     public function create(Injector $injector): Injector
     {

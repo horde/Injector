@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Horde\Injector\Test\Unit\Binder;
@@ -10,6 +11,9 @@ use Horde\Injector\Injector;
 use Horde\Injector\NotFoundException;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @coversNothing
+ */
 class ImplementationTest extends TestCase
 {
     private DependencyFinder $df;
@@ -144,9 +148,7 @@ class ImplementationTest extends TestCase
  * Test fixture classes
  */
 
-class ImplementationTestNoDependencies
-{
-}
+class ImplementationTestNoDependencies {}
 
 class ImplementationTestTypedDependency
 {
@@ -160,9 +162,7 @@ class ImplementationTestTypedDependency
 
 class ImplementationTestUntypedDependency
 {
-    public function __construct($dep)
-    {
-    }
+    public function __construct($dep) {}
 }
 
 class ImplementationTestUntypedOptionalDependency
@@ -175,13 +175,9 @@ class ImplementationTestUntypedOptionalDependency
     }
 }
 
-interface ImplementationTestInterface
-{
-}
+interface ImplementationTestInterface {}
 
-abstract class ImplementationTestAbstractClass
-{
-}
+abstract class ImplementationTestAbstractClass {}
 
 class ImplementationTestSetterNoDependencies
 {

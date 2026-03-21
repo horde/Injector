@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Horde\Injector\Test\Unit\Binder;
@@ -8,6 +9,9 @@ use Horde\Injector\Injector;
 use Horde\Injector\TopLevel;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @coversNothing
+ */
 class ClosureTest extends TestCase
 {
     public function testShouldCallClosure(): void
@@ -64,8 +68,7 @@ class ClosureTest extends TestCase
 
     public function testShouldReturnBindingDetails(): void
     {
-        $closure = function (Injector $injector) {
-        };
+        $closure = function (Injector $injector) {};
         $closureBinder = new Closure($closure);
 
         $this->assertEquals($closure, $closureBinder->getClosure());

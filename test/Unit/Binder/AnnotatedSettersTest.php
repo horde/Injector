@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Horde\Injector\Test\Unit\Binder;
@@ -10,6 +11,9 @@ use Horde\Injector\Injector;
 use Horde\Injector\TopLevel;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @coversNothing
+ */
 class AnnotatedSettersTest extends TestCase
 {
     public function testShouldCallAnnotatedSetters(): void
@@ -34,8 +38,7 @@ class AnnotatedSettersTestEmptyBinder implements Binder
 {
     public function __construct(
         public readonly object $instance
-    ) {
-    }
+    ) {}
 
     public function create(Injector $injector): object
     {
@@ -48,9 +51,7 @@ class AnnotatedSettersTestEmptyBinder implements Binder
     }
 }
 
-class AnnotatedSettersTestNoDependencies
-{
-}
+class AnnotatedSettersTestNoDependencies {}
 
 class AnnotatedSettersTestTypedSetterDependency
 {

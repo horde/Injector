@@ -332,9 +332,9 @@ class Injector implements Scope, ContainerInterface
             if (!$this->hasInstance($id)) {
                 // Do we have a binding for this interface? If so then we don't
                 // ask our parent.
-                if (!isset($this->bindings[$id]) &&
+                if (!isset($this->bindings[$id])
                     // Does our parent have an instance?
-                    ($instance = $this->parentInjector->get($id))) {
+                    && ($instance = $this->parentInjector->get($id))) {
                     return $instance;
                 }
 

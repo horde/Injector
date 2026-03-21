@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /**
@@ -43,6 +44,5 @@ class Factory
         public readonly ?string $factory = null,
         public readonly ?string $method = null,
         public readonly ?string $creates = null,
-    ) {
-    }
+    ) {}
 }

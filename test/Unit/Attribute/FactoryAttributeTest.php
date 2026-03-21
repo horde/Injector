@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Horde\Injector\Test\Unit\Attribute;
@@ -8,6 +9,9 @@ use Horde\Injector\Injector;
 use Horde\Injector\TopLevel;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @coversNothing
+ */
 class FactoryAttributeTest extends TestCase
 {
     public function testFactoryAttributeAutoDiscovery(): void
@@ -75,8 +79,7 @@ class AttributeTestWidget
 {
     public function __construct(
         private readonly string $source
-    ) {
-    }
+    ) {}
 
     public function getSource(): string
     {
@@ -90,7 +93,5 @@ class AttributeTestWidget
 #[Factory(factory: AttributeTestWidgetFactory::class)]
 class AttributeTestInvalidFactory
 {
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 }

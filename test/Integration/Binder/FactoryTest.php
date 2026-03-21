@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Horde\Injector\Test\Integration\Binder;
@@ -8,6 +9,9 @@ use Horde\Injector\Injector;
 use Horde\Injector\TopLevel;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @coversNothing
+ */
 class FactoryTest extends TestCase
 {
     public function testShouldCallFactoryMethod(): void

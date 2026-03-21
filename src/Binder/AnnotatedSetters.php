@@ -71,8 +71,8 @@ class AnnotatedSetters implements Binder
      */
     public function equals(Binder $otherBinder): bool
     {
-        return ($otherBinder instanceof AnnotatedSetters) &&
-            $this->getBinder()->equals($otherBinder->getBinder());
+        return ($otherBinder instanceof AnnotatedSetters)
+            && $this->getBinder()->equals($otherBinder->getBinder());
     }
 
     /**

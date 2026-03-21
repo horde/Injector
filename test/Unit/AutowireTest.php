@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Horde\Injector\Test\Unit;
@@ -14,6 +15,9 @@ use Horde\Injector\Test\Unit\Fixture\UnwireableChildClassImplementingAnInterface
 use Horde\Injector\TopLevel;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @coversNothing
+ */
 class AutowireTest extends TestCase
 {
     public function testAutowiringArrayDefaultNullShouldProvideNull(): void
