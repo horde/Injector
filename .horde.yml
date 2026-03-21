@@ -14,7 +14,7 @@ authors:
     active: false
     role: lead
 version:
-  release: 3.0.0-alpha12
+  release: 3.0.0-alpha13
   api: 3.0.0alpha1
 state:
   release: alpha
@@ -38,7 +38,6 @@ vendor: horde
 autoload-dev:
   psr-4:
     Horde\\Injector\\Test\\: test/
-
 quality:
   phpstan:
     level: 5

@@ -1,4 +1,19 @@
 ---
+3.0.0-alpha13:
+  api: 3.0.0-alpha13
+  state:
+    release: alpha
+    api: alpha
+  date: 2026-03-21
+  license:
+    identifier: BSD-2-Clause
+    uri: https://spdx.org/licenses/BSD-2-Clause.html
+  notes: |-
+    Merge pull request #4 from horde/feat/factory-attributes
+    chore(phpstan): Set level 5 as the current watermark to prevent later degradation.
+    style: Apply php-cs-fixer to code base.
+    feat(injector): Support Factory attribute for autowiring
+    test: modernize test suite to PHPUnit 11-13
 3.0.0-alpha12:
   api: 3.0.0-alpha12
   state:
