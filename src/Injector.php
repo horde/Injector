@@ -367,13 +367,130 @@ class Injector implements Scope, ContainerInterface
             // Re-throw circular dependency as-is
             array_pop($this->resolutionStack);
             throw $e;
+        } catch (NotFoundException $e) {
+            // If already enhanced (contains "Cannot create"), just re-throw
+            if (strpos($e->getMessage(), 'Cannot create') === 0) {
+                array_pop($this->resolutionStack);
+                throw $e;
+            }
+
+            // Otherwise, enhance with context
+            array_pop($this->resolutionStack);
+
+            $message = "Cannot create $id";
+
+            $chain = $this->extractDependencyChain($e);
+            if (!empty($chain) && count($chain) > 1) {
+                $message .= "\n  Dependency chain: " . implode(' → ', $chain);
+            }
+
+            $rootCause = $this->extractRootCause($e);
+            $message .= "\n  Root cause: $rootCause";
+
+            throw new NotFoundException($message, $e->getCode(), $e);
         } catch (Exception $e) {
             array_pop($this->resolutionStack);
-            throw new NotFoundException('The requested interface was not found: ' . $id, $e->getCode(), $e);
+
+            // Enhance error message with context
+            $message = "Cannot create $id";
+
+            $chain = $this->extractDependencyChain($e);
+            if (!empty($chain) && count($chain) > 1) {
+                $message .= "\n  Dependency chain: " . implode(' → ', $chain);
+            }
+
+            $rootCause = $this->extractRootCause($e);
+            $message .= "\n  Root cause: $rootCause";
+
+            throw new NotFoundException($message, $e->getCode(), $e);
         }
 
         array_pop($this->resolutionStack);
         return $this->instances[$id];
+    }
+
+    /**
+     * Extract root cause from exception chain.
+     *
+     * @param \Throwable $e  The exception to analyze.
+     *
+     * @return string  Human-readable root cause description.
+     */
+    private function extractRootCause(\Throwable $e): string
+    {
+        // Walk to deepest exception
+        $current = $e;
+        while ($current->getPrevious()) {
+            $current = $current->getPrevious();
+        }
+
+        $msg = $current->getMessage();
+
+        // Extract clean message from various formats
+        if (preg_match('/Class "(\w+)" does not exist/', $msg, $matches)) {
+            return "Class {$matches[1]} does not exist";
+        }
+
+        if (preg_match('/Cannot bind interface or abstract class "(\S+)"/', $msg, $matches)) {
+            return "Interface {$matches[1]} is not bound to an implementation";
+        }
+
+        if (preg_match('/Parameter \$(\w+) \((\w+)\) cannot be resolved/', $msg, $matches)) {
+            return "Parameter \${$matches[1]} ({$matches[2]}) cannot be resolved";
+        }
+
+        if (preg_match('/Untyped parameter \$(\w+)/', $msg, $matches)) {
+            return "Parameter \${$matches[1]} has no type hint";
+        }
+
+        // Fallback to exception message (first line only for brevity)
+        $lines = explode("\n", $msg);
+        return $lines[0];
+    }
+
+    /**
+     * Extract dependency chain from exception chain.
+     *
+     * @param \Throwable $e  The exception to analyze.
+     *
+     * @return string[]  Array of class names in dependency chain.
+     */
+    private function extractDependencyChain(\Throwable $e): array
+    {
+        $chain = [];
+        $current = $e;
+
+        while ($current) {
+            $msg = $current->getMessage();
+
+            // Extract from "Cannot resolve parameter $x (ClassName) for ..."
+            if (preg_match('/Cannot resolve parameter \$\w+ \(([^)]+)\) for (\S+)::/', $msg, $matches)) {
+                $paramType = $matches[1];
+                $ownerClass = $matches[2];
+
+                // Add owner class if not already in chain
+                if (empty($chain) || end($chain) !== $ownerClass) {
+                    $chain[] = $ownerClass;
+                }
+
+                // Add parameter type if not already in chain
+                if (end($chain) !== $paramType) {
+                    $chain[] = $paramType;
+                }
+            }
+
+            // Also extract from old-style "The requested interface was not found: X"
+            if (preg_match('/The requested interface was not found: (\S+)/', $msg, $matches)) {
+                $className = $matches[1];
+                if (empty($chain) || end($chain) !== $className) {
+                    $chain[] = $className;
+                }
+            }
+
+            $current = $current->getPrevious();
+        }
+
+        return $chain;
     }
 
     /**
