@@ -53,7 +53,22 @@ class DependencyFinder
             // Re-throw circular dependency as-is
             throw $e;
         } catch (Exception $e) {
-            throw new Exception("$method has unfulfilled dependencies ($parameter)", 0, $e);
+            $className = $method->getDeclaringClass()->getName();
+            $methodName = $method->getName();
+            $paramName = $parameter->getName();
+            $paramType = $parameter->getType() ? (string) $parameter->getType() : 'untyped';
+
+            throw new Exception(
+                sprintf(
+                    'Cannot resolve parameter $%s (%s) for %s::%s()',
+                    $paramName,
+                    $paramType,
+                    $className,
+                    $methodName
+                ),
+                0,
+                $e
+            );
         }
 
         return $dependencies;
@@ -107,6 +122,15 @@ class DependencyFinder
             return $parameter->getDefaultValue();
         }
 
-        throw new Exception("Untyped parameter \$" . $parameter->getName() . "can't be fulfilled");
+        $paramName = $parameter->getName();
+        $paramType = $parameter->getType() ? (string) $parameter->getType() : 'untyped';
+
+        throw new Exception(
+            sprintf(
+                'Parameter $%s (%s) cannot be resolved',
+                $paramName,
+                $paramType
+            )
+        );
     }
 }
