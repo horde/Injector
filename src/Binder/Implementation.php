@@ -68,8 +68,8 @@ class Implementation implements Binder
      */
     public function equals(Binder $otherBinder): bool
     {
-        return (($otherBinder instanceof Implementation) &&
-                ($otherBinder->getImplementation() == $this->implementation));
+        return (($otherBinder instanceof Implementation)
+                && ($otherBinder->getImplementation() == $this->implementation));
     }
 
     /**

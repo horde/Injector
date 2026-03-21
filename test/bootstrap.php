@@ -1,13 +1,29 @@
 <?php
 
-$candidates = [
-    dirname(__FILE__, 2) . '/vendor/autoload.php',
-    dirname(__FILE__, 4) . '/autoload.php',
+declare(strict_types=1);
+
+/**
+ * Test suite bootstrap for Horde\Injector
+ *
+ * Loads composer autoloader to make all classes available for testing.
+ */
+
+// Locate composer autoloader
+$autoloadCandidates = [
+    __DIR__ . '/../vendor/autoload.php',      // Standalone component
+    __DIR__ . '/../../../autoload.php',       // Installed via composer
 ];
-// Cover root case and library case
-foreach ($candidates as $candidate) {
-    if (file_exists($candidate)) {
-        require_once $candidate;
+
+foreach ($autoloadCandidates as $autoloadFile) {
+    if (file_exists($autoloadFile)) {
+        require_once $autoloadFile;
+        return;
     }
 }
-\Horde_Test_Bootstrap::bootstrap(dirname(__FILE__));
+
+// If we reach here, autoloader not found
+fwrite(
+    STDERR,
+    'Unable to find composer autoloader. Run: composer install' . PHP_EOL
+);
+exit(1);

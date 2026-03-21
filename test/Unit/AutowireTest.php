@@ -1,31 +1,26 @@
 <?php
 
-namespace Horde\Injector\Test;
+declare(strict_types=1);
 
-use BadMethodCallException;
-use Horde\Exception\NotFound;
-use Horde\Injector\Binder;
-use Horde\Injector\Binder\AnnotatedSetters;
-use Horde\Injector\Binder\Factory;
-use Horde\Injector\Binder\Implementation;
-use Horde\Injector\Binder\Mock;
-use Horde\Injector\Binder\MockWithDependencies;
-use Horde\Injector\DependencyFinder;
+namespace Horde\Injector\Test\Unit;
+
 use Horde\Injector\Injector;
 use Horde\Injector\NotFoundException;
-use Horde\Injector\Test\Injectable\AnInterface;
-use Horde\Injector\Test\Injectable\ClassImplementingAnInterface;
-use Horde\Injector\Test\Injectable\ClassWithArrayParam;
-use Horde\Injector\Test\Injectable\ClassWithOptionalStringNullParam;
-use Horde\Injector\Test\Injectable\ClassWithOptionalStringDefaultParam;
-use Horde\Injector\Test\Injectable\UnwireableChildClassImplementingAnInterface;
+use Horde\Injector\Test\Unit\Fixture\AnInterface;
+use Horde\Injector\Test\Unit\Fixture\ClassImplementingAnInterface;
+use Horde\Injector\Test\Unit\Fixture\ClassWithArrayParam;
+use Horde\Injector\Test\Unit\Fixture\ClassWithOptionalStringDefaultParam;
+use Horde\Injector\Test\Unit\Fixture\ClassWithOptionalStringNullParam;
+use Horde\Injector\Test\Unit\Fixture\UnwireableChildClassImplementingAnInterface;
 use Horde\Injector\TopLevel;
 use PHPUnit\Framework\TestCase;
-use Psr\Container\ContainerInterface;
 
+/**
+ * @coversNothing
+ */
 class AutowireTest extends TestCase
 {
-    public function testAutowiringArrayDefaultNullShouldProvideNull()
+    public function testAutowiringArrayDefaultNullShouldProvideNull(): void
     {
         $injector = new Injector(new TopLevel());
         $res = $injector->getInstance(ClassWithArrayParam::class);
@@ -34,7 +29,7 @@ class AutowireTest extends TestCase
         $this->assertNull($res->getParam());
     }
 
-    public function testAutowiringStringDefaultNullShouldProvideNull()
+    public function testAutowiringStringDefaultNullShouldProvideNull(): void
     {
         $injector = new Injector(new TopLevel());
         $res = $injector->getInstance(ClassWithOptionalStringNullParam::class);
@@ -43,14 +38,14 @@ class AutowireTest extends TestCase
         $this->assertNull($res->getParam());
     }
 
-    public function testAutowiringStringDefaultShouldProvideDefault()
+    public function testAutowiringStringDefaultShouldProvideDefault(): void
     {
         $injector = new Injector(new TopLevel());
         $res = $injector->get(ClassWithOptionalStringDefaultParam::class);
         $this->assertEquals('foo', $res->getParam());
     }
 
-    public function testJustProduceClassWithNoDependenciesExplicitly()
+    public function testJustProduceClassWithNoDependenciesExplicitly(): void
     {
         $injector = new Injector(new TopLevel());
         // hasInstance is about having produced or assigned, not about being able to produce
@@ -63,7 +58,7 @@ class AutowireTest extends TestCase
         $this->assertTrue($injector->has(ClassImplementingAnInterface::class));
     }
 
-    public function testCannotProduceInterfaceWithoutRegistering()
+    public function testCannotProduceInterfaceWithoutRegistering(): void
     {
         $injector = new Injector(new TopLevel());
         $this->assertFalse($injector->has(AnInterface::class));
@@ -72,23 +67,12 @@ class AutowireTest extends TestCase
         $res = $injector->get(AnInterface::class);
     }
 
-    public function testFailWithoutDefault()
+    public function testFailWithoutDefault(): void
     {
         $injector = new Injector(new TopLevel());
         $this->assertFalse($injector->has(UnwireableChildClassImplementingAnInterface::class));
         $this->assertFalse($injector->hasInstance(UnwireableChildClassImplementingAnInterface::class));
         $this->expectException(NotFoundException::class);
         $res = $injector->get(UnwireableChildClassImplementingAnInterface::class);
-    }
-
-    public function testSetInstanceIfInjectorDoesNotHaveInterface()
-    {
-        $injector = new Injector(new TopLevel());
-
-        // This is pretty much what happens in Horde\Core\Middleware\HordeCore
-        if (!$injector->has(AnInterface::class)) {
-            $injector->setInstance(AnInterface::class, new ClassImplementingAnInterface());
-        }
-        $this->assertTrue($injector->has(AnInterface::class));
     }
 }

@@ -74,9 +74,9 @@ class Factory implements Binder
      */
     public function equals(Binder $otherBinder): bool
     {
-        return (($otherBinder instanceof Factory) &&
-                ($otherBinder->getFactory() == $this->factory) &&
-                ($otherBinder->getMethod() == $this->method));
+        return (($otherBinder instanceof Factory)
+                && ($otherBinder->getFactory() == $this->factory)
+                && ($otherBinder->getMethod() == $this->method));
     }
 
     /**

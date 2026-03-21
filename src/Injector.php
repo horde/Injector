@@ -214,8 +214,53 @@ class Injector implements Scope, ContainerInterface
      */
     public function getBinder(string $interface): ?Binder
     {
-        return $this->bindings[$interface]
-            ?? $this->parentInjector->getBinder($interface);
+        // Check if we already have a binding
+        if (isset($this->bindings[$interface])) {
+            return $this->bindings[$interface];
+        }
+
+        // Try to auto-discover factory from attribute (lazy discovery)
+        if (class_exists($interface)) {
+            $factoryBinder = $this->discoverFactoryFromAttribute($interface);
+            if ($factoryBinder !== null) {
+                $this->bindings[$interface] = $factoryBinder;
+                return $factoryBinder;
+            }
+        }
+
+        // Fallback to parent
+        return $this->parentInjector->getBinder($interface);
+    }
+
+    /**
+     * Discover factory binding from #[Factory] attribute on target class.
+     *
+     * @param string $interface  The interface/class to check for attributes.
+     *
+     * @return Binder|null       Factory binder if attribute found, null otherwise.
+     */
+    private function discoverFactoryFromAttribute(string $interface): ?Binder
+    {
+        try {
+            $reflection = new \ReflectionClass($interface);
+            $attributes = $reflection->getAttributes(Attribute\Factory::class);
+
+            if (empty($attributes)) {
+                return null;
+            }
+
+            $factory = $attributes[0]->newInstance();
+
+            // Validate factory attribute has required parameters
+            if ($factory->factory === null || $factory->method === null) {
+                return null;
+            }
+
+            // Create and return factory binder
+            return new Binder\Factory($factory->factory, $factory->method);
+        } catch (\ReflectionException $e) {
+            return null;
+        }
     }
 
     /**
@@ -287,9 +332,9 @@ class Injector implements Scope, ContainerInterface
             if (!$this->hasInstance($id)) {
                 // Do we have a binding for this interface? If so then we don't
                 // ask our parent.
-                if (!isset($this->bindings[$id]) &&
+                if (!isset($this->bindings[$id])
                     // Does our parent have an instance?
-                    ($instance = $this->parentInjector->get($id))) {
+                    && ($instance = $this->parentInjector->get($id))) {
                     return $instance;
                 }
 
