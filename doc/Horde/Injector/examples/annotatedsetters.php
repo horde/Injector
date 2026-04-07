@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Demonstrates how to use the annotated setters binder with Horde_Injector.
  *

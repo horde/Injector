@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Demonstrates how we register binders so that the instances get created only
  * when actually accessing the instance.

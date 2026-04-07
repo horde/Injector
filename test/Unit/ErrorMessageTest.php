@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /**
@@ -158,34 +159,24 @@ class ErrorMessageTest extends TestCase
 }
 
 // Test fixtures
-interface UnboundInterface
-{
-}
+interface UnboundInterface {}
 
 class UntypedConstructor
 {
-    public function __construct($untyped)
-    {
-    }
+    public function __construct($untyped) {}
 }
 
 class DeepTopLevel
 {
-    public function __construct(DeepMiddle $m)
-    {
-    }
+    public function __construct(DeepMiddle $m) {}
 }
 
 class DeepMiddle
 {
-    public function __construct(DeepBottom $b)
-    {
-    }
+    public function __construct(DeepBottom $b) {}
 }
 
 class DeepBottom
 {
-    public function __construct(NonExistent $x)
-    {
-    }
+    public function __construct(NonExistent $x) {}
 }

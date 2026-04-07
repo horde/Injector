@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Demonstrates how to use the default implementation binder with Horde_Injector.
  *

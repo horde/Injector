@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Demonstrates how to use the closure binder with Horde_Injector.
  *
@@ -23,7 +24,7 @@ class ClosureCreated
     }
 }
 
-$closure = function(Horde_Injector $i) {
+$closure = function (Horde_Injector $i) {
     return new ClosureCreated('created by closure');
 };
 $binder = new Horde_Injector_Binder_Closure($closure);

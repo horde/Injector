@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Demonstrates how to use the default factory binder with Horde_Injector.
  *

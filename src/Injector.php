@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright 2009-2021 Horde LLC (http://www.horde.org/)
+ * Copyright 2009-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (BSD). If you
  * did not receive this file, see http://www.horde.org/licenses/bsd.
@@ -18,6 +18,10 @@ use BadMethodCallException;
 use Psr\Container\ContainerInterface;
 use Reflection;
 use ReflectionClass;
+use ReflectionException;
+use Throwable;
+
+use function get_class;
 
 /**
  * Injector class for injecting dependencies of objects
@@ -112,7 +116,7 @@ class Injector implements Scope, ContainerInterface
     public function createChildInjector(): Injector
     {
         // Using self is wrong and breaks wrapping into inheriting injectors
-        $thisOrDerivedClass = \get_class($this);
+        $thisOrDerivedClass = get_class($this);
         return new $thisOrDerivedClass($this);
     }
 
@@ -249,7 +253,7 @@ class Injector implements Scope, ContainerInterface
     private function discoverFactoryFromAttribute(string $interface): ?Binder
     {
         try {
-            $reflection = new \ReflectionClass($interface);
+            $reflection = new ReflectionClass($interface);
             $attributes = $reflection->getAttributes(Attribute\Factory::class);
 
             if (empty($attributes)) {
@@ -265,7 +269,7 @@ class Injector implements Scope, ContainerInterface
 
             // Create and return factory binder
             return new Binder\Factory($factory->factory, $factory->method);
-        } catch (\ReflectionException $e) {
+        } catch (ReflectionException $e) {
             return null;
         }
     }
@@ -412,11 +416,11 @@ class Injector implements Scope, ContainerInterface
     /**
      * Extract root cause from exception chain.
      *
-     * @param \Throwable $e  The exception to analyze.
+     * @param Throwable $e  The exception to analyze.
      *
      * @return string  Human-readable root cause description.
      */
-    private function extractRootCause(\Throwable $e): string
+    private function extractRootCause(Throwable $e): string
     {
         // Walk to deepest exception
         $current = $e;
@@ -451,11 +455,11 @@ class Injector implements Scope, ContainerInterface
     /**
      * Extract dependency chain from exception chain.
      *
-     * @param \Throwable $e  The exception to analyze.
+     * @param Throwable $e  The exception to analyze.
      *
      * @return string[]  Array of class names in dependency chain.
      */
-    private function extractDependencyChain(\Throwable $e): array
+    private function extractDependencyChain(Throwable $e): array
     {
         $chain = [];
         $current = $e;

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright 2009-2021 Horde LLC (http://www.horde.org/)
+ * Copyright 2009-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (BSD). If you
  * did not receive this file, see http://www.horde.org/licenses/bsd.
@@ -17,6 +17,8 @@ namespace Horde\Injector;
 use ReflectionClass;
 use ReflectionNamedType;
 use ReflectionUnionType;
+use ReflectionMethod;
+use ReflectionParameter;
 
 /**
  * This is a simple class that uses reflection to figure out the dependencies
@@ -34,14 +36,14 @@ class DependencyFinder
 {
     /**
      * @param Injector $injector
-     * @param \ReflectionMethod $method
+     * @param ReflectionMethod $method
      *
      * @return mixed[]
      * @throws Exception
      */
     public function getMethodDependencies(
         Injector $injector,
-        \ReflectionMethod $method
+        ReflectionMethod $method
     ): array {
         $dependencies = [];
 
@@ -76,14 +78,14 @@ class DependencyFinder
 
     /**
      * @param Injector $injector
-     * @param \ReflectionParameter $parameter
+     * @param ReflectionParameter $parameter
      *
      * @return mixed
      * @throws Exception
      */
     public function getParameterDependency(
         Injector $injector,
-        \ReflectionParameter $parameter
+        ReflectionParameter $parameter
     ) {
         $type = $parameter->getType();
         // TODO: What about union and intersection types?

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /**
@@ -111,64 +112,46 @@ class CircularDependencyTest extends TestCase
 // Test fixtures - Circular dependencies
 class CircularA
 {
-    public function __construct(CircularB $b)
-    {
-    }
+    public function __construct(CircularB $b) {}
 }
 
 class CircularB
 {
-    public function __construct(CircularA $a)
-    {
-    }
+    public function __construct(CircularA $a) {}
 }
 
 class SelfReferencing
 {
-    public function __construct(SelfReferencing $self)
-    {
-    }
+    public function __construct(SelfReferencing $self) {}
 }
 
 class ChainA
 {
-    public function __construct(ChainB $b)
-    {
-    }
+    public function __construct(ChainB $b) {}
 }
 
 class ChainB
 {
-    public function __construct(ChainC $c)
-    {
-    }
+    public function __construct(ChainC $c) {}
 }
 
 class ChainC
 {
-    public function __construct(ChainA $a)
-    {
-    }
+    public function __construct(ChainA $a) {}
 }
 
 // Test fixtures - Linear (non-circular) dependencies
 class LinearA
 {
-    public function __construct(LinearB $b)
-    {
-    }
+    public function __construct(LinearB $b) {}
 }
 
 class LinearB
 {
-    public function __construct(LinearC $c)
-    {
-    }
+    public function __construct(LinearC $c) {}
 }
 
 class LinearC
 {
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 }

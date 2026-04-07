@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright 2009-2021 Horde LLC (http://www.horde.org/)
+ * Copyright 2009-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (BSD). If you
  * did not receive this file, see http://www.horde.org/licenses/bsd.
@@ -15,6 +15,7 @@
 namespace Horde\Injector;
 
 use Psr\Container\ContainerExceptionInterface;
+use Horde_Exception;
 
 /**
  * Injector exception class.
@@ -26,4 +27,4 @@ use Psr\Container\ContainerExceptionInterface;
  * @license   http://www.horde.org/licenses/bsd BSD
  * @package   Injector
  */
-class Exception extends \Horde_Exception implements ContainerExceptionInterface {}
+class Exception extends Horde_Exception implements ContainerExceptionInterface {}
