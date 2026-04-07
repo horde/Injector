@@ -11,17 +11,24 @@
             "role": "lead"
         }
     ],
-    "time": "2026-03-24",
+    "keywords": [
+        "psr-11",
+        "psr-container",
+        "dic",
+        "ioc",
+        "service-container",
+        "dependency-injection",
+        "container",
+        "autowiring"
+    ],
+    "time": "2026-04-07",
     "repositories": [],
     "require": {
         "php": "^8.1",
         "psr/container": "^2",
         "horde/exception": "^3 || dev-FRAMEWORK_6_0"
     },
-    "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3",
-        "phpstan/phpstan": "^2"
-    },
+    "require-dev": {},
     "suggest": {},
     "autoload": {
         "psr-0": {
