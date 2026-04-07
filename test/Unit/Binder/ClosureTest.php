@@ -7,19 +7,15 @@ namespace Horde\Injector\Test\Unit\Binder;
 use Horde\Injector\Binder\Closure;
 use Horde\Injector\Injector;
 use Horde\Injector\TopLevel;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @coversNothing
- */
+#[CoversClass(Closure::class)]
 class ClosureTest extends TestCase
 {
     public function testShouldCallClosure(): void
     {
-        $childInjector = $this->getMockBuilder(Injector::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods(['createInstance', 'getInstance'])
-            ->getMock();
+        $childInjector = $this->createStub(Injector::class);
 
         $injector = $this->getMockBuilder(Injector::class)
             ->disableOriginalConstructor()

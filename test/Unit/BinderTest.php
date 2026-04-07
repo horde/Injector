@@ -7,12 +7,12 @@ namespace Horde\Injector\Test\Unit;
 use Horde\Injector\Binder\Factory as FactoryBinder;
 use Horde\Injector\Binder\Implementation as ImplementationBinder;
 use Horde\Injector\DependencyFinder;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @coversNothing
- */
+#[CoversClass(ImplementationBinder::class)]
+#[CoversClass(FactoryBinder::class)]
 class BinderTest extends TestCase
 {
     /**

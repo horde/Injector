@@ -13,11 +13,11 @@ use Horde\Injector\Test\Unit\Fixture\ClassWithOptionalStringDefaultParam;
 use Horde\Injector\Test\Unit\Fixture\ClassWithOptionalStringNullParam;
 use Horde\Injector\Test\Unit\Fixture\UnwireableChildClassImplementingAnInterface;
 use Horde\Injector\TopLevel;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @coversNothing
- */
+#[CoversClass(Injector::class)]
+#[CoversClass(TopLevel::class)]
 class AutowireTest extends TestCase
 {
     public function testAutowiringArrayDefaultNullShouldProvideNull(): void

@@ -7,11 +7,11 @@ namespace Horde\Injector\Test\Unit\Attribute;
 use Horde\Injector\Attribute\Factory;
 use Horde\Injector\Injector;
 use Horde\Injector\TopLevel;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @coversNothing
- */
+#[CoversClass(Factory::class)]
+#[CoversClass(Injector::class)]
 class FactoryAttributeTest extends TestCase
 {
     public function testFactoryAttributeAutoDiscovery(): void

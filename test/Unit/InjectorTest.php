@@ -14,6 +14,7 @@ use Horde\Injector\Injector;
 use Horde\Injector\Test\Unit\Fixture\MockBinder;
 use Horde\Injector\Test\Unit\Fixture\MockBinderWithDependencies;
 use Horde\Injector\TopLevel;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 // Register mock binders in Horde\Injector\Binder namespace for magic method tests
@@ -25,15 +26,14 @@ if (!class_exists('Horde\Injector\Binder\MockBinderWithDependencies')) {
     class_alias(MockBinderWithDependencies::class, 'Horde\Injector\Binder\MockBinderWithDependencies');
 }
 
-/**
- * @coversNothing
- */
+#[CoversClass(Injector::class)]
+#[CoversClass(TopLevel::class)]
 class InjectorTest extends TestCase
 {
     public function testShouldGetDefaultImplementationBinder(): void
     {
         $topLevel = $this->getMockBuilder(TopLevel::class)->onlyMethods(['getBinder'])->getMock();
-        $returnedObject = $this->createMock(AnnotatedSetters::class);
+        $returnedObject = $this->createStub(AnnotatedSetters::class);
         $topLevel->expects($this->once())
             ->method('getBinder')
             ->with($this->equalTo('UNBOUND_INTERFACE'))
@@ -202,7 +202,7 @@ class InjectorTest extends TestCase
     public function testShouldAllowChildInjectorsAccessToParentInjectorBindings(): void
     {
         $mockInjector = $this->getMockBuilder(TopLevel::class)->onlyMethods(['getBinder'])->getMock();
-        $mockInjector->expects($this->any()) // this gets called once in addBinder
+        $mockInjector->expects($this->atLeastOnce())
             ->method('getBinder')
             ->with('BOUND_INTERFACE')
             ->willReturn(new MockBinder());

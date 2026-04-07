@@ -7,11 +7,10 @@ namespace Horde\Injector\Test\Integration\Binder;
 use Horde\Injector\Binder\Factory;
 use Horde\Injector\Injector;
 use Horde\Injector\TopLevel;
+use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @coversNothing
- */
+#[CoversNothing]
 class FactoryTest extends TestCase
 {
     public function testShouldCallFactoryMethod(): void

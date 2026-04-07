@@ -9,11 +9,11 @@ use Horde\Injector\Binder\AnnotatedSetters;
 use Horde\Injector\DependencyFinder;
 use Horde\Injector\Injector;
 use Horde\Injector\TopLevel;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @coversNothing
- */
+#[CoversClass(AnnotatedSetters::class)]
+#[CoversClass(DependencyFinder::class)]
 class AnnotatedSettersTest extends TestCase
 {
     public function testShouldCallAnnotatedSetters(): void

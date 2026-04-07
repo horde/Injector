@@ -9,11 +9,11 @@ use Horde\Injector\DependencyFinder;
 use Horde\Injector\Exception;
 use Horde\Injector\Injector;
 use Horde\Injector\NotFoundException;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @coversNothing
- */
+#[CoversClass(Implementation::class)]
+#[CoversClass(DependencyFinder::class)]
 class ImplementationTest extends TestCase
 {
     private DependencyFinder $df;
