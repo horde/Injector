@@ -19,7 +19,7 @@ use Psr\Container\NotFoundExceptionInterface;
 /**
  * Injector NotFoundException class as suggested by PSR-11.
  *
- * @author    Ralf Lang <lang@b1-systems.de>
+ * @author    Ralf Lang <ralf.lang@ralf-lang.de>
  * @category  Horde
  * @copyright 2020-2021 Horde LLC
  * @license   http://www.horde.org/licenses/bsd BSD

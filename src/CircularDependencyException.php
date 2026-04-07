@@ -17,7 +17,7 @@ namespace Horde\Injector;
 /**
  * Exception thrown when circular dependency is detected.
  *
- * @author    Ralf Lang <lang@b1-systems.de>
+ * @author    Ralf Lang <ralf.lang@ralf-lang.de>
  * @category  Horde
  * @copyright 2026-2026 Horde LLC
  * @license   http://www.horde.org/licenses/bsd BSD
