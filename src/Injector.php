@@ -360,7 +360,6 @@ class Injector implements Scope, ContainerInterface
                 if (!isset($this->bindings[$id])
                     // Does our parent have an instance?
                     && ($instance = $this->parentInjector->get($id))) {
-                    array_pop($this->resolutionStack);
                     return $instance;
                 }
 
@@ -369,18 +368,14 @@ class Injector implements Scope, ContainerInterface
             }
         } catch (CircularDependencyException $e) {
             // Re-throw circular dependency as-is
-            array_pop($this->resolutionStack);
             throw $e;
         } catch (NotFoundException $e) {
             // If already enhanced (contains "Cannot create"), just re-throw
             if (strpos($e->getMessage(), 'Cannot create') === 0) {
-                array_pop($this->resolutionStack);
                 throw $e;
             }
 
             // Otherwise, enhance with context
-            array_pop($this->resolutionStack);
-
             $message = "Cannot create $id";
 
             $chain = $this->extractDependencyChain($e);
@@ -392,10 +387,9 @@ class Injector implements Scope, ContainerInterface
             $message .= "\n  Root cause: $rootCause";
 
             throw new NotFoundException($message, $e->getCode(), $e);
-        } catch (Exception $e) {
-            array_pop($this->resolutionStack);
-
-            // Enhance error message with context
+        } catch (Throwable $e) {
+            // Catch all throwables including PHP Errors (TypeError, ValueError, etc.)
+            // which don't extend Exception
             $message = "Cannot create $id";
 
             $chain = $this->extractDependencyChain($e);
@@ -407,9 +401,10 @@ class Injector implements Scope, ContainerInterface
             $message .= "\n  Root cause: $rootCause";
 
             throw new NotFoundException($message, $e->getCode(), $e);
+        } finally {
+            array_pop($this->resolutionStack);
         }
 
-        array_pop($this->resolutionStack);
         return $this->instances[$id];
     }
 
