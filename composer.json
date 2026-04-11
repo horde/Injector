@@ -40,7 +40,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Horde\\\\Injector\\\\Test\\\\": "test/"
+            "Horde\\Injector\\Test\\": "test/"
         }
     },
     "config": {
@@ -53,5 +53,6 @@
         "branch-alias": {
             "dev-FRAMEWORK_6_0": "3.x-dev"
         }
-    }
+    },
+    "minimum-stability": "dev"
 }
