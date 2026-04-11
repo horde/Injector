@@ -18,6 +18,7 @@ namespace Horde\Injector\Test\Unit;
 
 use Horde\Injector\CircularDependencyException;
 use Horde\Injector\Injector;
+use Horde\Injector\NotFoundException;
 use Horde\Injector\TopLevel;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
@@ -107,6 +108,66 @@ class CircularDependencyTest extends TestCase
             $this->assertStringContainsString('Circular dependency detected', $e->getMessage());
         }
     }
+
+    /**
+     * Verify that a PHP Error (TypeError) thrown during construction
+     * does not leave the resolution stack polluted, which would cause
+     * a false circular dependency on the next call.
+     */
+    public function testResolutionStackCleanedUpAfterPhpError(): void
+    {
+        $injector = new Injector(new TopLevel());
+
+        // First attempt: constructor throws TypeError, should be wrapped
+        try {
+            $injector->get(ThrowsTypeError::class);
+            $this->fail('Should have thrown NotFoundException');
+        } catch (NotFoundException $e) {
+            $this->assertStringContainsString('Cannot create', $e->getMessage());
+        }
+
+        // Second attempt: should get the same NotFoundException, NOT a
+        // CircularDependencyException (which would indicate a leaked stack)
+        try {
+            $injector->get(ThrowsTypeError::class);
+            $this->fail('Should have thrown NotFoundException');
+        } catch (CircularDependencyException $e) {
+            $this->fail(
+                'Got CircularDependencyException on retry — resolution stack was not cleaned up after TypeError'
+            );
+        } catch (NotFoundException $e) {
+            $this->assertStringContainsString('Cannot create', $e->getMessage());
+        }
+    }
+
+    /**
+     * Verify that an Error during a dependency resolution does not
+     * pollute the stack for the parent class either.
+     */
+    public function testResolutionStackCleanedUpAfterDependencyPhpError(): void
+    {
+        $injector = new Injector(new TopLevel());
+
+        // DependsOnTypeErrorClass depends on ThrowsTypeError which throws
+        try {
+            $injector->get(DependsOnTypeErrorClass::class);
+            $this->fail('Should have thrown NotFoundException');
+        } catch (NotFoundException $e) {
+            // Expected
+        }
+
+        // Neither class should be stuck on the resolution stack
+        try {
+            $injector->get(DependsOnTypeErrorClass::class);
+            $this->fail('Should have thrown NotFoundException');
+        } catch (CircularDependencyException $e) {
+            $this->fail(
+                'Got CircularDependencyException on retry — resolution stack leak from dependency Error'
+            );
+        } catch (NotFoundException $e) {
+            $this->assertStringContainsString('Cannot create', $e->getMessage());
+        }
+    }
 }
 
 // Test fixtures - Circular dependencies
@@ -154,4 +215,18 @@ class LinearB
 class LinearC
 {
     public function __construct() {}
+}
+
+// Test fixtures - PHP Error during construction
+class ThrowsTypeError
+{
+    public function __construct()
+    {
+        throw new \TypeError('Simulated type error during construction');
+    }
+}
+
+class DependsOnTypeErrorClass
+{
+    public function __construct(ThrowsTypeError $dep) {}
 }
