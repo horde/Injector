@@ -231,7 +231,7 @@ class Injector implements Scope, ContainerInterface
         }
 
         // Try to auto-discover factory from attribute (lazy discovery)
-        if (class_exists($interface)) {
+        if (class_exists($interface) || interface_exists($interface)) {
             $factoryBinder = $this->discoverFactoryFromAttribute($interface);
             if ($factoryBinder !== null) {
                 $this->bindings[$interface] = $factoryBinder;
@@ -555,6 +555,15 @@ class Injector implements Scope, ContainerInterface
         if ($this->parentInjector->has($id)) {
             $this->hasCache[$id] = 'parent';
             return true;
+        }
+        // Check for #[Factory] attribute on class or interface (lazy discovery)
+        if (class_exists($id) || interface_exists($id)) {
+            $factoryBinder = $this->discoverFactoryFromAttribute($id);
+            if ($factoryBinder !== null) {
+                $this->bindings[$id] = $factoryBinder;
+                $this->hasCache[$id] = 'attribute';
+                return true;
+            }
         }
         // Find out if we could autowire it.
         // TODO: Unions and intersections must be handled before this.
