@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Horde\Injector\Test\Unit;
 
+use Horde\Injector\Binder\AnnotatedSetters;
+use Horde\Injector\Binder\Closure as ClosureBinder;
 use Horde\Injector\Binder\Factory as FactoryBinder;
 use Horde\Injector\Binder\Implementation as ImplementationBinder;
 use Horde\Injector\DependencyFinder;
@@ -13,6 +15,8 @@ use PHPUnit\Framework\TestCase;
 
 #[CoversClass(ImplementationBinder::class)]
 #[CoversClass(FactoryBinder::class)]
+#[CoversClass(ClosureBinder::class)]
+#[CoversClass(AnnotatedSetters::class)]
 class BinderTest extends TestCase
 {
     /**
@@ -63,6 +67,47 @@ class BinderTest extends TestCase
                 new FactoryBinder('foobar', 'otherMethod'),
                 false,
                 "Factory Binders are set to the same class but different methods. They should not be equal",
+            ],
+            // Closure binder equality
+            (function () {
+                $closure = function ($injector) { return new \stdClass(); };
+                return [
+                    new ClosureBinder($closure),
+                    new ClosureBinder($closure),
+                    true,
+                    "Closure Binders referencing the same closure should be equal",
+                ];
+            })(),
+            [
+                new ClosureBinder(function ($injector) { return new \stdClass(); }),
+                new ClosureBinder(function ($injector) { return new \stdClass(); }),
+                false,
+                "Closure Binders referencing different closures should not be equal",
+            ],
+            [
+                new ClosureBinder(function ($injector) { return new \stdClass(); }),
+                new ImplementationBinder('foobar', $df),
+                false,
+                "Closure Binder should not equal Implementation Binder",
+            ],
+            // AnnotatedSetters equality (delegates to inner binder)
+            [
+                new AnnotatedSetters(new ImplementationBinder('foobar', $df), $df),
+                new AnnotatedSetters(new ImplementationBinder('foobar', $df), $df),
+                true,
+                "AnnotatedSetters wrapping equal Implementation binders should be equal",
+            ],
+            [
+                new AnnotatedSetters(new ImplementationBinder('foobar', $df), $df),
+                new AnnotatedSetters(new ImplementationBinder('otherimpl', $df), $df),
+                false,
+                "AnnotatedSetters wrapping different Implementation binders should not be equal",
+            ],
+            [
+                new AnnotatedSetters(new ImplementationBinder('foobar', $df), $df),
+                new ImplementationBinder('foobar', $df),
+                false,
+                "AnnotatedSetters should not equal bare Implementation Binder",
             ],
         ];
     }
