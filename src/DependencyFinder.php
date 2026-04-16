@@ -90,7 +90,14 @@ class DependencyFinder
         $type = $parameter->getType();
         // TODO: What about union and intersection types?
         if ($type instanceof ReflectionNamedType && !$type->isBuiltin() && $classname = $type->getName()) {
-            return $injector->getInstance($classname);
+            try {
+                return $injector->getInstance($classname);
+            } catch (\Throwable $e) {
+                if ($parameter->isOptional()) {
+                    return $parameter->getDefaultValue();
+                }
+                throw $e;
+            }
         }
         // Catch optional array parameters
         // TODO: What about union and intersection types including arrays?
