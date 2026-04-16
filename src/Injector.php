@@ -15,6 +15,8 @@
 namespace Horde\Injector;
 
 use BadMethodCallException;
+use Closure;
+use InvalidArgumentException;
 use Psr\Container\ContainerInterface;
 use Reflection;
 use ReflectionClass;
@@ -97,12 +99,16 @@ class Injector implements Scope, ContainerInterface
      * Every injector object has a parent scope.  For the very first
      * Injector, you should pass it a TopLevel object.
      *
-     * @param Scope $injector  The parent scope.
+     * @param Scope $injector   The parent scope.
+     * @param array $bindings   Optional declarative binding map.
      */
-    public function __construct(Scope $injector)
+    public function __construct(Scope $injector, array $bindings = [])
     {
         $this->parentInjector = $injector;
         $this->instances = [__CLASS__ => $this];
+        if ($bindings !== []) {
+            $this->loadBindings($bindings);
+        }
     }
 
     /**
@@ -216,7 +222,54 @@ class Injector implements Scope, ContainerInterface
     }
 
     /**
-     * Get the Binder associated with the specified instance.
+     * Load bindings from a declarative array.
+     *
+     * The array maps interface/class names to binding definitions:
+     * - string value: Implementation binder (interface → concrete class)
+     * - array [factoryClass, method]: Factory binder
+     * - Closure value: Closure binder (not opcacheable)
+     *
+     * @param array<string, string|array{0: string, 1: string}|Closure> $bindings
+     *
+     * @return self For method chaining.
+     *
+     * @throws InvalidArgumentException If a binding value has an unsupported type.
+     */
+    public function loadBindings(array $bindings): self
+    {
+        foreach ($bindings as $interface => $definition) {
+            if ($definition instanceof Closure) {
+                $this->addBinder($interface, new Binder\Closure($definition));
+            } elseif (is_array($definition)) {
+                if (count($definition) !== 2
+                    || !is_string($definition[0])
+                    || !is_string($definition[1])
+                ) {
+                    throw new InvalidArgumentException(
+                        sprintf(
+                            'Factory binding for "%s" must be [factoryClass, method]',
+                            $interface
+                        )
+                    );
+                }
+                $this->addBinder($interface, new Binder\Factory($definition[0], $definition[1]));
+            } elseif (is_string($definition)) {
+                $this->addBinder($interface, new Binder\Implementation($definition));
+            } else {
+                throw new InvalidArgumentException(
+                    sprintf(
+                        'Unsupported binding type for "%s": expected string, array, or Closure, got %s',
+                        $interface,
+                        get_debug_type($definition)
+                    )
+                );
+            }
+        }
+
+        return $this;
+    }
+
+    /**
      *
      * Binders are objects responsible for binding a particular interface
      * with a class. If no binding is set for this object, the parent scope is
