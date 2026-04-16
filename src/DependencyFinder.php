@@ -118,7 +118,7 @@ class DependencyFinder
         }
 
         foreach ($types as $type) {
-            if ($type instanceof ReflectionNamedType && !in_array($type->getName(), ['bool', 'int', 'string', 'float'])) {
+            if ($type instanceof ReflectionNamedType && !$type->isBuiltin()) {
                 $instance = $injector->getInstance($type);
                 if ($instance) {
                     return $instance;

@@ -34,16 +34,15 @@ class IntersectionTypeTest extends TestCase
      * DNF type (Interface1&Interface2)|null with default null.
      * This is a ReflectionUnionType containing a ReflectionIntersectionType
      * and a ReflectionNamedType('null'). The union loop skips the intersection
-     * member (not ReflectionNamedType) but tries getInstance('null') on the
-     * null member (it's not in the builtin skip list). This throws instead
-     * of falling to the default.
-     * Documents the DNF/null handling bug.
+     * member (not ReflectionNamedType) and skips null (isBuiltin()=true).
+     * Falls through to optional default → null.
      */
-    public function testDnfTypeWithNullMemberThrows(): void
+    public function testDnfTypeWithNullMemberFallsToDefault(): void
     {
         $injector = new Injector(new TopLevel());
-        $this->expectException(NotFoundException::class);
-        $injector->get(NeedsDnfNullable::class);
+        $result = $injector->get(NeedsDnfNullable::class);
+        $this->assertInstanceOf(NeedsDnfNullable::class, $result);
+        $this->assertNull($result->dep);
     }
 }
 
