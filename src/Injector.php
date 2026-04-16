@@ -158,9 +158,12 @@ class Injector implements Scope, ContainerInterface
             throw new BadMethodCallException('First parameter for "bind' . $type . '" must be the name of an interface or class');
         }
 
-        // TODO: We should detect and mind binder types with FQCN
+        // Support both short names (e.g. "Factory") and FQCNs
         if (!isset($this->reflection[$type])) {
-            $rc = new ReflectionClass('Horde\Injector\Binder\\' . $type);
+            $className = str_contains($type, '\\')
+                ? $type
+                : 'Horde\Injector\Binder\\' . $type;
+            $rc = new ReflectionClass($className);
             $this->reflection[$type] = [
                 $rc,
                 (bool) $rc->getConstructor(),
