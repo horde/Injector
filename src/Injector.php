@@ -567,7 +567,6 @@ class Injector implements Scope, ContainerInterface
         }
         // Find out if we could autowire it.
         // TODO: Unions and intersections must be handled before this.
-        // TODO: Do Enums need special handling?
         // It must be a class (no interface)
         if (!class_exists($id)) {
             $this->hasNotCache[] = $id;
@@ -576,6 +575,11 @@ class Injector implements Scope, ContainerInterface
         $reflection = new ReflectionClass($id);
         // non-abstract,
         if ($reflection->isAbstract()) {
+            $this->hasNotCache[] = $id;
+            return false;
+        }
+        // Enums are not instantiable
+        if ($reflection->isEnum()) {
             $this->hasNotCache[] = $id;
             return false;
         }

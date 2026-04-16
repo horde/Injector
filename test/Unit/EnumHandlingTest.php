@@ -17,15 +17,13 @@ use PHPUnit\Framework\TestCase;
 class EnumHandlingTest extends TestCase
 {
     /**
-     * class_exists() returns true for enums and the enum has no constructor,
-     * so has() takes the 'noConstructor' path and returns true.
-     * However get() will fail because enums are not instantiable.
-     * This documents a PSR-11 contract violation.
+     * has() returns false for enums because they are not instantiable.
+     * This is correct PSR-11 behavior: get() would throw, so has() is false.
      */
-    public function testHasReturnsTrueForEnum(): void
+    public function testHasReturnsFalseForEnum(): void
     {
         $injector = new Injector(new TopLevel());
-        $this->assertTrue($injector->has(SampleEnum::class));
+        $this->assertFalse($injector->has(SampleEnum::class));
     }
 
     /**
@@ -41,12 +39,12 @@ class EnumHandlingTest extends TestCase
     }
 
     /**
-     * Unit enums (no backing type) have the same PSR-11 violation.
+     * Unit enums also return false from has() — consistent behavior.
      */
     public function testGetThrowsForUnitEnum(): void
     {
         $injector = new Injector(new TopLevel());
-        $this->assertTrue($injector->has(SampleUnitEnum::class));
+        $this->assertFalse($injector->has(SampleUnitEnum::class));
         $this->expectException(NotFoundException::class);
         $injector->get(SampleUnitEnum::class);
     }
