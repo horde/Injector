@@ -84,22 +84,14 @@ class UnionTypeTest extends TestCase
     }
 
     /**
-     * has() casts ReflectionUnionType to string (e.g. "A|B"), then calls
-     * has("A|B") recursively. No class named "A|B" exists, so has() returns
-     * false even though get() would succeed.
-     * Documents PSR-11 contract violation.
+     * has() iterates union members individually. Both members are concrete
+     * and autowireable, so has() correctly returns true — consistent with
+     * get() succeeding. PSR-11 contract satisfied.
      */
-    public function testHasReturnsFalseForClassWithUnionParam(): void
+    public function testHasReturnsTrueForClassWithUnionParam(): void
     {
         $injector = new Injector(new TopLevel());
-
-        // get() succeeds — both members are concrete
-        $result = $injector->get(ClassDependingOnUnionType::class);
-        $this->assertInstanceOf(ClassDependingOnUnionType::class, $result);
-
-        // But on a fresh injector, has() returns false due to the string-cast bug
-        $fresh = new Injector(new TopLevel());
-        $this->assertFalse($fresh->has(ClassDependingOnUnionType::class));
+        $this->assertTrue($injector->has(ClassDependingOnUnionType::class));
     }
 }
 

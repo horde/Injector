@@ -19,6 +19,8 @@ use Psr\Container\ContainerInterface;
 use Reflection;
 use ReflectionClass;
 use ReflectionException;
+use ReflectionNamedType;
+use ReflectionUnionType;
 use Throwable;
 
 use function get_class;
@@ -597,16 +599,44 @@ class Injector implements Scope, ContainerInterface
         }
         // Or all parameters are either optional or available
         foreach ($parameters as $parameter) {
-            if ($parameter->isOptional()) {
+            if ($parameter->isOptional() || $parameter->isVariadic()) {
                 continue;
             }
             $parameterType = $parameter->getType();
-            if ((string) $parameterType == $id) {
-                // Cannot autowire recursive constructions
-                $this->hasNotCache[] = $id;
-                return false;
-            }
-            if (!$this->has((string) $parameterType)) {
+            if ($parameterType instanceof ReflectionNamedType) {
+                if ($parameterType->isBuiltin()) {
+                    $this->hasNotCache[] = $id;
+                    return false;
+                }
+                $typeName = $parameterType->getName();
+                if ($typeName === $id) {
+                    // Cannot autowire recursive constructions
+                    $this->hasNotCache[] = $id;
+                    return false;
+                }
+                if (!$this->has($typeName)) {
+                    $this->hasNotCache[] = $id;
+                    return false;
+                }
+            } elseif ($parameterType instanceof ReflectionUnionType) {
+                // Check if any union member is resolvable
+                $anyResolvable = false;
+                foreach ($parameterType->getTypes() as $memberType) {
+                    if ($memberType instanceof ReflectionNamedType
+                        && !$memberType->isBuiltin()
+                        && $memberType->getName() !== $id
+                        && $this->has($memberType->getName())
+                    ) {
+                        $anyResolvable = true;
+                        break;
+                    }
+                }
+                if (!$anyResolvable) {
+                    $this->hasNotCache[] = $id;
+                    return false;
+                }
+            } else {
+                // Intersection types or unknown — cannot resolve
                 $this->hasNotCache[] = $id;
                 return false;
             }

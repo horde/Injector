@@ -186,16 +186,14 @@ class HasMethodTest extends TestCase
         $this->assertFalse($injector->has(HasSelfReference::class));
     }
 
-    // --- union type string-cast bug (line 600, 605) ---
+    // --- union type handling (lines 600-612) ---
 
-    public function testHasFalseForUnionTypeParam(): void
+    public function testHasTrueForUnionTypeParam(): void
     {
         $injector = new Injector(new TopLevel());
-        // Both union members are concrete and autowireable, so get() succeeds.
-        // But has() casts the union ReflectionUnionType to string "A|B" and
-        // calls has("A|B") which fails.
-        // Documents PSR-11 violation: has()=false, get()=success.
-        $this->assertFalse($injector->has(ClassDependingOnUnionType::class));
+        // Both union members are concrete and autowireable.
+        // has() iterates union members individually and finds a match.
+        $this->assertTrue($injector->has(ClassDependingOnUnionType::class));
     }
 }
 
