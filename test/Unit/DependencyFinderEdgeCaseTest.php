@@ -17,17 +17,15 @@ use PHPUnit\Framework\TestCase;
 class DependencyFinderEdgeCaseTest extends TestCase
 {
     /**
-     * Variadic parameters are isOptional()=true in reflection, but
-     * getDefaultValue() throws for variadic params. The DependencyFinder
-     * does not check isVariadic() before calling getDefaultValue(), so
-     * this currently fails.
-     * Documents a bug: variadic parameters should resolve to [].
+     * Variadic parameters are skipped during dependency resolution.
+     * The class is instantiated without passing any variadic arguments.
      */
-    public function testVariadicParameterThrowsDueToMissingSupport(): void
+    public function testVariadicParameterResolvesToEmptyArray(): void
     {
         $injector = new Injector(new TopLevel());
-        $this->expectException(NotFoundException::class);
-        $injector->get(VariadicFixture::class);
+        $result = $injector->get(VariadicFixture::class);
+        $this->assertInstanceOf(VariadicFixture::class, $result);
+        $this->assertSame([], $result->items);
     }
 
     /**

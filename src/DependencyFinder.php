@@ -49,6 +49,9 @@ class DependencyFinder
 
         try {
             foreach ($method->getParameters() as $parameter) {
+                if ($parameter->isVariadic()) {
+                    break;
+                }
                 $dependencies[] = $this->getParameterDependency($injector, $parameter);
             }
         } catch (CircularDependencyException $e) {
