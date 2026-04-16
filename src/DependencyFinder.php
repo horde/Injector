@@ -14,6 +14,7 @@
 
 namespace Horde\Injector;
 
+use Throwable;
 use ReflectionClass;
 use ReflectionNamedType;
 use ReflectionUnionType;
@@ -95,7 +96,7 @@ class DependencyFinder
         if ($type instanceof ReflectionNamedType && !$type->isBuiltin() && $classname = $type->getName()) {
             try {
                 return $injector->getInstance($classname);
-            } catch (\Throwable $e) {
+            } catch (Throwable $e) {
                 if ($parameter->isOptional()) {
                     return $parameter->getDefaultValue();
                 }
@@ -119,13 +120,10 @@ class DependencyFinder
 
         foreach ($types as $type) {
             if ($type instanceof ReflectionNamedType && !$type->isBuiltin()) {
-                $instance = $injector->getInstance($type);
-                if ($instance) {
-                    return $instance;
-                }
-                $instance = $injector->getInstance('\\' . $type);
-                if ($instance) {
-                    return $instance;
+                try {
+                    return $injector->getInstance($type->getName());
+                } catch (Throwable) {
+                    continue;
                 }
             }
         }

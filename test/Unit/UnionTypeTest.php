@@ -35,16 +35,16 @@ class UnionTypeTest extends TestCase
     }
 
     /**
-     * First union member is an unbound interface.
-     * The union loop at DependencyFinder:117-128 does NOT catch exceptions,
-     * so the first failing member causes the entire resolution to fail.
-     * This documents the current (broken) behavior.
+     * First union member is an unbound interface, second is concrete.
+     * The try/catch in the union loop catches the first failure and
+     * resolves the second member successfully.
      */
-    public function testUnionTypeThrowsWhenFirstMemberUnresolvable(): void
+    public function testUnionTypeFallsToSecondWhenFirstUnavailable(): void
     {
         $injector = new Injector(new TopLevel());
-        $this->expectException(NotFoundException::class);
-        $injector->get(ClassWithUnionFirstUnavailable::class);
+        $result = $injector->get(ClassWithUnionFirstUnavailable::class);
+        $this->assertInstanceOf(ClassWithUnionFirstUnavailable::class, $result);
+        $this->assertInstanceOf(ClassImplementingAnInterface::class, $result->getDep());
     }
 
     /**
