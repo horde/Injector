@@ -16,6 +16,7 @@ namespace Horde\Injector;
 
 use Throwable;
 use ReflectionClass;
+use ReflectionIntersectionType;
 use ReflectionNamedType;
 use ReflectionUnionType;
 use ReflectionMethod;
@@ -114,6 +115,8 @@ class DependencyFinder
             $types = [$type];
         } elseif ($type instanceof ReflectionUnionType) {
             $types = $type->getTypes();
+        } elseif ($type instanceof ReflectionIntersectionType) {
+            return $this->resolveIntersectionType($injector, $parameter, $type);
         } else {
             $types = [];
         }
@@ -134,6 +137,60 @@ class DependencyFinder
 
         $paramName = $parameter->getName();
         $paramType = $parameter->getType() ? (string) $parameter->getType() : 'untyped';
+
+        throw new Exception(
+            sprintf(
+                'Parameter $%s (%s) cannot be resolved',
+                $paramName,
+                $paramType
+            )
+        );
+    }
+
+    /**
+     * Resolve an intersection type by trying each member interface.
+     *
+     * For each named member, attempt getInstance(). If the resolved
+     * instance satisfies all member interfaces, return it.
+     * Falls back to the parameter default if optional.
+     */
+    private function resolveIntersectionType(
+        Injector $injector,
+        ReflectionParameter $parameter,
+        ReflectionIntersectionType $intersectionType,
+    ): mixed {
+        $memberNames = [];
+        foreach ($intersectionType->getTypes() as $memberType) {
+            if ($memberType instanceof ReflectionNamedType && !$memberType->isBuiltin()) {
+                $memberNames[] = $memberType->getName();
+            }
+        }
+
+        foreach ($memberNames as $name) {
+            try {
+                $instance = $injector->getInstance($name);
+            } catch (Throwable) {
+                continue;
+            }
+            // Verify the instance satisfies all members
+            $satisfiesAll = true;
+            foreach ($memberNames as $requiredName) {
+                if (!($instance instanceof $requiredName)) {
+                    $satisfiesAll = false;
+                    break;
+                }
+            }
+            if ($satisfiesAll) {
+                return $instance;
+            }
+        }
+
+        if ($parameter->isOptional()) {
+            return $parameter->getDefaultValue();
+        }
+
+        $paramName = $parameter->getName();
+        $paramType = (string) $parameter->getType();
 
         throw new Exception(
             sprintf(
