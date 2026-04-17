@@ -14,7 +14,7 @@ authors:
     active: false
     role: lead
 version:
-  release: 3.0.0-beta3
+  release: 3.0.0-beta4
   api: 3.0.0alpha1
 state:
   release: beta
@@ -28,6 +28,11 @@ dependencies:
     composer:
       psr/container: ^2
       horde/exception: ^3
+  dev:
+    composer:
+      psr/event-dispatcher: ^1
+  suggests:
+    psr/event-dispatcher: Required for injector event support (dev/profiling)
 provides:
   psr/container-implementation: 2.0.1
 vendor: horde

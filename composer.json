@@ -21,14 +21,16 @@
         "container",
         "autowiring"
     ],
-    "time": "2026-04-16",
+    "time": "2026-04-17",
     "repositories": [],
     "require": {
         "php": "^8.1",
         "psr/container": "^2",
         "horde/exception": "^3 || dev-FRAMEWORK_6_0"
     },
-    "require-dev": {},
+    "require-dev": {
+        "psr/event-dispatcher": "^1"
+    },
     "suggest": {},
     "autoload": {
         "psr-0": {

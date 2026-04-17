@@ -1,4 +1,29 @@
 ---
+3.0.0-beta4:
+  api: 3.0.0-beta4
+  state:
+    release: beta
+    api: beta
+  date: 2026-04-17
+  license:
+    identifier: BSD-2-Clause
+    uri: https://spdx.org/licenses/BSD-2-Clause.html
+  notes: |-
+    test: BindingMapWriterTest
+    docs: Remove TODOs we solved
+    feat: A dependency collector for an event system
+    feat: Optional event dispatcher for observing the DI resolution
+    feat: Add events for BindingRegistered, DependencyCreated and DependencyResolved
+    test: LoadBindingsTest
+    feat: Consume precompiled binding map
+    feat: Support FCQNs when registering new binders
+    feat: Support resolving intersection types
+    feat: has() and get() support union types correctly now
+    fix: Actually evaluate second member of a Union Type and don't fail prematurely
+    feat: Correctly handle more recent builtins and DNF with null types
+    fix: Cannot "get" enums though has says true
+    fix: "has" on constructor-less enums but can't get
+    test: cover union/intersection types and potential capability gaps derived from them
 3.0.0-beta3:
   api: 3.0.0-beta3
   state:
