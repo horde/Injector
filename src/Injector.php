@@ -676,7 +676,6 @@ class Injector implements Scope, ContainerInterface
             }
         }
         // Find out if we could autowire it.
-        // TODO: Unions and intersections must be handled before this.
         // It must be a class (no interface)
         if (!class_exists($id)) {
             $this->hasNotCache[] = $id;

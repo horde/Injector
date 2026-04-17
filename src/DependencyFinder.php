@@ -93,7 +93,7 @@ class DependencyFinder
         ReflectionParameter $parameter
     ) {
         $type = $parameter->getType();
-        // TODO: What about union and intersection types?
+        // Single named type: resolve directly or fall back to default if optional
         if ($type instanceof ReflectionNamedType && !$type->isBuiltin() && $classname = $type->getName()) {
             try {
                 return $injector->getInstance($classname);
@@ -105,7 +105,6 @@ class DependencyFinder
             }
         }
         // Catch optional array parameters
-        // TODO: What about union and intersection types including arrays?
         if ($type instanceof ReflectionNamedType && $type->getName() === 'array' && $parameter->isOptional()) {
             return $parameter->getDefaultValue();
         }
