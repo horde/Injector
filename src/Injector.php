@@ -18,6 +18,7 @@ use BadMethodCallException;
 use Closure;
 use InvalidArgumentException;
 use Psr\Container\ContainerInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Reflection;
 use ReflectionClass;
 use ReflectionException;
@@ -94,6 +95,12 @@ class Injector implements Scope, ContainerInterface
     private array $resolutionStack = [];
 
     /**
+     * Optional PSR-14 event dispatcher for dev/profiling.
+     * When null, no events are dispatched (zero overhead).
+     */
+    private ?EventDispatcherInterface $eventDispatcher = null;
+
+    /**
      * Create a new Injector object.
      *
      * Every injector object has a parent scope.  For the very first
@@ -112,7 +119,19 @@ class Injector implements Scope, ContainerInterface
     }
 
     /**
-     * Create a child injector that inherits this injector's scope.
+     * Set an optional PSR-14 event dispatcher for dev/profiling.
+     *
+     * Pass null to disable event dispatching.
+     *
+     * @return self For method chaining.
+     */
+    public function setEventDispatcher(?EventDispatcherInterface $dispatcher): self
+    {
+        $this->eventDispatcher = $dispatcher;
+        return $this;
+    }
+
+    /**
      *
      * All child injectors inherit the parent scope.  Any objects that were
      * created using getInstance, will be available to the child container.
@@ -217,6 +236,12 @@ class Injector implements Scope, ContainerInterface
         $pos = array_search($interface, $this->hasNotCache);
         if ($pos !== false) {
             array_splice($this->hasNotCache, $pos, 1);
+        }
+        if ($this->eventDispatcher !== null) {
+            [$binderType, $impl] = $this->describeBinderForEvent($binder);
+            $this->eventDispatcher->dispatch(
+                new Event\BindingRegistered($interface, $binderType, $impl)
+            );
         }
         return $this;
     }
@@ -370,7 +395,18 @@ class Injector implements Scope, ContainerInterface
      */
     public function createInstance(string $interface)
     {
-        return $this->getBinder($interface)->create($this);
+        $binder = $this->getBinder($interface);
+        if ($this->eventDispatcher !== null) {
+            $start = hrtime(true);
+            $instance = $binder->create($this);
+            $durationMs = (hrtime(true) - $start) / 1_000_000;
+            [$binderType] = $this->describeBinderForEvent($binder);
+            $this->eventDispatcher->dispatch(
+                new Event\DependencyCreated($interface, $binderType, $durationMs)
+            );
+            return $instance;
+        }
+        return $binder->create($this);
     }
 
     /**
@@ -418,11 +454,27 @@ class Injector implements Scope, ContainerInterface
                 if (!isset($this->bindings[$id])
                     // Does our parent have an instance?
                     && ($instance = $this->parentInjector->get($id))) {
+                    if ($this->eventDispatcher !== null) {
+                        $this->eventDispatcher->dispatch(
+                            new Event\DependencyResolved($id, false, 'parent')
+                        );
+                    }
                     return $instance;
                 }
 
                 // We have to make our own instance
                 $this->setInstance($id, $this->createInstance($id));
+                if ($this->eventDispatcher !== null) {
+                    $this->eventDispatcher->dispatch(
+                        new Event\DependencyResolved($id, false, 'created')
+                    );
+                }
+            } else {
+                if ($this->eventDispatcher !== null) {
+                    $this->eventDispatcher->dispatch(
+                        new Event\DependencyResolved($id, true, 'cache')
+                    );
+                }
             }
         } catch (CircularDependencyException $e) {
             // Re-throw circular dependency as-is
@@ -715,5 +767,40 @@ class Injector implements Scope, ContainerInterface
     public function hasInstance($interface): bool
     {
         return isset($this->instances[$interface]);
+    }
+
+    /**
+     * Get all explicitly registered bindings.
+     *
+     * @return array<string, Binder>  Interface → Binder map.
+     */
+    public function getBindings(): array
+    {
+        return $this->bindings;
+    }
+
+    /**
+     * Extract binder type and implementation detail for event dispatch.
+     *
+     * @return array{0: string, 1: ?string}  [binderType, implementation]
+     */
+    private function describeBinderForEvent(Binder $binder): array
+    {
+        if ($binder instanceof Binder\AnnotatedSetters) {
+            $inner = $binder->getBinder();
+            if ($inner !== null) {
+                return $this->describeBinderForEvent($inner);
+            }
+        }
+        if ($binder instanceof Binder\Implementation) {
+            return ['Implementation', $binder->getImplementation()];
+        }
+        if ($binder instanceof Binder\Factory) {
+            return ['Factory', $binder->getFactory()];
+        }
+        if ($binder instanceof Binder\Closure) {
+            return ['Closure', null];
+        }
+        return [get_class($binder), null];
     }
 }
