@@ -1,4 +1,14 @@
 ---
+3.0.0:
+  api: 3.0.0
+  state:
+    release: stable
+    api: stable
+  date: 2026-06-27
+  license:
+    identifier: BSD-2-Clause
+    uri: https://spdx.org/licenses/BSD-2-Clause.html
+  notes: "chore: refresh qc fixes and platform deps\nchore: Update workflow dependency"
 3.0.0-beta4:
   api: 3.0.0-beta4
   state:
@@ -8,22 +18,7 @@
   license:
     identifier: BSD-2-Clause
     uri: https://spdx.org/licenses/BSD-2-Clause.html
-  notes: |-
-    test: BindingMapWriterTest
-    docs: Remove TODOs we solved
-    feat: A dependency collector for an event system
-    feat: Optional event dispatcher for observing the DI resolution
-    feat: Add events for BindingRegistered, DependencyCreated and DependencyResolved
-    test: LoadBindingsTest
-    feat: Consume precompiled binding map
-    feat: Support FCQNs when registering new binders
-    feat: Support resolving intersection types
-    feat: has() and get() support union types correctly now
-    fix: Actually evaluate second member of a Union Type and don't fail prematurely
-    feat: Correctly handle more recent builtins and DNF with null types
-    fix: Cannot "get" enums though has says true
-    fix: "has" on constructor-less enums but can't get
-    test: cover union/intersection types and potential capability gaps derived from them
+  notes: "test: BindingMapWriterTest\ndocs: Remove TODOs we solved\nfeat: A dependency collector for an event system\nfeat: Optional event dispatcher for observing the DI resolution\nfeat: Add events for BindingRegistered, DependencyCreated and DependencyResolved\ntest: LoadBindingsTest\nfeat: Consume precompiled binding map\nfeat: Support FCQNs when registering new binders\nfeat: Support resolving intersection types\nfeat: has() and get() support union types correctly now\nfix: Actually evaluate second member of a Union Type and don't fail prematurely\nfeat: Correctly handle more recent builtins and DNF with null types\nfix: Cannot \"get\" enums though has says true\nfix: \"has\" on constructor-less enums but can't get\ntest: cover union/intersection types and potential capability gaps derived from them"
 3.0.0-beta3:
   api: 3.0.0-beta3
   state:
@@ -33,8 +28,7 @@
   license:
     identifier: BSD-2-Clause
     uri: https://spdx.org/licenses/BSD-2-Clause.html
-  notes: |-
-    fix: If a non-primitive optional parameter cannot be resolved, use the default value
+  notes: 'fix: If a non-primitive optional parameter cannot be resolved, use the default value'
 3.0.0-beta2:
   api: 3.0.0-beta2
   state:
@@ -44,12 +38,7 @@
   license:
     identifier: BSD-2-Clause
     uri: https://spdx.org/licenses/BSD-2-Clause.html
-  notes: |-
-    feat: Try to auto-discover factories for abstract classes and interface by attribute
-    chore: Fix autoloading metadata for unit tests
-    test: Add a circular dependency test case for PHP Errors
-    test: Delete duplicate definition
-    fix: Catch all Throwables including PHP Errors.
+  notes: "feat: Try to auto-discover factories for abstract classes and interface by attribute\nchore: Fix autoloading metadata for unit tests\ntest: Add a circular dependency test case for PHP Errors\ntest: Delete duplicate definition\nfix: Catch all Throwables including PHP Errors."
 3.0.0-beta1:
   api: 3.0.0-beta1
   state:
@@ -59,10 +48,7 @@
   license:
     identifier: BSD-2-Clause
     uri: https://spdx.org/licenses/BSD-2-Clause.html
-  notes: |-
-    style: php-cs-fixer
-    chore: It was good while it lasted
-    test: Upgrade unit tests for PHPUnit 13 compatibility
+  notes: "style: php-cs-fixer\nchore: It was good while it lasted\ntest: Upgrade unit tests for PHPUnit 13 compatibility"
 3.0.0-alpha14:
   api: 3.0.0-alpha14
   state:
@@ -72,9 +58,7 @@
   license:
     identifier: BSD-2-Clause
     uri: https://spdx.org/licenses/BSD-2-Clause.html
-  notes: |-
-    feat(dx): Developer friendly error messages
-    fix(injector): Don't crash on circular dependencies.
+  notes: "feat(dx): Developer friendly error messages\nfix(injector): Don't crash on circular dependencies."
 3.0.0-alpha13:
   api: 3.0.0-alpha13
   state:
@@ -84,12 +68,7 @@
   license:
     identifier: BSD-2-Clause
     uri: https://spdx.org/licenses/BSD-2-Clause.html
-  notes: |-
-    Merge pull request #4 from horde/feat/factory-attributes
-    chore(phpstan): Set level 5 as the current watermark to prevent later degradation.
-    style: Apply php-cs-fixer to code base.
-    feat(injector): Support Factory attribute for autowiring
-    test: modernize test suite to PHPUnit 11-13
+  notes: "Merge pull request #4 from horde/feat/factory-attributes\nchore(phpstan): Set level 5 as the current watermark to prevent later degradation.\nstyle: Apply php-cs-fixer to code base.\nfeat(injector): Support Factory attribute for autowiring\ntest: modernize test suite to PHPUnit 11-13"
 3.0.0-alpha12:
   api: 3.0.0-alpha12
   state:
@@ -109,9 +88,7 @@
   license:
     identifier: BSD-2-Clause
     uri: http://www.horde.org/licenses/bsd
-  notes: |-
-    Original version string was 3.0.0alpha11
-    |+
+  notes: "Original version string was 3.0.0alpha11\n|+"
 3.0.0-alpha10:
   api: 3.0.0alpha1
   state:
@@ -121,9 +98,7 @@
   license:
     identifier: BSD-2-Clause
     uri: http://www.horde.org/licenses/bsd
-  notes: |-
-    Original version string was 3.0.0alpha10
-    |+
+  notes: "Original version string was 3.0.0alpha10\n|+"
 3.0.0-alpha9:
   api: 3.0.0alpha1
   state:
@@ -133,11 +108,7 @@
   license:
     identifier: BSD-2-Clause
     uri: http://www.horde.org/licenses/bsd
-  notes: |
-    Original version string was 3.0.0alpha9
-    [rla] Added Cache for has() method.
-    [rla] Fixed has() method compliance with PSR-11.
-    |+
+  notes: "Original version string was 3.0.0alpha9\n[rla] Added Cache for has() method.\n[rla] Fixed has() method compliance with PSR-11.\n|+\n"
 3.0.0-alpha8:
   api: 3.0.0alpha1
   state:
@@ -147,10 +118,7 @@
   license:
     identifier: BSD-2-Clause
     uri: http://www.horde.org/licenses/bsd
-  notes: |
-    Original version string was 3.0.0alpha8
-    [rla] Release for PHP 8.
-    |+
+  notes: "Original version string was 3.0.0alpha8\n[rla] Release for PHP 8.\n|+\n"
 3.0.0-alpha7:
   api: 3.0.0alpha1
   state:
@@ -160,10 +128,7 @@
   license:
     identifier: BSD-2-Clause
     uri: http://www.horde.org/licenses/bsd
-  notes: |
-    Original version string was 3.0.0alpha7
-    [rla] Enable for PHP 8.
-    |+
+  notes: "Original version string was 3.0.0alpha7\n[rla] Enable for PHP 8.\n|+\n"
 3.0.0-alpha6:
   api: 3.0.0alpha1
   state:
@@ -173,10 +138,7 @@
   license:
     identifier: BSD-2-Clause
     uri: http://www.horde.org/licenses/bsd
-  notes: |
-    Original version string was 3.0.0alpha6
-    [rla] Upgraded to conform PSR-11 2.0.1 interfaces
-    |+
+  notes: "Original version string was 3.0.0alpha6\n[rla] Upgraded to conform PSR-11 2.0.1 interfaces\n|+\n"
 3.0.0-alpha5:
   api: 3.0.0-alpha1
   state:
@@ -186,10 +148,7 @@
   license:
     identifier: BSD-2-Clause
     uri: http://www.horde.org/licenses/bsd
-  notes: |
-    revert: A release v3.0.0alpha5 already exists
-    fix: var_export needs 2nd parameter to actually return rather than output
-    style: Apply recent php-cs-fixer rules
+  notes: "revert: A release v3.0.0alpha5 already exists\nfix: var_export needs 2nd parameter to actually return rather than output\nstyle: Apply recent php-cs-fixer rules\n"
 3.0.0-alpha4:
   api: 3.0.0alpha1
   state:
@@ -199,9 +158,7 @@
   license:
     identifier: BSD-2-Clause
     uri: http://www.horde.org/licenses/bsd
-  notes: |-
-    Original version string was 3.0.0alpha4
-    |+
+  notes: "Original version string was 3.0.0alpha4\n|+"
 3.0.0-alpha3:
   api: 3.0.0alpha1
   state:
@@ -211,9 +168,7 @@
   license:
     identifier: BSD-2-Clause
     uri: http://www.horde.org/licenses/bsd
-  notes: |-
-    Original version string was 3.0.0alpha3
-    |+
+  notes: "Original version string was 3.0.0alpha3\n|+"
 3.0.0-alpha2:
   api: 3.0.0alpha1
   state:
@@ -223,9 +178,7 @@
   license:
     identifier: BSD-2-Clause
     uri: http://www.horde.org/licenses/bsd
-  notes: |-
-    Original version string was 3.0.0alpha2
-    |+
+  notes: "Original version string was 3.0.0alpha2\n|+"
 3.0.0-alpha1:
   api: 3.0.0alpha1
   state:
@@ -235,8 +188,7 @@
   license:
     identifier: BSD-2-Clause
     uri: http://www.horde.org/licenses/bsd
-  notes: |
-    Original version string was 3.0.0alpha1
+  notes: "Original version string was 3.0.0alpha1\n"
 2.0.5:
   api: 1.0.0
   state:
@@ -246,8 +198,7 @@
   license:
     identifier: BSD-2-Clause
     uri: http://www.horde.org/licenses/bsd
-  notes: |
-    [jan] Mark PHP 7 as supported.
+  notes: "[jan] Mark PHP 7 as supported.\n"
 2.0.4:
   api: 1.0.0
   state:
@@ -257,8 +208,7 @@
   license:
     identifier: BSD-2-Clause
     uri: http://www.horde.org/licenses/bsd
-  notes: |
-    [jan] Improve PSR-2 compatibility.
+  notes: "[jan] Improve PSR-2 compatibility.\n"
 2.0.3:
   api: 1.0.0
   state:
@@ -268,8 +218,7 @@
   license:
     identifier: BSD-2-Clause
     uri: http://www.horde.org/licenses/bsd
-  notes: |
-    [mms] Cache creation of Reflection objects when binding.
+  notes: "[mms] Cache creation of Reflection objects when binding.\n"
 2.0.2:
   api: 1.0.0
   state:
@@ -279,8 +228,7 @@
   license:
     identifier: BSD-2-Clause
     uri: http://www.horde.org/licenses/bsd
-  notes: |
-    [jan] Re-throw ReflectionExceptions as Horde_Injector_Exceptions.
+  notes: "[jan] Re-throw ReflectionExceptions as Horde_Injector_Exceptions.\n"
 2.0.1:
   api: 1.0.0
   state:
@@ -290,32 +238,7 @@
   license:
     identifier: BSD-2-Clause
     uri: http://www.horde.org/licenses/bsd
-  notes: |
-    [mms] Use new Horde_Test layout.
-2.0.0-beta1:
-  api: 1.0.0
-  state:
-    release: beta
-    api: stable
-  date: 2012-07-19
-  license:
-    identifier: BSD-2-Clause
-    uri: http://www.horde.org/licenses/bsd
-  notes: |
-    Original version string was 2.0.0beta1
-    First beta release for Horde 5.
-2.0.0-alpha1:
-  api: 1.0.0
-  state:
-    release: alpha
-    api: stable
-  date: 2012-07-05
-  license:
-    identifier: BSD-2-Clause
-    uri: http://www.horde.org/licenses/bsd
-  notes: |
-    Original version string was 2.0.0alpha1
-    First alpha release for Horde 5.
+  notes: "[mms] Use new Horde_Test layout.\n"
 2.0.0:
   api: 1.0.0
   state:
@@ -325,8 +248,27 @@
   license:
     identifier: BSD-2-Clause
     uri: http://www.horde.org/licenses/bsd
-  notes: |
-    First stable release for Horde 5.
+  notes: "First stable release for Horde 5.\n"
+2.0.0-beta1:
+  api: 1.0.0
+  state:
+    release: beta
+    api: stable
+  date: 2012-07-19
+  license:
+    identifier: BSD-2-Clause
+    uri: http://www.horde.org/licenses/bsd
+  notes: "Original version string was 2.0.0beta1\nFirst beta release for Horde 5.\n"
+2.0.0-alpha1:
+  api: 1.0.0
+  state:
+    release: alpha
+    api: stable
+  date: 2012-07-05
+  license:
+    identifier: BSD-2-Clause
+    uri: http://www.horde.org/licenses/bsd
+  notes: "Original version string was 2.0.0alpha1\nFirst alpha release for Horde 5.\n"
 1.0.1:
   api: 1.0.0
   state:
@@ -336,58 +278,7 @@
   license:
     identifier: BSD-2-Clause
     uri: http://www.horde.org/licenses/bsd
-  notes: |
-    [jan] Fix tests to work with PHPUnit 3.6.
-1.0.0-beta1:
-  api: 1.0.0
-  state:
-    release: beta
-    api: beta
-  date: 2011-03-16
-  license:
-    identifier: BSD-2-Clause
-    uri: http://www.horde.org/licenses/bsd
-  notes: |
-    Original version string was 1.0.0beta1
-    First beta release for Horde 4.
-1.0.0-alpha1:
-  api: 1.0.0
-  state:
-    release: alpha
-    api: alpha
-  date: 2011-03-08
-  license:
-    identifier: BSD-2-Clause
-    uri: http://www.horde.org/licenses/bsd
-  notes: |
-    Original version string was 1.0.0alpha1
-    First alpha release for Horde 4.
-    Add Horde_Injector#hasInstance().
-    Initial release, contributed by Blue State Digital
-1.0.0-RC2:
-  api: 1.0.0
-  state:
-    release: beta
-    api: beta
-  date: 2011-03-29
-  license:
-    identifier: BSD-2-Clause
-    uri: http://www.horde.org/licenses/bsd
-  notes: |
-    Original version string was 1.0.0RC2
-    Second release candidate for Horde 4.
-1.0.0-RC1:
-  api: 1.0.0
-  state:
-    release: beta
-    api: beta
-  date: 2011-03-22
-  license:
-    identifier: BSD-2-Clause
-    uri: http://www.horde.org/licenses/bsd
-  notes: |
-    Original version string was 1.0.0RC1
-    First release candidate for Horde 4.
+  notes: "[jan] Fix tests to work with PHPUnit 3.6.\n"
 1.0.0:
   api: 1.0.0
   state:
@@ -397,5 +288,44 @@
   license:
     identifier: BSD-2-Clause
     uri: http://www.horde.org/licenses/bsd
-  notes: |
-    First stable release for Horde 4.
+  notes: "First stable release for Horde 4.\n"
+1.0.0-RC2:
+  api: 1.0.0
+  state:
+    release: beta
+    api: beta
+  date: 2011-03-29
+  license:
+    identifier: BSD-2-Clause
+    uri: http://www.horde.org/licenses/bsd
+  notes: "Original version string was 1.0.0RC2\nSecond release candidate for Horde 4.\n"
+1.0.0-RC1:
+  api: 1.0.0
+  state:
+    release: beta
+    api: beta
+  date: 2011-03-22
+  license:
+    identifier: BSD-2-Clause
+    uri: http://www.horde.org/licenses/bsd
+  notes: "Original version string was 1.0.0RC1\nFirst release candidate for Horde 4.\n"
+1.0.0-beta1:
+  api: 1.0.0
+  state:
+    release: beta
+    api: beta
+  date: 2011-03-16
+  license:
+    identifier: BSD-2-Clause
+    uri: http://www.horde.org/licenses/bsd
+  notes: "Original version string was 1.0.0beta1\nFirst beta release for Horde 4.\n"
+1.0.0-alpha1:
+  api: 1.0.0
+  state:
+    release: alpha
+    api: alpha
+  date: 2011-03-08
+  license:
+    identifier: BSD-2-Clause
+    uri: http://www.horde.org/licenses/bsd
+  notes: "Original version string was 1.0.0alpha1\nFirst alpha release for Horde 4.\nAdd Horde_Injector#hasInstance().\nInitial release, contributed by Blue State Digital\n"
