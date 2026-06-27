@@ -7,8 +7,7 @@ list: dev
 type: library
 homepage: https://www.horde.org/libraries/Horde_Injector
 authors:
-  -
-    name: Chuck Hagenbuch
+  - name: Chuck Hagenbuch
     user: chuck
     email: chuck@horde.org
     active: false
@@ -41,7 +40,7 @@ autoload-dev:
     Horde\Injector\Test\: test/
 quality:
   phpstan:
-    level: 5
+    level: 9
 keywords:
   - psr-11
   - psr-container
@@ -51,3 +50,18 @@ keywords:
   - dependency-injection
   - container
   - autowiring
+ci-platform:
+  '8.1':
+    - php: ^7.4 || ^8
+  '8.2':
+    - php: ^7.4 || ^8
+  '8.3':
+    - php: ^7.4 || ^8
+  '8.4':
+    - php: ^7.4 || ^8
+  '8.5':
+    - php: ^7.4 || ^8
+  '8.6':
+    - php: ^7.4 || ^8
+ci-platform-flags:
+  needs_installer_plugin: false
